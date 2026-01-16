@@ -1,0 +1,27 @@
+// Bootstrap 5 CSS
+@import "~bootstrap5/dist/css/bootstrap.min.css";
+
+// Bootstrap Icons
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+// AOS
+@import "~aos/dist/aos.css";
+
+// Glightbox
+@import "~glightbox/dist/css/glightbox.min.css";
+
+// select2
+@import "~select2/dist/css/select2";
+
+/* Swiper */
+// @import "~swiper/swiper.min.css";
+
+// Style utama SnapFolio
+@import "main.scss";
+@import "section.scss";
+@import "custom-scss/loader.scss";
+@import "custom-scss/product-swiper.scss";
+@import "custom-scss/gallery-swiper.scss";
+@import "custom-scss/responsive.scss";
+@import "custom-scss/sweet-alert2.scss";
+@import "custom-scss/select2-snapfolio.scss";

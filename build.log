@@ -1,0 +1,1051 @@
+
+> dev
+> npm run development
+
+
+> development
+> mix
+
+i Compiling Mix
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+5 │ @import 'variables';
+  │         ^^^^^^^^^^^
+  ╵
+    stdin 5:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+12 │ @import '~bootstrap/scss/bootstrap';
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    stdin 12:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+23 │ @import '../lib/dropzone/basic.min';
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    stdin 23:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+24 │ @import '../lib/dropzone/dropzone.min';
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    stdin 24:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+27 │ @import '~bootstrap-star-rating/css/star-rating';
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    stdin 27:9  root stylesheet
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+2 │ @import '~bootstrap/scss/bootstrap';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    stdin 2:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+6 │ @import '~bootstrap-star-rating/css/star-rating';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    stdin 6:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+7 │ @import '~bootstrap-star-rating/themes/krajee-fas/theme';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    stdin 7:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+9 │ @import '~select2/dist/css/select2';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    stdin 9:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+17 │ @import '../../../../../lib/lightGallery/css/lightgallery.min';
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    stdin 17:9  root stylesheet
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+17 │ @import "main.scss";
+   │         ^^^^^^^^^^^
+   ╵
+    stdin 17:9  root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+21 │   $grays: map-merge(
+   │ ┌─────────^
+22 │ │   (
+23 │ │     "100": $gray-100,
+24 │ │     "200": $gray-200,
+25 │ │     "300": $gray-300,
+26 │ │     "400": $gray-400,
+27 │ │     "500": $gray-500,
+28 │ │     "600": $gray-600,
+29 │ │     "700": $gray-700,
+30 │ │     "800": $gray-800,
+31 │ │     "900": $gray-900
+32 │ │   ),
+33 │ │   $grays
+34 │ │ );
+   │ └─^
+   ╵
+    node_modules\bootstrap\scss\_variables.scss 21:9  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9    @import
+    stdin 12:9                                        root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+21 │   $grays: map-merge(
+   │ ┌─────────^
+22 │ │   (
+23 │ │     "100": $gray-100,
+24 │ │     "200": $gray-200,
+25 │ │     "300": $gray-300,
+26 │ │     "400": $gray-400,
+27 │ │     "500": $gray-500,
+28 │ │     "600": $gray-600,
+29 │ │     "700": $gray-700,
+30 │ │     "800": $gray-800,
+31 │ │     "900": $gray-900
+32 │ │   ),
+33 │ │   $grays
+34 │ │ );
+   │ └─^
+   ╵
+    node_modules\bootstrap\scss\_variables.scss 21:9  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9    @import
+    stdin 2:9                                         root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+48 │   $colors: map-merge(
+   │ ┌──────────^
+49 │ │   (
+50 │ │     "blue":       $blue,
+51 │ │     "indigo":     $indigo,
+52 │ │     "purple":     $purple,
+53 │ │     "pink":       $pink,
+54 │ │     "red":        $red,
+55 │ │     "orange":     $orange,
+56 │ │     "yellow":     $yellow,
+57 │ │     "green":      $green,
+58 │ │     "teal":       $teal,
+59 │ │     "cyan":       $cyan,
+60 │ │     "white":      $white,
+61 │ │     "gray":       $gray-600,
+62 │ │     "gray-dark":  $gray-800
+63 │ │   ),
+64 │ │   $colors
+65 │ │ );
+   │ └─^
+   ╵
+    node_modules\bootstrap\scss\_variables.scss 48:10  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9     @import
+    stdin 12:9                                         root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+48 │   $colors: map-merge(
+   │ ┌──────────^
+49 │ │   (
+50 │ │     "blue":       $blue,
+51 │ │     "indigo":     $indigo,
+52 │ │     "purple":     $purple,
+53 │ │     "pink":       $pink,
+54 │ │     "red":        $red,
+55 │ │     "orange":     $orange,
+56 │ │     "yellow":     $yellow,
+57 │ │     "green":      $green,
+58 │ │     "teal":       $teal,
+59 │ │     "cyan":       $cyan,
+60 │ │     "white":      $white,
+61 │ │     "gray":       $gray-600,
+62 │ │     "gray-dark":  $gray-800
+63 │ │   ),
+64 │ │   $colors
+65 │ │ );
+   │ └─^
+   ╵
+    node_modules\bootstrap\scss\_variables.scss 48:10  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9     @import
+    stdin 2:9                                          root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+77 │   $theme-colors: map-merge(
+   │ ┌────────────────^
+78 │ │   (
+79 │ │     "primary":    $primary,
+80 │ │     "secondary":  $secondary,
+81 │ │     "success":    $success,
+82 │ │     "info":       $info,
+83 │ │     "warning":    $warning,
+84 │ │     "danger":     $danger,
+85 │ │     "light":      $light,
+86 │ │     "dark":       $dark
+87 │ │   ),
+88 │ │   $theme-colors
+89 │ │ );
+   │ └─^
+   ╵
+    node_modules\bootstrap\scss\_variables.scss 77:16  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9     @import
+    stdin 12:9                                         root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+77 │   $theme-colors: map-merge(
+   │ ┌────────────────^
+78 │ │   (
+79 │ │     "primary":    $primary,
+80 │ │     "secondary":  $secondary,
+81 │ │     "success":    $success,
+82 │ │     "info":       $info,
+83 │ │     "warning":    $warning,
+84 │ │     "danger":     $danger,
+85 │ │     "light":      $light,
+86 │ │     "dark":       $dark
+87 │ │   ),
+88 │ │   $theme-colors
+89 │ │ );
+   │ └─^
+   ╵
+    node_modules\bootstrap\scss\_variables.scss 77:16  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9     @import
+    stdin 2:9                                          root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+    ╷
+138 │   $spacers: map-merge(
+    │ ┌───────────^
+139 │ │   (
+140 │ │     0: 0,
+141 │ │     1: ($spacer * .25),
+142 │ │     2: ($spacer * .5),
+143 │ │     3: $spacer,
+144 │ │     4: ($spacer * 1.5),
+145 │ │     5: ($spacer * 3)
+146 │ │   ),
+147 │ │   $spacers
+148 │ │ );
+    │ └─^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 138:11  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 12:9                                          root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+    ╷
+138 │   $spacers: map-merge(
+    │ ┌───────────^
+139 │ │   (
+140 │ │     0: 0,
+141 │ │     1: ($spacer * .25),
+142 │ │     2: ($spacer * .5),
+143 │ │     3: $spacer,
+144 │ │     4: ($spacer * 1.5),
+145 │ │     5: ($spacer * 3)
+146 │ │   ),
+147 │ │   $spacers
+148 │ │ );
+    │ └─^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 138:11  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 2:9                                           root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+    ╷
+152 │   $sizes: map-merge(
+    │ ┌─────────^
+153 │ │   (
+154 │ │     25: 25%,
+155 │ │     50: 50%,
+156 │ │     75: 75%,
+157 │ │     100: 100%,
+158 │ │     auto: auto
+159 │ │   ),
+160 │ │   $sizes
+161 │ │ );
+    │ └─^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 152:9  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9     @import
+    stdin 12:9                                         root stylesheet
+
+DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+Use map.merge instead.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+    ╷
+152 │   $sizes: map-merge(
+    │ ┌─────────^
+153 │ │   (
+154 │ │     25: 25%,
+155 │ │     50: 50%,
+156 │ │     75: 75%,
+157 │ │     100: 100%,
+158 │ │     auto: auto
+159 │ │   ),
+160 │ │   $sizes
+161 │ │ );
+    │ └─^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 152:9  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9     @import
+    stdin 2:9                                          root stylesheet
+
+DEPRECATION WARNING [color-functions]: darken() is deprecated. Suggestions:
+
+color.scale($color, $lightness: -28.125%)
+color.adjust($color, $lightness: -15%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+178 │ $link-hover-color:                        darken($link-color, 15%) !default;
+    │                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 178:43  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 12:9                                          root stylesheet
+
+DEPRECATION WARNING [color-functions]: darken() is deprecated. Suggestions:
+
+color.scale($color, $lightness: -30%)
+color.adjust($color, $lightness: -15%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+178 │ $link-hover-color:                        darken($link-color, 15%) !default;
+    │                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 178:43  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 2:9                                           root stylesheet
+
+DEPRECATION WARNING [color-functions]: lighten() is deprecated. Suggestions:
+
+color.scale($color, $lightness: 9.7081218274%)
+color.adjust($color, $lightness: 7.5%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+374 │ $table-dark-border-color:     lighten($table-dark-bg, 7.5%) !default;
+    │                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 374:31  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 12:9                                          root stylesheet
+
+DEPRECATION WARNING [color-functions]: lighten() is deprecated. Suggestions:
+
+color.scale($color, $lightness: 9.7081218274%)
+color.adjust($color, $lightness: 7.5%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+374 │ $table-dark-border-color:     lighten($table-dark-bg, 7.5%) !default;
+    │                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 374:31  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 2:9                                           root stylesheet
+
+DEPRECATION WARNING [color-functions]: lighten() is deprecated. Suggestions:
+
+color.scale($color, $lightness: 53.5714285714%)
+color.adjust($color, $lightness: 25%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+487 │ $input-focus-border-color:              lighten($component-active-bg, 25%) !default;
+    │                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 487:41  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 12:9                                          root stylesheet
+
+DEPRECATION WARNING [color-functions]: lighten() is deprecated. Suggestions:
+
+color.scale($color, $lightness: 50%)
+color.adjust($color, $lightness: 25%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+487 │ $input-focus-border-color:              lighten($component-active-bg, 25%) !default;
+    │                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 487:41  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 2:9                                           root stylesheet
+
+DEPRECATION WARNING [color-functions]: lighten() is deprecated. Suggestions:
+
+color.scale($color, $lightness: 75%)
+color.adjust($color, $lightness: 35%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+552 │ $custom-control-indicator-active-bg:            lighten($component-active-bg, 35%) !default;
+    │                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 552:49  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 12:9                                          root stylesheet
+
+DEPRECATION WARNING [color-functions]: lighten() is deprecated. Suggestions:
+
+color.scale($color, $lightness: 70%)
+color.adjust($color, $lightness: 35%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+552 │ $custom-control-indicator-active-bg:            lighten($component-active-bg, 35%) !default;
+    │                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 552:49  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 2:9                                           root stylesheet
+
+DEPRECATION WARNING [color-functions]: lighten() is deprecated. Suggestions:
+
+color.scale($color, $lightness: 75%)
+color.adjust($color, $lightness: 35%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+627 │ $custom-range-thumb-active-bg:               lighten($component-active-bg, 35%) !default;
+    │                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 627:46  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 12:9                                          root stylesheet
+
+DEPRECATION WARNING [color-functions]: lighten() is deprecated. Suggestions:
+
+color.scale($color, $lightness: 70%)
+color.adjust($color, $lightness: 35%)
+
+More info: https://sass-lang.com/d/color-functions
+
+    ╷
+627 │ $custom-range-thumb-active-bg:               lighten($component-active-bg, 35%) !default;
+    │                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules\bootstrap\scss\_variables.scss 627:46  @import
+    node_modules\bootstrap\scss\bootstrap.scss 9:9      @import
+    stdin 2:9                                           root stylesheet
+
+DEPRECATION WARNING [abs-percent]: Passing percentage units to the global abs() function is deprecated.
+In the future, this will emit a CSS abs() function to be resolved by the browser.
+To preserve current behavior: math.abs(100%)
+To emit a CSS abs() now: abs(#{100%})
+More info: https://sass-lang.com/d/abs-percent
+
+   ╷
+54 │   $dividend: abs($dividend);
+   │              ^^^^^^^^^^^^^^
+   ╵
+    node_modules\bootstrap\scss\vendor\_rfs.scss 54:14             divide()
+    node_modules\bootstrap\scss\mixins\_grid.scss 66:15            row-cols()
+    node_modules\bootstrap\scss\mixins\_grid-framework.scss 43:13  @content
+    node_modules\bootstrap\scss\mixins\_breakpoints.scss 65:5      media-breakpoint-up()
+    node_modules\bootstrap\scss\mixins\_grid-framework.scss 32:5   make-grid-columns()
+    node_modules\bootstrap\scss\_grid.scss 72:3                    @import
+    node_modules\bootstrap\scss\bootstrap.scss 16:9                @import
+    stdin 2:9                                                      root stylesheet
+
+DEPRECATION WARNING [abs-percent]: Passing percentage units to the global abs() function is deprecated.
+In the future, this will emit a CSS abs() function to be resolved by the browser.
+To preserve current behavior: math.abs(100%)
+To emit a CSS abs() now: abs(#{100%})
+More info: https://sass-lang.com/d/abs-percent
+
+   ╷
+54 │   $dividend: abs($dividend);
+   │              ^^^^^^^^^^^^^^
+   ╵
+    node_modules\bootstrap\scss\vendor\_rfs.scss 54:14             divide()
+    node_modules\bootstrap\scss\mixins\_grid.scss 66:15            row-cols()
+    node_modules\bootstrap\scss\mixins\_grid-framework.scss 43:13  @content
+    node_modules\bootstrap\scss\mixins\_breakpoints.scss 65:5      media-breakpoint-up()
+    node_modules\bootstrap\scss\mixins\_grid-framework.scss 32:5   make-grid-columns()
+    node_modules\bootstrap\scss\_grid.scss 72:3                    @import
+    node_modules\bootstrap\scss\bootstrap.scss 16:9                @import
+    stdin 12:9                                                     root stylesheet
+
+DEPRECATION WARNING [mixed-decls]: Sass's behavior for declarations that appear after nested
+rules will be changing to match the behavior specified by CSS in an upcoming
+version. To keep the existing behavior, move the declaration above the nested
+rule. To opt into the new behavior, wrap the declaration in `& {}`.
+
+More info: https://sass-lang.com/d/mixed-decls
+
+   ┌──> node_modules\bootstrap\scss\_custom-forms.scss
+415│       appearance: none;
+   │       ^^^^^^^^^^^^^^^^ declaration
+   ╵
+   ┌──> node_modules\bootstrap\scss\mixins\_transition.scss
+21 │ ┌       @media (prefers-reduced-motion: reduce) {
+22 │ │         transition: none;
+23 │ │       }
+   │ └─── nested rule
+   ╵
+    node_modules\bootstrap\scss\_custom-forms.scss 415:5  @import
+    node_modules\bootstrap\scss\bootstrap.scss 24:9       @import
+    stdin 2:9                                             root stylesheet
+
+DEPRECATION WARNING [mixed-decls]: Sass's behavior for declarations that appear after nested
+rules will be changing to match the behavior specified by CSS in an upcoming
+version. To keep the existing behavior, move the declaration above the nested
+rule. To opt into the new behavior, wrap the declaration in `& {}`.
+
+More info: https://sass-lang.com/d/mixed-decls
+
+   ┌──> node_modules\bootstrap\scss\_custom-forms.scss
+441│       appearance: none;
+   │       ^^^^^^^^^^^^^^^^ declaration
+   ╵
+   ┌──> node_modules\bootstrap\scss\mixins\_transition.scss
+21 │ ┌       @media (prefers-reduced-motion: reduce) {
+22 │ │         transition: none;
+23 │ │       }
+   │ └─── nested rule
+   ╵
+    node_modules\bootstrap\scss\_custom-forms.scss 441:5  @import
+    node_modules\bootstrap\scss\bootstrap.scss 24:9       @import
+    stdin 2:9                                             root stylesheet
+
+DEPRECATION WARNING [mixed-decls]: Sass's behavior for declarations that appear after nested
+rules will be changing to match the behavior specified by CSS in an upcoming
+version. To keep the existing behavior, move the declaration above the nested
+rule. To opt into the new behavior, wrap the declaration in `& {}`.
+
+More info: https://sass-lang.com/d/mixed-decls
+
+   ┌──> node_modules\bootstrap\scss\_custom-forms.scss
+470│       appearance: none;
+   │       ^^^^^^^^^^^^^^^^ declaration
+   ╵
+   ┌──> node_modules\bootstrap\scss\mixins\_transition.scss
+21 │ ┌       @media (prefers-reduced-motion: reduce) {
+22 │ │         transition: none;
+23 │ │       }
+   │ └─── nested rule
+   ╵
+    node_modules\bootstrap\scss\_custom-forms.scss 470:5  @import
+    node_modules\bootstrap\scss\bootstrap.scss 24:9       @import
+    stdin 2:9                                             root stylesheet
+
+DEPRECATION WARNING [mixed-decls]: Sass's behavior for declarations that appear after nested
+rules will be changing to match the behavior specified by CSS in an upcoming
+version. To keep the existing behavior, move the declaration above the nested
+rule. To opt into the new behavior, wrap the declaration in `& {}`.
+
+More info: https://sass-lang.com/d/mixed-decls
+
+   ┌──> node_modules\bootstrap\scss\_custom-forms.scss
+415│       appearance: none;
+   │       ^^^^^^^^^^^^^^^^ declaration
+   ╵
+   ┌──> node_modules\bootstrap\scss\mixins\_transition.scss
+21 │ ┌       @media (prefers-reduced-motion: reduce) {
+22 │ │         transition: none;
+23 │ │       }
+   │ └─── nested rule
+   ╵
+    node_modules\bootstrap\scss\_custom-forms.scss 415:5  @import
+    node_modules\bootstrap\scss\bootstrap.scss 24:9       @import
+    stdin 12:9                                            root stylesheet
+
+DEPRECATION WARNING [mixed-decls]: Sass's behavior for declarations that appear after nested
+rules will be changing to match the behavior specified by CSS in an upcoming
+version. To keep the existing behavior, move the declaration above the nested
+rule. To opt into the new behavior, wrap the declaration in `& {}`.
+
+More info: https://sass-lang.com/d/mixed-decls
+
+   ┌──> node_modules\bootstrap\scss\_custom-forms.scss
+441│       appearance: none;
+   │       ^^^^^^^^^^^^^^^^ declaration
+   ╵
+   ┌──> node_modules\bootstrap\scss\mixins\_transition.scss
+21 │ ┌       @media (prefers-reduced-motion: reduce) {
+22 │ │         transition: none;
+23 │ │       }
+   │ └─── nested rule
+   ╵
+    node_modules\bootstrap\scss\_custom-forms.scss 441:5  @import
+    node_modules\bootstrap\scss\bootstrap.scss 24:9       @import
+    stdin 12:9                                            root stylesheet
+
+DEPRECATION WARNING [mixed-decls]: Sass's behavior for declarations that appear after nested
+rules will be changing to match the behavior specified by CSS in an upcoming
+version. To keep the existing behavior, move the declaration above the nested
+rule. To opt into the new behavior, wrap the declaration in `& {}`.
+
+More info: https://sass-lang.com/d/mixed-decls
+
+   ┌──> node_modules\bootstrap\scss\_custom-forms.scss
+470│       appearance: none;
+   │       ^^^^^^^^^^^^^^^^ declaration
+   ╵
+   ┌──> node_modules\bootstrap\scss\mixins\_transition.scss
+21 │ ┌       @media (prefers-reduced-motion: reduce) {
+22 │ │         transition: none;
+23 │ │       }
+   │ └─── nested rule
+   ╵
+    node_modules\bootstrap\scss\_custom-forms.scss 470:5  @import
+    node_modules\bootstrap\scss\bootstrap.scss 24:9       @import
+    stdin 12:9                                            root stylesheet
+
+DEPRECATION WARNING [mixed-decls]: Sass's behavior for declarations that appear after nested
+rules will be changing to match the behavior specified by CSS in an upcoming
+version. To keep the existing behavior, move the declaration above the nested
+rule. To opt into the new behavior, wrap the declaration in `& {}`.
+
+More info: https://sass-lang.com/d/mixed-decls
+
+   ┌──> node_modules\bootstrap\scss\_modal.scss
+46 │       transform: $modal-fade-transform;
+   │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ declaration
+   ╵
+   ┌──> node_modules\bootstrap\scss\mixins\_transition.scss
+21 │ ┌       @media (prefers-reduced-motion: reduce) {
+22 │ │         transition: none;
+23 │ │       }
+   │ └─── nested rule
+   ╵
+    node_modules\bootstrap\scss\_modal.scss 46:5     @import
+    node_modules\bootstrap\scss\bootstrap.scss 38:9  @import
+    stdin 2:9                                        root stylesheet
+
+DEPRECATION WARNING [mixed-decls]: Sass's behavior for declarations that appear after nested
+rules will be changing to match the behavior specified by CSS in an upcoming
+version. To keep the existing behavior, move the declaration above the nested
+rule. To opt into the new behavior, wrap the declaration in `& {}`.
+
+More info: https://sass-lang.com/d/mixed-decls
+
+   ┌──> node_modules\bootstrap\scss\_modal.scss
+46 │       transform: $modal-fade-transform;
+   │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ declaration
+   ╵
+   ┌──> node_modules\bootstrap\scss\mixins\_transition.scss
+21 │ ┌       @media (prefers-reduced-motion: reduce) {
+22 │ │         transition: none;
+23 │ │       }
+   │ └─── nested rule
+   ╵
+    node_modules\bootstrap\scss\_modal.scss 46:5     @import
+    node_modules\bootstrap\scss\bootstrap.scss 38:9  @import
+    stdin 12:9                                       root stylesheet
+
+WARNING: 306 repetitive deprecation warnings omitted.
+
+WARNING: 281 repetitive deprecation warnings omitted.
+
+
+[1;1H[0J
+                         
+   Laravel Mix v6.0.49   
+                         
+
+✔ Compiled Successfully in 5985ms
+[90m┌───────────────────────────────────[39m[90m┬───────────┐[39m
+[90m│[39m                              File [90m│[39m Size      [90m│[39m
+[90m├───────────────────────────────────[39m[90m┼───────────┤[39m
+[90m│[39m                /backend/js/app.js [90m│[39m 2.16 MiB  [90m│[39m
+[90m│[39m /frontend/booking-theme/js/app.js [90m│[39m 1.74 MiB  [90m│[39m
+[90m│[39m  …ntend/dealer-theme-v1/js/app.js [90m│[39m 370 KiB   [90m│[39m
+[90m│[39m               backend/css/app.css [90m│[39m 672 KiB   [90m│[39m
+[90m│[39m  …_addon_edit_matchbrackets_js.js [90m│[39m 400 KiB   [90m│[39m
+[90m│[39m  …_scroll_simplescrollbars_css.js [90m│[39m 14.4 KiB  [90m│[39m
+[90m│[39m  …n_scroll_simplescrollbars_js.js [90m│[39m 398 KiB   [90m│[39m
+[90m│[39m  …don_selection_active-line_js.js [90m│[39m 396 KiB   [90m│[39m
+[90m│[39m  …codemirror_lib_codemirror_js.js [90m│[39m 393 KiB   [90m│[39m
+[90m│[39m  …ode_javascript_javascript_js.js [90m│[39m 431 KiB   [90m│[39m
+[90m│[39m  …or_theme_material-darker_css.js [90m│[39m 15.9 KiB  [90m│[39m
+[90m│[39m  …ist_js_tempus-dominus_esm_js.js [90m│[39m 276 KiB   [90m│[39m
+[90m│[39m  …imagesloaded_imagesloaded_js.js [90m│[39m 12.3 KiB  [90m│[39m
+[90m│[39m  …isotope-layout_js_isotope_js.js [90m│[39m 92 KiB    [90m│[39m
+[90m│[39m  …k-plugin_dist_jquery_mask_js.js [90m│[39m 23.4 KiB  [90m│[39m
+[90m│[39m  …tric_src_jquery_selectric_js.js [90m│[39m 27.8 KiB  [90m│[39m
+[90m│[39m  …ode_modules_moment_moment_js.js [90m│[39m 199 KiB   [90m│[39m
+[90m│[39m  …s_select2_dist_js_select2_js.js [90m│[39m 153 KiB   [90m│[39m
+[90m│[39m  …_dist_purecounter_vanilla_js.js [90m│[39m 5.63 KiB  [90m│[39m
+[90m│[39m  …nymce_icons_default_index_js.js [90m│[39m 64.5 KiB  [90m│[39m
+[90m│[39m  …mce_plugins_advlist_index_js.js [90m│[39m 9.03 KiB  [90m│[39m
+[90m│[39m  …ymce_plugins_anchor_index_js.js [90m│[39m 7.2 KiB   [90m│[39m
+[90m│[39m  …ce_plugins_autolink_index_js.js [90m│[39m 7.92 KiB  [90m│[39m
+[90m│[39m  …mce_plugins_charmap_index_js.js [90m│[39m 37 KiB    [90m│[39m
+[90m│[39m  …inymce_plugins_code_index_js.js [90m│[39m 3.12 KiB  [90m│[39m
+[90m│[39m  …gins_directionality_index_js.js [90m│[39m 14.2 KiB  [90m│[39m
+[90m│[39m  …e_plugins_emoticons_index_js.js [90m│[39m 18.7 KiB  [90m│[39m
+[90m│[39m  …_plugins_fullscreen_index_js.js [90m│[39m 41.7 KiB  [90m│[39m
+[90m│[39m  …_tinymce_plugins_hr_index_js.js [90m│[39m 2.07 KiB  [90m│[39m
+[90m│[39m  …nymce_plugins_image_index_js.js [90m│[39m 52.9 KiB  [90m│[39m
+[90m│[39m  …gins_insertdatetime_index_js.js [90m│[39m 7.41 KiB  [90m│[39m
+[90m│[39m  …inymce_plugins_link_index_js.js [90m│[39m 41.3 KiB  [90m│[39m
+[90m│[39m  …nymce_plugins_lists_index_js.js [90m│[39m 74.1 KiB  [90m│[39m
+[90m│[39m  …nymce_plugins_media_index_js.js [90m│[39m 43.8 KiB  [90m│[39m
+[90m│[39m  …plugins_nonbreaking_index_js.js [90m│[39m 3.94 KiB  [90m│[39m
+[90m│[39m  …e_plugins_pagebreak_index_js.js [90m│[39m 4.34 KiB  [90m│[39m
+[90m│[39m  …nymce_plugins_paste_index_js.js [90m│[39m 61 KiB    [90m│[39m
+[90m│[39m  …mce_plugins_preview_index_js.js [90m│[39m 5.3 KiB   [90m│[39m
+[90m│[39m  …nymce_plugins_print_index_js.js [90m│[39m 2.26 KiB  [90m│[39m
+[90m│[39m  …e_plugins_quickbars_index_js.js [90m│[39m 15.3 KiB  [90m│[39m
+[90m│[39m  …inymce_plugins_save_index_js.js [90m│[39m 4.3 KiB   [90m│[39m
+[90m│[39m  …ugins_searchreplace_index_js.js [90m│[39m 37.9 KiB  [90m│[39m
+[90m│[39m  …nymce_plugins_table_index_js.js [90m│[39m 393 KiB   [90m│[39m
+[90m│[39m  …ce_plugins_template_index_js.js [90m│[39m 20.3 KiB  [90m│[39m
+[90m│[39m  …plugins_textpattern_index_js.js [90m│[39m 44 KiB    [90m│[39m
+[90m│[39m  …lugins_visualblocks_index_js.js [90m│[39m 4.1 KiB   [90m│[39m
+[90m│[39m  …plugins_visualchars_index_js.js [90m│[39m 15.7 KiB  [90m│[39m
+[90m│[39m  …e_plugins_wordcount_index_js.js [90m│[39m 21.9 KiB  [90m│[39m
+[90m│[39m  …_skins_ui_oxide_skin_min_css.js [90m│[39m 72.6 KiB  [90m│[39m
+[90m│[39m  …nymce_themes_silver_index_js.js [90m│[39m 1.05 MiB  [90m│[39m
+[90m│[39m  …e_modules_tinymce_tinymce_js.js [90m│[39m 1.03 MiB  [90m│[39m
+[90m│[39m  …helpers_my-datetimepicker_js.js [90m│[39m 6.38 KiB  [90m│[39m
+[90m│[39m  …ources_js_helpers_my-mask_js.js [90m│[39m 5.8 KiB   [90m│[39m
+[90m│[39m  …ces_js_helpers_my-select2_js.js [90m│[39m 5.75 KiB  [90m│[39m
+[90m│[39m  …s_js_helpers_my-selectric_js.js [90m│[39m 5.85 KiB  [90m│[39m
+[90m│[39m  …f5ab4bf2b54710439f88c36e51da244 [90m│[39m 3.93 KiB  [90m│[39m
+[90m│[39m  …2a2f1bb471d122e46bb664927003215 [90m│[39m 8.7 KiB   [90m│[39m
+[90m│[39m  …69f233c78c029ba7cceefa0dfa3e5af [90m│[39m 3.79 KiB  [90m│[39m
+[90m│[39m  …392227eb4b4510402ab45dee2ceda73 [90m│[39m 3.86 KiB  [90m│[39m
+[90m│[39m  …3f19bb08961f37aaf692ff943823453 [90m│[39m 131 KiB   [90m│[39m
+[90m│[39m  …f517e09eb2ca6650ff5bec5a95157ab [90m│[39m 730 KiB   [90m│[39m
+[90m│[39m  …27940b104eb2ea366c8630f3f038603 [90m│[39m 131 KiB   [90m│[39m
+[90m│[39m  …878b0a6a1144760244ff0665888404c [90m│[39m 74.9 KiB  [90m│[39m
+[90m│[39m  …285773e6b4b172f07d9b777c81b0775 [90m│[39m 87.9 KiB  [90m│[39m
+[90m│[39m  …7206a6bb316fa0aded5083cc57f92b9 [90m│[39m 33.2 KiB  [90m│[39m
+[90m│[39m  …689f52cc96215721344e51e5831eec1 [90m│[39m 141 KiB   [90m│[39m
+[90m│[39m  …91974d108fe4002b2aaf7ffc48249a0 [90m│[39m 32.9 KiB  [90m│[39m
+[90m│[39m  …a3337626410ca2f40718481c755640f [90m│[39m 12.9 KiB  [90m│[39m
+[90m│[39m  …b58e57c48a3e911f15fa834ff00d44a [90m│[39m 15.9 KiB  [90m│[39m
+[90m│[39m  …bbb245e67a133f6e486d8d2545e14a5 [90m│[39m 198 KiB   [90m│[39m
+[90m│[39m  …a8b4f130182d19a2d7c67d80c090397 [90m│[39m 897 KiB   [90m│[39m
+[90m│[39m  …e9ee23c0c6390141475d519c2c5fb8f [90m│[39m 198 KiB   [90m│[39m
+[90m│[39m  …551f4f60c37af51121f106501f69b80 [90m│[39m 76.4 KiB  [90m│[39m
+[90m│[39m  …eccf4f66002c6f2ba24d3d22f2434c2 [90m│[39m 99.3 KiB  [90m│[39m
+[90m│[39m  …2ea18a81d737146ff044ddb52010366 [90m│[39m 131 KiB   [90m│[39m
+[90m│[39m  …295669cd4e305c97f2cfc16d56614b8 [90m│[39m 176 KiB   [90m│[39m
+[90m│[39m  …ntend/booking-theme/css/app.css [90m│[39m 556 KiB   [90m│[39m
+[90m│[39m  …end/dealer-theme-v1/css/app.css [90m│[39m 410 KiB   [90m│[39m
+[90m│[39m  …21cc8ad61b6eb26c7165eb447f3d8fd [90m│[39m 3.71 KiB  [90m│[39m
+[90m│[39m  …c63e069bbc944a0dd9ebdc9c7d21e2c [90m│[39m 847 bytes [90m│[39m
+[90m│[39m  …f01b07148f205f6e8258e92bbf652d9 [90m│[39m 4.86 KiB  [90m│[39m
+[90m│[39m  …3bb7d07ece69125950d8abb17356920 [90m│[39m 819 bytes [90m│[39m
+[90m│[39m  …c87992d63b09bc8c161a7f28419d3df [90m│[39m 1.45 KiB  [90m│[39m
+[90m│[39m  …921bc9cdd0eaf56ec89be386b2a7f7f [90m│[39m 2.64 KiB  [90m│[39m
+[90m│[39m  …some/webfonts/fa-brands-400.eot [90m│[39m 131 KiB   [90m│[39m
+[90m│[39m  …some/webfonts/fa-brands-400.svg [90m│[39m 730 KiB   [90m│[39m
+[90m│[39m  …some/webfonts/fa-brands-400.ttf [90m│[39m 131 KiB   [90m│[39m
+[90m│[39m  …ome/webfonts/fa-brands-400.woff [90m│[39m 87.9 KiB  [90m│[39m
+[90m│[39m  …me/webfonts/fa-brands-400.woff2 [90m│[39m 74.9 KiB  [90m│[39m
+[90m│[39m  …ome/webfonts/fa-regular-400.eot [90m│[39m 33.2 KiB  [90m│[39m
+[90m│[39m  …ome/webfonts/fa-regular-400.svg [90m│[39m 141 KiB   [90m│[39m
+[90m│[39m  …ome/webfonts/fa-regular-400.ttf [90m│[39m 32.9 KiB  [90m│[39m
+[90m│[39m  …me/webfonts/fa-regular-400.woff [90m│[39m 15.9 KiB  [90m│[39m
+[90m│[39m  …e/webfonts/fa-regular-400.woff2 [90m│[39m 12.9 KiB  [90m│[39m
+[90m│[39m  …esome/webfonts/fa-solid-900.eot [90m│[39m 198 KiB   [90m│[39m
+[90m│[39m  …esome/webfonts/fa-solid-900.svg [90m│[39m 897 KiB   [90m│[39m
+[90m│[39m  …esome/webfonts/fa-solid-900.ttf [90m│[39m 198 KiB   [90m│[39m
+[90m│[39m  …some/webfonts/fa-solid-900.woff [90m│[39m 99.3 KiB  [90m│[39m
+[90m│[39m  …ome/webfonts/fa-solid-900.woff2 [90m│[39m 76.4 KiB  [90m│[39m
+[90m│[39m  …/tinymce/icons/default/icons.js [90m│[39m 63.6 KiB  [90m│[39m
+[90m│[39m  …ymce/icons/default/icons.min.js [90m│[39m 62.4 KiB  [90m│[39m
+[90m│[39m  …/tinymce/icons/default/index.js [90m│[39m 199 bytes [90m│[39m
+[90m│[39m  …inymce/plugins/advlist/index.js [90m│[39m 205 bytes [90m│[39m
+[90m│[39m  …nymce/plugins/advlist/plugin.js [90m│[39m 8.05 KiB  [90m│[39m
+[90m│[39m  …e/plugins/advlist/plugin.min.js [90m│[39m 3.38 KiB  [90m│[39m
+[90m│[39m  …tinymce/plugins/anchor/index.js [90m│[39m 202 bytes [90m│[39m
+[90m│[39m  …inymce/plugins/anchor/plugin.js [90m│[39m 6.24 KiB  [90m│[39m
+[90m│[39m  …ce/plugins/anchor/plugin.min.js [90m│[39m 2.65 KiB  [90m│[39m
+[90m│[39m  …nymce/plugins/autolink/index.js [90m│[39m 208 bytes [90m│[39m
+[90m│[39m  …ymce/plugins/autolink/plugin.js [90m│[39m 6.94 KiB  [90m│[39m
+[90m│[39m  …/plugins/autolink/plugin.min.js [90m│[39m 2.67 KiB  [90m│[39m
+[90m│[39m  …mce/plugins/autoresize/index.js [90m│[39m 214 bytes [90m│[39m
+[90m│[39m  …ce/plugins/autoresize/plugin.js [90m│[39m 6.02 KiB  [90m│[39m
+[90m│[39m  …lugins/autoresize/plugin.min.js [90m│[39m 2.24 KiB  [90m│[39m
+[90m│[39m  …nymce/plugins/autosave/index.js [90m│[39m 208 bytes [90m│[39m
+[90m│[39m  …ymce/plugins/autosave/plugin.js [90m│[39m 6.59 KiB  [90m│[39m
+[90m│[39m  …/plugins/autosave/plugin.min.js [90m│[39m 2.89 KiB  [90m│[39m
+[90m│[39m  …tinymce/plugins/bbcode/index.js [90m│[39m 202 bytes [90m│[39m
+[90m│[39m  …inymce/plugins/bbcode/plugin.js [90m│[39m 4 KiB     [90m│[39m
+[90m│[39m  …ce/plugins/bbcode/plugin.min.js [90m│[39m 3.01 KiB  [90m│[39m
+[90m│[39m  …inymce/plugins/charmap/index.js [90m│[39m 205 bytes [90m│[39m
+[90m│[39m  …nymce/plugins/charmap/plugin.js [90m│[39m 36 KiB    [90m│[39m
+[90m│[39m  …e/plugins/charmap/plugin.min.js [90m│[39m 11.4 KiB  [90m│[39m
+[90m│[39m lib/tinymce/plugins/code/index.js [90m│[39m 196 bytes [90m│[39m
+[90m│[39m  …/tinymce/plugins/code/plugin.js [90m│[39m 2.19 KiB  [90m│[39m
+[90m│[39m  …ymce/plugins/code/plugin.min.js [90m│[39m 1.11 KiB  [90m│[39m
+[90m│[39m  …mce/plugins/codesample/index.js [90m│[39m 214 bytes [90m│[39m
+[90m│[39m  …ce/plugins/codesample/plugin.js [90m│[39m 92.2 KiB  [90m│[39m
+[90m│[39m  …lugins/codesample/plugin.min.js [90m│[39m 44.6 KiB  [90m│[39m
+[90m│[39m  …ce/plugins/colorpicker/index.js [90m│[39m 217 bytes [90m│[39m
+[90m│[39m  …e/plugins/colorpicker/plugin.js [90m│[39m 499 bytes [90m│[39m
+[90m│[39m  …ugins/colorpicker/plugin.min.js [90m│[39m 397 bytes [90m│[39m
+[90m│[39m  …ce/plugins/contextmenu/index.js [90m│[39m 217 bytes [90m│[39m
+[90m│[39m  …e/plugins/contextmenu/plugin.js [90m│[39m 499 bytes [90m│[39m
+[90m│[39m  …ugins/contextmenu/plugin.min.js [90m│[39m 397 bytes [90m│[39m
+[90m│[39m  …plugins/directionality/index.js [90m│[39m 226 bytes [90m│[39m
+[90m│[39m  …lugins/directionality/plugin.js [90m│[39m 13.1 KiB  [90m│[39m
+[90m│[39m  …ns/directionality/plugin.min.js [90m│[39m 5.21 KiB  [90m│[39m
+[90m│[39m  …ymce/plugins/emoticons/index.js [90m│[39m 211 bytes [90m│[39m
+[90m│[39m  …ins/emoticons/js/emojiimages.js [90m│[39m 471 KiB   [90m│[39m
+[90m│[39m  …emoticons/js/emojiimages.min.js [90m│[39m 411 KiB   [90m│[39m
+[90m│[39m  …/plugins/emoticons/js/emojis.js [90m│[39m 253 KiB   [90m│[39m
+[90m│[39m  …gins/emoticons/js/emojis.min.js [90m│[39m 193 KiB   [90m│[39m
+[90m│[39m  …mce/plugins/emoticons/plugin.js [90m│[39m 17.7 KiB  [90m│[39m
+[90m│[39m  …plugins/emoticons/plugin.min.js [90m│[39m 6.72 KiB  [90m│[39m
+[90m│[39m  …nymce/plugins/fullpage/index.js [90m│[39m 208 bytes [90m│[39m
+[90m│[39m  …ymce/plugins/fullpage/plugin.js [90m│[39m 17.4 KiB  [90m│[39m
+[90m│[39m  …/plugins/fullpage/plugin.min.js [90m│[39m 7.64 KiB  [90m│[39m
+[90m│[39m  …mce/plugins/fullscreen/index.js [90m│[39m 214 bytes [90m│[39m
+[90m│[39m  …ce/plugins/fullscreen/plugin.js [90m│[39m 40.7 KiB  [90m│[39m
+[90m│[39m  …lugins/fullscreen/plugin.min.js [90m│[39m 16.1 KiB  [90m│[39m
+[90m│[39m lib/tinymce/plugins/help/index.js [90m│[39m 196 bytes [90m│[39m
+[90m│[39m  …/tinymce/plugins/help/plugin.js [90m│[39m 24.1 KiB  [90m│[39m
+[90m│[39m  …ymce/plugins/help/plugin.min.js [90m│[39m 13.1 KiB  [90m│[39m
+[90m│[39m   lib/tinymce/plugins/hr/index.js [90m│[39m 190 bytes [90m│[39m
+[90m│[39m  lib/tinymce/plugins/hr/plugin.js [90m│[39m 1.16 KiB  [90m│[39m
+[90m│[39m  …inymce/plugins/hr/plugin.min.js [90m│[39m 740 bytes [90m│[39m
+[90m│[39m  …/tinymce/plugins/image/index.js [90m│[39m 199 bytes [90m│[39m
+[90m│[39m  …tinymce/plugins/image/plugin.js [90m│[39m 52 KiB    [90m│[39m
+[90m│[39m  …mce/plugins/image/plugin.min.js [90m│[39m 19.7 KiB  [90m│[39m
+[90m│[39m  …mce/plugins/imagetools/index.js [90m│[39m 214 bytes [90m│[39m
+[90m│[39m  …ce/plugins/imagetools/plugin.js [90m│[39m 49.7 KiB  [90m│[39m
+[90m│[39m  …lugins/imagetools/plugin.min.js [90m│[39m 19 KiB    [90m│[39m
+[90m│[39m  …ymce/plugins/importcss/index.js [90m│[39m 211 bytes [90m│[39m
+[90m│[39m  …mce/plugins/importcss/plugin.js [90m│[39m 11.4 KiB  [90m│[39m
+[90m│[39m  …plugins/importcss/plugin.min.js [90m│[39m 3.89 KiB  [90m│[39m
+[90m│[39m  …plugins/insertdatetime/index.js [90m│[39m 226 bytes [90m│[39m
+[90m│[39m  …lugins/insertdatetime/plugin.js [90m│[39m 6.35 KiB  [90m│[39m
+[90m│[39m  …ns/insertdatetime/plugin.min.js [90m│[39m 2.94 KiB  [90m│[39m
+[90m│[39m  …e/plugins/legacyoutput/index.js [90m│[39m 220 bytes [90m│[39m
+[90m│[39m  …/plugins/legacyoutput/plugin.js [90m│[39m 6.04 KiB  [90m│[39m
+[90m│[39m  …gins/legacyoutput/plugin.min.js [90m│[39m 2.93 KiB  [90m│[39m
+[90m│[39m lib/tinymce/plugins/link/index.js [90m│[39m 196 bytes [90m│[39m
+[90m│[39m  …/tinymce/plugins/link/plugin.js [90m│[39m 40.4 KiB  [90m│[39m
+[90m│[39m  …ymce/plugins/link/plugin.min.js [90m│[39m 15.4 KiB  [90m│[39m
+[90m│[39m  …/tinymce/plugins/lists/index.js [90m│[39m 199 bytes [90m│[39m
+[90m│[39m  …tinymce/plugins/lists/plugin.js [90m│[39m 73.2 KiB  [90m│[39m
+[90m│[39m  …mce/plugins/lists/plugin.min.js [90m│[39m 27.3 KiB  [90m│[39m
+[90m│[39m  …/tinymce/plugins/media/index.js [90m│[39m 199 bytes [90m│[39m
+[90m│[39m  …tinymce/plugins/media/plugin.js [90m│[39m 42.9 KiB  [90m│[39m
+[90m│[39m  …mce/plugins/media/plugin.min.js [90m│[39m 17.1 KiB  [90m│[39m
+[90m│[39m  …ce/plugins/nonbreaking/index.js [90m│[39m 217 bytes [90m│[39m
+[90m│[39m  …e/plugins/nonbreaking/plugin.js [90m│[39m 2.91 KiB  [90m│[39m
+[90m│[39m  …ugins/nonbreaking/plugin.min.js [90m│[39m 1.36 KiB  [90m│[39m
+[90m│[39m  …ce/plugins/noneditable/index.js [90m│[39m 217 bytes [90m│[39m
+[90m│[39m  …e/plugins/noneditable/plugin.js [90m│[39m 4.16 KiB  [90m│[39m
+[90m│[39m  …ugins/noneditable/plugin.min.js [90m│[39m 1.71 KiB  [90m│[39m
+[90m│[39m  …ymce/plugins/pagebreak/index.js [90m│[39m 211 bytes [90m│[39m
+[90m│[39m  …mce/plugins/pagebreak/plugin.js [90m│[39m 3.34 KiB  [90m│[39m
+[90m│[39m  …plugins/pagebreak/plugin.min.js [90m│[39m 1.59 KiB  [90m│[39m
+[90m│[39m  …/tinymce/plugins/paste/index.js [90m│[39m 199 bytes [90m│[39m
+[90m│[39m  …tinymce/plugins/paste/plugin.js [90m│[39m 60 KiB    [90m│[39m
+[90m│[39m  …mce/plugins/paste/plugin.min.js [90m│[39m 22 KiB    [90m│[39m
+[90m│[39m  …inymce/plugins/preview/index.js [90m│[39m 205 bytes [90m│[39m
+[90m│[39m  …nymce/plugins/preview/plugin.js [90m│[39m 4.33 KiB  [90m│[39m
+[90m│[39m  …e/plugins/preview/plugin.min.js [90m│[39m 2.05 KiB  [90m│[39m
+[90m│[39m  …/tinymce/plugins/print/index.js [90m│[39m 199 bytes [90m│[39m
+[90m│[39m  …tinymce/plugins/print/plugin.js [90m│[39m 1.31 KiB  [90m│[39m
+[90m│[39m  …mce/plugins/print/plugin.min.js [90m│[39m 808 bytes [90m│[39m
+[90m│[39m  …ymce/plugins/quickbars/index.js [90m│[39m 211 bytes [90m│[39m
+[90m│[39m  …mce/plugins/quickbars/plugin.js [90m│[39m 14.3 KiB  [90m│[39m
+[90m│[39m  …plugins/quickbars/plugin.min.js [90m│[39m 5.92 KiB  [90m│[39m
+[90m│[39m lib/tinymce/plugins/save/index.js [90m│[39m 196 bytes [90m│[39m
+[90m│[39m  …/tinymce/plugins/save/plugin.js [90m│[39m 3.36 KiB  [90m│[39m
+[90m│[39m  …ymce/plugins/save/plugin.min.js [90m│[39m 1.68 KiB  [90m│[39m
+[90m│[39m  …/plugins/searchreplace/index.js [90m│[39m 223 bytes [90m│[39m
+[90m│[39m  …plugins/searchreplace/plugin.js [90m│[39m 36.8 KiB  [90m│[39m
+[90m│[39m  …ins/searchreplace/plugin.min.js [90m│[39m 14.3 KiB  [90m│[39m
+[90m│[39m  …e/plugins/spellchecker/index.js [90m│[39m 220 bytes [90m│[39m
+[90m│[39m  …/plugins/spellchecker/plugin.js [90m│[39m 26.2 KiB  [90m│[39m
+[90m│[39m  …gins/spellchecker/plugin.min.js [90m│[39m 9.56 KiB  [90m│[39m
+[90m│[39m  …nymce/plugins/tabfocus/index.js [90m│[39m 208 bytes [90m│[39m
+[90m│[39m  …ymce/plugins/tabfocus/plugin.js [90m│[39m 3.85 KiB  [90m│[39m
+[90m│[39m  …/plugins/tabfocus/plugin.min.js [90m│[39m 1.81 KiB  [90m│[39m
+[90m│[39m  …/tinymce/plugins/table/index.js [90m│[39m 199 bytes [90m│[39m
+[90m│[39m  …tinymce/plugins/table/plugin.js [90m│[39m 392 KiB   [90m│[39m
+[90m│[39m  …mce/plugins/table/plugin.min.js [90m│[39m 140 KiB   [90m│[39m
+[90m│[39m  …nymce/plugins/template/index.js [90m│[39m 208 bytes [90m│[39m
+[90m│[39m  …ymce/plugins/template/plugin.js [90m│[39m 19.3 KiB  [90m│[39m
+[90m│[39m  …/plugins/template/plugin.min.js [90m│[39m 8.06 KiB  [90m│[39m
+[90m│[39m  …ymce/plugins/textcolor/index.js [90m│[39m 211 bytes [90m│[39m
+[90m│[39m  …mce/plugins/textcolor/plugin.js [90m│[39m 497 bytes [90m│[39m
+[90m│[39m  …plugins/textcolor/plugin.min.js [90m│[39m 395 bytes [90m│[39m
+[90m│[39m  …ce/plugins/textpattern/index.js [90m│[39m 217 bytes [90m│[39m
+[90m│[39m  …e/plugins/textpattern/plugin.js [90m│[39m 43 KiB    [90m│[39m
+[90m│[39m  …ugins/textpattern/plugin.min.js [90m│[39m 17.2 KiB  [90m│[39m
+[90m│[39m  lib/tinymce/plugins/toc/index.js [90m│[39m 193 bytes [90m│[39m
+[90m│[39m lib/tinymce/plugins/toc/plugin.js [90m│[39m 7.36 KiB  [90m│[39m
+[90m│[39m  …nymce/plugins/toc/plugin.min.js [90m│[39m 3.21 KiB  [90m│[39m
+[90m│[39m  …e/plugins/visualblocks/index.js [90m│[39m 220 bytes [90m│[39m
+[90m│[39m  …/plugins/visualblocks/plugin.js [90m│[39m 3.06 KiB  [90m│[39m
+[90m│[39m  …gins/visualblocks/plugin.min.js [90m│[39m 1.35 KiB  [90m│[39m
+[90m│[39m  …ce/plugins/visualchars/index.js [90m│[39m 217 bytes [90m│[39m
+[90m│[39m  …e/plugins/visualchars/plugin.js [90m│[39m 14.6 KiB  [90m│[39m
+[90m│[39m  …ugins/visualchars/plugin.min.js [90m│[39m 5.64 KiB  [90m│[39m
+[90m│[39m  …ymce/plugins/wordcount/index.js [90m│[39m 211 bytes [90m│[39m
+[90m│[39m  …mce/plugins/wordcount/plugin.js [90m│[39m 20.9 KiB  [90m│[39m
+[90m│[39m  …plugins/wordcount/plugin.min.js [90m│[39m 11.8 KiB  [90m│[39m
+[90m│[39m  …/skins/content/dark/content.css [90m│[39m 1.98 KiB  [90m│[39m
+[90m│[39m  …ns/content/dark/content.min.css [90m│[39m 1.43 KiB  [90m│[39m
+[90m│[39m  …ins/content/default/content.css [90m│[39m 1.89 KiB  [90m│[39m
+[90m│[39m  …content/default/content.min.css [90m│[39m 1.37 KiB  [90m│[39m
+[90m│[39m  …ns/content/document/content.css [90m│[39m 2.03 KiB  [90m│[39m
+[90m│[39m  …ontent/document/content.min.css [90m│[39m 1.46 KiB  [90m│[39m
+[90m│[39m  …kins/content/writer/content.css [90m│[39m 1.92 KiB  [90m│[39m
+[90m│[39m  …/content/writer/content.min.css [90m│[39m 1.39 KiB  [90m│[39m
+[90m│[39m  …skins/ui/oxide-dark/content.css [90m│[39m 23.2 KiB  [90m│[39m
+[90m│[39m  …i/oxide-dark/content.inline.css [90m│[39m 23.5 KiB  [90m│[39m
+[90m│[39m  …ide-dark/content.inline.min.css [90m│[39m 21.3 KiB  [90m│[39m
+[90m│[39m  …s/ui/oxide-dark/content.min.css [90m│[39m 20.9 KiB  [90m│[39m
+[90m│[39m  …i/oxide-dark/content.mobile.css [90m│[39m 727 bytes [90m│[39m
+[90m│[39m  …ide-dark/content.mobile.min.css [90m│[39m 544 bytes [90m│[39m
+[90m│[39m  …-dark/fonts/tinymce-mobile.woff [90m│[39m 4.52 KiB  [90m│[39m
+[90m│[39m  …ce/skins/ui/oxide-dark/skin.css [90m│[39m 71.2 KiB  [90m│[39m
+[90m│[39m  …kins/ui/oxide-dark/skin.min.css [90m│[39m 60 KiB    [90m│[39m
+[90m│[39m  …s/ui/oxide-dark/skin.mobile.css [90m│[39m 24 KiB    [90m│[39m
+[90m│[39m  …/oxide-dark/skin.mobile.min.css [90m│[39m 20.5 KiB  [90m│[39m
+[90m│[39m  …i/oxide-dark/skin.shadowdom.css [90m│[39m 882 bytes [90m│[39m
+[90m│[39m  …ide-dark/skin.shadowdom.min.css [90m│[39m 783 bytes [90m│[39m
+[90m│[39m  …ymce/skins/ui/oxide/content.css [90m│[39m 23.6 KiB  [90m│[39m
+[90m│[39m  …ins/ui/oxide/content.inline.css [90m│[39m 23.5 KiB  [90m│[39m
+[90m│[39m  …ui/oxide/content.inline.min.css [90m│[39m 21.3 KiB  [90m│[39m
+[90m│[39m  …/skins/ui/oxide/content.min.css [90m│[39m 21.3 KiB  [90m│[39m
+[90m│[39m  …ins/ui/oxide/content.mobile.css [90m│[39m 727 bytes [90m│[39m
+[90m│[39m  …ui/oxide/content.mobile.min.css [90m│[39m 544 bytes [90m│[39m
+[90m│[39m  …oxide/fonts/tinymce-mobile.woff [90m│[39m 4.52 KiB  [90m│[39m
+[90m│[39m  …tinymce/skins/ui/oxide/skin.css [90m│[39m 71.3 KiB  [90m│[39m
+[90m│[39m  …mce/skins/ui/oxide/skin.min.css [90m│[39m 60.1 KiB  [90m│[39m
+[90m│[39m  …/skins/ui/oxide/skin.mobile.css [90m│[39m 24 KiB    [90m│[39m
+[90m│[39m  …ns/ui/oxide/skin.mobile.min.css [90m│[39m 20.5 KiB  [90m│[39m
+[90m│[39m  …ins/ui/oxide/skin.shadowdom.css [90m│[39m 882 bytes [90m│[39m
+[90m│[39m  …ui/oxide/skin.shadowdom.min.css [90m│[39m 783 bytes [90m│[39m
+[90m│[39m  …/tinymce/themes/mobile/index.js [90m│[39m 198 bytes [90m│[39m
+[90m│[39m  …/tinymce/themes/mobile/theme.js [90m│[39m 428 KiB   [90m│[39m
+[90m│[39m  …ymce/themes/mobile/theme.min.js [90m│[39m 156 KiB   [90m│[39m
+[90m│[39m  …/tinymce/themes/silver/index.js [90m│[39m 198 bytes [90m│[39m
+[90m│[39m  …/tinymce/themes/silver/theme.js [90m│[39m 1.05 MiB  [90m│[39m
+[90m│[39m  …ymce/themes/silver/theme.min.js [90m│[39m 394 KiB   [90m│[39m
+[90m└───────────────────────────────────[39m[90m┴───────────┘[39m
+√ Mix: Compiled successfully in 6.12s
+[1mWebpack Bundle Analyzer[22m saved report to [1mC:\laragon\www\booking\public\bundle-report.html[22m
+[1m[33m5 WARNINGS in child compilations (Use 'stats.children: true' resp. '--stats-children' for more details)[39m[22m
+webpack compiled with [1m[33m5 warnings[39m[22m
+npm notice
+npm notice New major version of npm available! 10.9.3 -> 11.5.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.5.2
+npm notice To update run: npm install -g npm@11.5.2
+npm notice

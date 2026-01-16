@@ -1,0 +1,114 @@
+.swal-glass-popup {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 1.8rem 1.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    font-family: "Poppins", sans-serif;
+    max-width: 450px;
+    text-align: center;
+    animation: glassFade 0.25s ease;
+}
+
+@keyframes glassFade {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.swal-glass-title {
+    color: var(--accent-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.swal2-html-container,
+.swal-glass-text {
+    color: var(--default-color);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.swal-glass-icon {
+    font-size: 2.5rem !important;
+    margin-bottom: 0.6rem;
+    color: var(--accent-color) !important;
+}
+
+.swal-glass-btn-confirm {
+    background: var(--accent-color);
+    color: var(--contrast-color);
+    border-radius: 30px;
+    padding: 8px 26px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+.swal-glass-btn-confirm:hover {
+    background: color-mix(in srgb, var(--accent-color), #fff 20%);
+    transform: translateY(-1px);
+}
+
+.swal-glass-btn-cancel {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--default-color);
+    border-radius: 30px;
+    padding: 8px 26px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.swal-glass-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.swal2-success-circular-line-left,
+.swal2-success-circular-line-right,
+.swal2-success-fix {
+    background-color: transparent !important;
+}
+
+.swal2-actions {
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Ini kunci utamanya */
+.swal2-confirm.swal-glass-btn-confirm {
+    background: var(--accent-color) !important;
+    color: var(--contrast-color) !important;
+    border-radius: 30px;
+    padding: 8px 26px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+.swal2-confirm.swal-glass-btn-confirm:hover {
+    background: color-mix(in srgb, var(--accent-color), #fff 20%) !important;
+    transform: translateY(-1px);
+}
+
+.swal2-cancel.swal-glass-btn-cancel {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: var(--default-color) !important;
+    border-radius: 30px;
+    padding: 8px 26px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.swal2-cancel.swal-glass-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+}

@@ -1,0 +1,185 @@
+.gallery-product-detail {
+    overflow: hidden;
+}
+
+.gallery-product-detail .gallery-product-detail-container {
+    padding: 20px 0 40px;
+    position: relative;
+}
+
+.gallery-product-detail .swiper-wrapper {
+    height: auto !important;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.gallery-product-detail .gallery-product-detail-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease;
+}
+
+.gallery-product-detail .gallery-product-detail-img {
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-product-detail .gallery-product-detail-img img {
+    transition: transform 0.6s ease;
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+
+.gallery-product-detail
+    .gallery-product-detail-img
+    .gallery-product-detail-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, var(--accent-color), transparent 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.gallery-product-detail
+    .gallery-product-detail-img
+    .gallery-product-detail-overlay
+    i {
+    color: var(--contrast-color);
+    font-size: 3rem;
+    transform: scale(0.5);
+    transition: all 0.3s ease;
+}
+
+.gallery-product-detail .gallery-product-detail-img:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-product-detail
+    .gallery-product-detail-img:hover
+    .gallery-product-detail-overlay {
+    opacity: 1;
+}
+
+.gallery-product-detail
+    .gallery-product-detail-img:hover
+    .gallery-product-detail-overlay
+    i {
+    transform: scale(1);
+}
+
+.gallery-product-detail .swiper-pagination {
+    position: relative;
+    margin-top: 20px;
+}
+
+.gallery-product-detail .swiper-pagination .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.gallery-product-detail .swiper-pagination .swiper-pagination-bullet-active {
+    background: var(--accent-color);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.gallery-product-detail .swiper-button-next,
+.gallery-product-detail .swiper-button-prev {
+    color: var(--accent-color);
+    background: var(--surface-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.gallery-product-detail .swiper-button-next:after,
+.gallery-product-detail .swiper-button-prev:after {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.gallery-product-detail:hover .swiper-button-next,
+.gallery-product-detail:hover .swiper-button-prev {
+    opacity: 0.9;
+}
+
+.gallery-product-detail:hover .swiper-button-next:hover,
+.gallery-product-detail:hover .swiper-button-prev:hover {
+    background: var(--accent-color);
+    color: var(--contrast-color);
+}
+
+@media (max-width: 991px) {
+    .gallery-product-detail .gallery-product-detail-item {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery-product-detail .swiper-button-next,
+    .gallery-product-detail .swiper-button-prev {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .gallery-product-detail .swiper-wrapper {
+        padding: 15px 0;
+    }
+
+    .gallery-product-detail
+        .gallery-product-detail-img
+        .gallery-product-detail-overlay
+        i {
+        font-size: 2rem;
+    }
+}
+
+/* Container unik */
+/* .custom-swiper {
+        width: min(1200px, 92vw);
+        padding: 60px 20px 80px;
+    } */
+
+.custom-swiper .swiper-slide {
+    background: #151a25;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* .custom-swiper .swiper-slide img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        display: block;
+    } */
+
+/* Navigasi */
+.custom-swiper .swiper-button-next,
+.custom-swiper .swiper-button-prev {
+    color: #fff;
+}
+
+.custom-swiper .swiper-pagination-bullet {
+    background: #fff;
+    opacity: 0.7;
+}
+
+.custom-swiper .swiper-pagination-bullet-active {
+    background: #ffb703;
+}
