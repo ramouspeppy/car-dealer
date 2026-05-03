@@ -18,7 +18,8 @@
                 },
                 {
                     data: 'title',
-                    name: 'title'
+                    name: 'title',
+                    class: 'font-weight-bold'
                 },
                 {
                     data: 'author.username',

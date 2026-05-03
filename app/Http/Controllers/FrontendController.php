@@ -60,19 +60,7 @@ class FrontendController extends Controller
             'galleries',
         ));
     }
-    public function productShow(Product $product)
-    {
-        SEOTools::setTitle(config('settings.site_title'));
-        SEOTools::setDescription(config('settings.site_desc'));
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
 
-        $profile      = Profile::first();
-        $testimonies      = Testimony::with('media')->randomLimit(4)->get();
-        $services  = Service::latest()->get();
-
-
-        return view('frontend.' . frontend_theme() . '.product-detail', compact('product', 'profile', 'testimonies', 'services'));
-    }
     public function testdriveShow()
     {
         SEOTools::setTitle(config('settings.site_title'));

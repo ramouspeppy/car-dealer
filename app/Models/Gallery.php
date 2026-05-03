@@ -20,6 +20,27 @@ class Gallery extends Model implements HasMedia, Viewable
     use HasFactory, Sluggable, InteractsWithMedia, InteractsWithViews;
 
     protected $guarded = ['id'];
+    protected $casts = [
+        'published_at' => 'datetime',
+        'loves'        => 'integer',
+    ];
+
+    public function getDateAttribute()
+    {
+
+        return is_null($this->published_at) ? "" : $this->published_at->diffForHumans();
+    }
+
+    public function dateFormatted($showtimes = false)
+    {
+        $format = "d-m-Y";
+        if ($showtimes) $format = $format . " H:i:s";
+        return $this->created_at->format($format);
+    }
+    public function descLimit($limit = 100)
+    {
+        return Str::words(strip_tags($this->description), $limit, '...');
+    }
 
     public function registerMediaCollections(): void
     {

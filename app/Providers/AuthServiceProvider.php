@@ -26,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Promo' => 'App\Policies\IsAdmin',
         'App\Models\PhotoDelivery' => 'App\Policies\IsAdmin',
         'App\Models\Testdrive' => 'App\Policies\IsAdmin',
+        'App\Models\Service' => 'App\Policies\IsAdmin',
+        'App\Models\Consultation' => 'App\Policies\IsAdmin',
     ];
 
     /**

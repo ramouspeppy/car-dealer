@@ -14,7 +14,9 @@
                 },
                 {
                     data: 'name',
-                    name: 'name'
+                    name: 'name',
+                    class: 'font-weight-bold'
+
                 },
                 {
                     data: 'subject',

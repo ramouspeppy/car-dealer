@@ -1,38 +1,67 @@
-export async function autoInitIsotope() {
-    const isotopeLayouts = document.querySelectorAll('.isotope-layout');
-    if (!isotopeLayouts.length) return;
+import Isotope from "isotope-layout";
+import imagesLoaded from "imagesloaded";
 
-    const {
-        default: Isotope
-    } = await import('isotope-layout');
-    const imagesLoaded = (await import('imagesloaded')).default;
+export function autoInitIsotope() {
+    document
+        .querySelectorAll(".isotope-layout")
+        .forEach(function (isotopeItem) {
+            const layout = isotopeItem.getAttribute("data-layout") ?? "masonry";
+            const filter =
+                isotopeItem.getAttribute("data-default-filter") ?? "*";
+            const sort =
+                isotopeItem.getAttribute("data-sort") ?? "original-order";
+            const container = isotopeItem.querySelector(".isotope-container");
 
-    isotopeLayouts.forEach((layoutEl) => {
-        let layoutMode = layoutEl.getAttribute('data-layout') ?? 'masonry';
-        let filter = layoutEl.getAttribute('data-default-filter') ?? '*';
-        let sort = layoutEl.getAttribute('data-sort') ?? 'original-order';
+            if (!container) return;
 
-        let initIsotope;
+            let iso;
 
-        imagesLoaded(layoutEl.querySelector('.isotope-container'), function () {
-            initIsotope = new Isotope(layoutEl.querySelector('.isotope-container'), {
-                itemSelector: '.isotope-item',
-                layoutMode: layoutMode,
-                filter: filter,
-                sortBy: sort
-            });
-        });
-
-        layoutEl.querySelectorAll('.isotope-filters li').forEach((filterEl) => {
-            filterEl.addEventListener('click', function () {
-                layoutEl.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-                this.classList.add('filter-active');
-                initIsotope.arrange({
-                    filter: this.getAttribute('data-filter')
+            imagesLoaded(container, function () {
+                iso = new Isotope(container, {
+                    itemSelector: ".isotope-item",
+                    layoutMode: layout,
+                    filter: filter,
+                    sortBy: sort,
                 });
-            });
-        });
-    });
 
-    console.info('✅ Isotope initialized for ${isotopeLayouts.length} layout(s)');
+                // Recalculate setelah AOS animasi selesai
+                document.addEventListener("aos:in", () => iso.layout());
+            });
+
+            // 🔥 Loop filterBtn yang hilang
+            isotopeItem
+                .querySelectorAll(".isotope-filters li") // ✅ ini yang hilang
+                .forEach(function (filterBtn) {
+                    // ✅ filterBtn didefinisikan di sini
+                    filterBtn.addEventListener("click", function () {
+                        isotopeItem
+                            .querySelectorAll(".isotope-filters .filter-active")
+                            .forEach((el) =>
+                                el.classList.remove("filter-active"),
+                            );
+
+                        this.classList.add("filter-active");
+
+                        iso.arrange({
+                            filter: this.getAttribute("data-filter"),
+                        });
+
+                        // 🔥 Tunggu animasi selesai baru layout ulang
+                        iso.once("arrangeComplete", function () {
+                            iso.layout();
+                            setTimeout(() => {
+                                if (typeof AOS !== "undefined")
+                                    AOS.refreshHard();
+                            }, 400);
+                        });
+
+                        iso.layout();
+
+                        // Refresh AOS setelah layout berubah
+                        setTimeout(() => {
+                            if (typeof AOS !== "undefined") AOS.refreshHard();
+                        }, 400);
+                    });
+                });
+        });
 }

@@ -16,6 +16,7 @@ use Database\Seeders\HeaderSeeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Database\Seeders\TestimonySeeder;
+use Illuminate\Support\Facades\File;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +27,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        File::cleanDirectory(public_path('uploads'));
+        DB::table('media')->truncate();
+
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
         $this->call(WebSettingSeeder::class);
@@ -50,7 +54,6 @@ class DatabaseSeeder extends Seeder
         DB::table('contacts')->truncate();
         Contact::factory(10)->create();
 
-        DB::table('media')->truncate();
 
         $this->call(GallerySeeder::class);
 
@@ -80,5 +83,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PhotoDeliverySeeder::class);
         $this->call(ProfileSeeder::class);
         $this->call(ServiceSeeder::class);
+        $this->call(ConsultationSeeder::class);
     }
 }

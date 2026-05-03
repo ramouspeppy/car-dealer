@@ -18,7 +18,8 @@
                 },
                 {
                     data: 'type',
-                    name: 'type'
+                    name: 'type',
+                    class: 'font-weight-bold'
                 },
                 {
                     data: 'product.name',

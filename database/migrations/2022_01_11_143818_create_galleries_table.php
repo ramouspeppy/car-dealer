@@ -17,6 +17,9 @@ class CreateGalleriesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
+            $table->text('description')->nullable();
+            $table->timestamp('published_at')->nullable();
+            $table->unsignedBigInteger('loves')->default(0);
             $table->timestamps();
         });
     }

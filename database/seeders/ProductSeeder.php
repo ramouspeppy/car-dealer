@@ -41,7 +41,7 @@ class ProductSeeder extends Seeder
             ]);
 
             $gallery
-                ->addMedia(public_path('seeder/gallery/') . 'images-(' . rand(1, 40) . ').jpg')
+                ->addMedia(public_path('seeder/gallery/') . 'gallery-(' . rand(1, 21) . ').jpg')
                 ->preservingOriginal()
                 ->toMediaCollection('header_image');
             $gallery
@@ -51,7 +51,7 @@ class ProductSeeder extends Seeder
 
             foreach (range(1, 4) as $key => $i) {
                 $gallery
-                    ->addMedia(public_path('seeder/gallery/') . 'images-(' . rand(1, 40) . ').jpg')
+                    ->addMedia(public_path('seeder/gallery/') . 'gallery-(' . rand(1, 21) . ').jpg')
                     ->preservingOriginal()
                     ->toMediaCollection('product_gallery');
             }

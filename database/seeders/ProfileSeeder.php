@@ -58,7 +58,7 @@ class ProfileSeeder extends Seeder
         $profile->save();
 
         $profile
-            ->addMedia(public_path('seeder/testimony/person-4.jpg'))
+            ->addMedia(public_path('seeder/profile/profile-3.webp'))
             ->preservingOriginal()
             ->toMediaCollection('image');
     }

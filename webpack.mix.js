@@ -21,23 +21,26 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 mix.js(
     "resources/views/backend/assets/js/backend-wrapper.js",
-    "public/backend/js/app.js"
+    "public/backend/js/app.js",
 );
 mix.sass(
     "resources/views/backend/assets/sass/backend-wrapper.scss",
-    "public/backend/css/app.css"
+    "public/backend/css/app.css",
 ).sourceMaps();
 
 mix.js(
     "resources/views/frontend/dealer-theme-v1/assets/js/frontend-wrapper.js",
-    "public/frontend/dealer-theme-v1/js/app.js"
+    "public/frontend/dealer-theme-v1/js/app.js",
 );
 mix.sass(
     "resources/views/frontend/dealer-theme-v1/assets/scss/frontend-wrapper.scss",
-    "public/frontend/dealer-theme-v1/css/app.css"
+    "public/frontend/dealer-theme-v1/css/app.css",
 ).sourceMaps();
 
 mix.webpackConfig({
+    output: {
+        publicPath: "/", // 🔥 tambahkan ini
+    },
     plugins: [
         // new BundleAnalyzerPlugin({
         //     analyzerMode: "static",

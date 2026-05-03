@@ -13,7 +13,7 @@ class PhotoDeliveryController extends Controller
 {
     private function uploadPath()
     {
-        return storage_path('app/public/tmp/' . auth()->user()->id);
+        return public_path('uploads/tmp/' . auth()->user()->id); // Direct path - no symlink needed
     }
 
     public function index(Request $request)

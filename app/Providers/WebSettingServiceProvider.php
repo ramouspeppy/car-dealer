@@ -2,36 +2,53 @@
 
 namespace App\Providers;
 
-use App;
-use App\Models\WebSetting;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Contracts\Cache\Factory;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Models\WebSetting;
 
 class WebSettingServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot(WebSetting $settings)
+    public function boot(): void
     {
-        if (!App::runningInConsole()) {
-            $settings = Cache::remember('settings', 6000, function () use ($settings) {
-                return $settings->configData();
+        if (App::runningInConsole()) return;
+
+        $this->loadSettings();
+    }
+
+    /**
+     * Load settings dari cache atau database,
+     * lalu share ke config dan semua view.
+     */
+    private function loadSettings(): void
+    {
+        try {
+            $settings = Cache::rememberForever('settings', function () {
+                return WebSetting::pluck('value', 'name')->toArray();
             });
+
+            // ✅ Akses via config('settings.key') di controller & blade
             config()->set('settings', $settings);
+
+            // ✅ Akses via $settings['key'] langsung di semua blade
+            View::share('settings', $settings);
+        } catch (\Exception $e) {
+            // Jika DB belum siap (misal saat migrate pertama)
+            // aplikasi tetap jalan tanpa crash
+            config()->set('settings', []);
+            View::share('settings', []);
         }
     }
 }

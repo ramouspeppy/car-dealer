@@ -31,8 +31,7 @@ class TestdriveController extends Controller
 
         $products = Product::latest()->active()->get();
         $services  = Service::latest()->get();
-        $profile      = Profile::first();
-        return view('frontend.' . frontend_theme() . '.testdrive', compact('products', 'profile', 'services'));
+        return view('frontend.' . frontend_theme() . '.testdrive', compact('products', 'services'));
     }
 
 

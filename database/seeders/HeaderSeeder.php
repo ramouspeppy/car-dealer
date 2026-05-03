@@ -25,7 +25,7 @@ class HeaderSeeder extends Seeder
         $header->save();
 
         $header
-            ->addMedia(public_path('seeder/header/image.jpg'))
+            ->addMedia(public_path('seeder/profile/profile-2.webp'))
             ->preservingOriginal()
             ->toMediaCollection('image');
         $header

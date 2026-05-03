@@ -37,8 +37,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . 'media',
+            'root' => public_path('uploads/media'), // Direct to public folder (no symlink needed)
+            'url' => env('APP_URL') . 'uploads/media',
             'visibility' => 'public',
         ],
 
@@ -50,6 +50,13 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
+        ],
+
+        'career_applications' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/career_applications'), // Direct to public folder
+            'url' => env('APP_URL') . 'uploads/career_applications',
+            'visibility' => 'public',
         ],
 
     ],
@@ -66,7 +73,8 @@ return [
     */
 
     'links' => [
-        public_path('media') => storage_path('app/public'),
+        // Disabled symlink for shared hosting - using direct public path instead
+        // public_path('media') => storage_path('app/public'),
     ],
 
 ];

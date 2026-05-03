@@ -22,7 +22,7 @@ class PhotoDeliverySeeder extends Seeder
             $deliver = PhotoDelivery::create(['product_id'        => mt_rand(1, 4)]);
 
             $deliver
-                ->addMedia(public_path('seeder/gallery/') . 'images-(' . rand(1, 40) . ').jpg')
+                ->addMedia(public_path('seeder/gallery/') . 'gallery-(' . rand(1, 21) . ').jpg')
                 ->preservingOriginal()
                 ->toMediaCollection('images');
         }

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
-use App\Views\Composers\AboutComposer;
-use Illuminate\Pagination\Paginator;
+use App\Models\Product;
+use App\Models\Profile;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,9 +16,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-    }
+    public function register() {}
 
     /**
      * Bootstrap any application services.
@@ -25,6 +25,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer('components.consultation-modal', function ($view) {
+            $view->with('products', Product::latest()->active()->get());
+        });
+
+        View::composer('frontend.dealer-theme-v1.*', function ($view) {
+            $view->with('profile', Profile::first());
+        });
+
         Paginator::useBootstrap();
     }
 }

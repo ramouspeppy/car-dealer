@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\WebSetting;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class WebSettingSeeder extends Seeder
@@ -16,6 +17,28 @@ class WebSettingSeeder extends Seeder
     public function run()
     {
         DB::table('web_settings')->truncate();
+        Cache::forget('settings');
+        $files = [
+            'seeder/setting/logo.png'        => 'logo.png',
+            'seeder/setting/favicon.ico'     => 'favicon.ico',
+            'seeder/setting/footer.jpg'      => 'footer.jpg',
+            'seeder/setting/og-image.jpg'    => 'og-image.jpg',
+            // 'seeder/testimony/bg.jpg'        => 'bg-testimony.jpg',
+            // 'seeder/header/image-other.jpg'  => 'image-other.jpg',
+        ];
+
+        // Buat folder jika belum ada & copy semua file
+        if (!file_exists(public_path())) {
+            mkdir(public_path(), 0755, true);
+        }
+
+        foreach ($files as $source => $dest) {
+            if (file_exists(public_path($source))) {
+                copy(public_path($source), public_path($dest));
+            }
+        }
+
+
         $data = array(
             [
                 'name'  => 'site_name',
@@ -32,11 +55,11 @@ class WebSettingSeeder extends Seeder
 
             [
                 'name'  => 'site_logo',
-                'value' => 'seeder/setting/logo.png',
+                'value' => 'logo.png',
             ],
             [
                 'name'  => 'favicon',
-                'value' => 'seeder/setting/favicon.ico',
+                'value' => 'favicon.ico',
             ],
             [
                 'name'  => 'g_verif',
@@ -56,7 +79,7 @@ class WebSettingSeeder extends Seeder
             ],
             [
                 'name'  => 'bg_footer',
-                'value' => 'seeder/setting/footer.jpg',
+                'value' => 'footer.jpg',
             ],
             [
                 'name'  => 'bg_header_other',

@@ -13,7 +13,8 @@
                 },
                 {
                     data: 'category',
-                    name: 'category'
+                    name: 'category',
+                    class: 'font-weight-bold'
                 },
                 {
                     data: 'products_count',

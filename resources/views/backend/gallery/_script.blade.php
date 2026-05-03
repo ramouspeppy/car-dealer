@@ -13,7 +13,9 @@
                 },
                 {
                     data: 'title',
-                    name: 'title'
+                    name: 'title',
+                    class: 'font-weight-bold'
+
                 },
                 {
                     data: 'created_at',

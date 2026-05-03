@@ -13,7 +13,8 @@
                 },
                 {
                     data: 'promo',
-                    name: 'promo'
+                    name: 'promo',
+                    class: 'font-weight-bold'
                 },
                 {
                     data: 'priority',

@@ -1,112 +1,77 @@
-import $ from 'jquery';
+import $ from "jquery";
+import { initSelect2, resetSelect2 } from "./my-select2"; // 🔥 static
+import { initSelectric, resetSelectric } from "./my-selectric"; // 🔥 static
+
+let _resetSelectric = null;
+let _resetSelect2 = null;
 
 export function autoInit() {
-    // --- Select2 ---
-    const select2Els = $('.select2');
-    if (select2Els.length) {
-        import('./my-select2').then(({
-            initSelect2
-        }) => {
-            select2Els.each(function () {
-                initSelect2(this, {
-                    placeholder: $(this).data('placeholder') || '',
-                });
+    const select2Els = $(".select2").not("[data-in-modal]");
+    const select2Tags = $(".select2-tags").not("[data-in-modal]");
+    const selectricEls = $(".selectric");
+
+    if (select2Els.length || select2Tags.length) {
+        _resetSelect2 = resetSelect2;
+
+        const baseConfig = (el) => ({
+            placeholder: $(el).data("placeholder") || "",
+        });
+
+        select2Els.each(function () {
+            initSelect2(this, baseConfig(this));
+        });
+
+        select2Tags.each(function () {
+            initSelect2(this, {
+                ...baseConfig(this),
+                tags: true,
+                tokenSeparators: [","],
+                allowClear: true,
             });
         });
     }
 
-    // --- Select2 with Tags ---
-    const select2Tags = $('.select2-tags');
-    if (select2Tags.length) {
-        import('./my-select2').then(({
-            initSelect2
-        }) => {
-            select2Tags.each(function () {
-                initSelect2(this, {
-                    tags: true,
-                    tokenSeparators: [','],
-                    placeholder: $(this).data('placeholder') || '',
-                    allowClear: true
-                });
-            });
+    if (selectricEls.length) {
+        _resetSelectric = resetSelectric;
+        initSelectric(selectricEls, {});
+    }
+}
+
+export function initSelect2InModal(modalEl) {
+    const modal$ = $(modalEl);
+
+    _resetSelect2 = resetSelect2;
+
+    modal$.find("select.select2").each(function () {
+        initSelect2(this, {
+            placeholder: $(this).data("placeholder") || "",
+            dropdownParent: modal$,
+        });
+    });
+
+    modal$.find("select.select2-tags").each(function () {
+        initSelect2(this, {
+            placeholder: $(this).data("placeholder") || "",
+            dropdownParent: modal$,
+            tags: true,
+            tokenSeparators: [","],
+            allowClear: true,
+        });
+    });
+}
+
+export function resetAllSelects(formEl) {
+    const form = $(formEl);
+
+    if (_resetSelect2) {
+        form.find("select.select2, select.select2-tags").each(function () {
+            _resetSelect2(this);
         });
     }
 
-    // // --- Selectric ---
-    // const selectricEls = $('.selectric');
-    // if (selectricEls.length) {
-    //     import('./my-selectric').then(({
-    //         initSelectric
-    //     }) => {
-    //         selectricEls.each(function () {
-    //             initSelectric(this);
-    //         });
-    //     });
-    // }
-
-    // // --- Tempus Dominus ---
-    // const tempusEls = document.querySelectorAll('[data-tempus]');
-    // if (tempusEls.length) {
-    //     import('./my-datetimepicker').then(({
-    //         initTempus
-    //     }) => {
-    //         tempusEls.forEach(el => {
-    //             const format = el.dataset.format || 'YYYY-MM-DD HH:mm:ss';
-    //             initTempus(el, format);
-    //         });
-    //     });
-    // }
-
-    // // --- jQuery Mask ---
-    // const maskList = {
-    //     '.mask-price': {
-    //         pattern: '000.000.000.000.000',
-    //         reverse: true
-    //     },
-    //     '.mask-ktp': {
-    //         pattern: '0000000000000000'
-    //     },
-    //     '.mask-hp': {
-    //         pattern: '0000-0000-0000'
-    //     },
-    //     '.mask-phone': {
-    //         pattern: '(000) 0000-0000'
-    //     },
-    //     '.mask-npwp': {
-    //         pattern: '00.000.000.0-000.000'
-    //     },
-    //     '.mask-rekening': {
-    //         pattern: '0000000000000000'
-    //     },
-    //     '.mask-date': {
-    //         pattern: '00-00-0000'
-    //     },
-    //     '.mask-time': {
-    //         pattern: '00:00'
-    //     },
-    //     '.mask-kodepos': {
-    //         pattern: '00000'
-    //     },
-    //     '.mask-sim': {
-    //         pattern: '000000000000'
-    //     },
-    //     '.mask-passport': {
-    //         pattern: 'A0000000'
-    //     },
-    //     '.mask-year': {
-    //         pattern: '0000'
-    //     },
-    // };
-
-    // Object.entries(maskList).forEach(([cls, cfg]) => {
-    //     if (document.querySelector(cls)) {
-    //         import('./my-mask').then(({
-    //             initMask
-    //         }) => {
-    //             document.querySelectorAll(cls).forEach(el => {
-    //                 initMask(el, cfg);
-    //             });
-    //         });
-    //     }
-    // });
+    if (_resetSelectric) {
+        form.find("select.selectric").each(function () {
+            _resetSelectric(this);
+        });
+    }
 }

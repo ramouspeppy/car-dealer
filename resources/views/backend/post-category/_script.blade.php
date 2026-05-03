@@ -13,7 +13,8 @@
                 },
                 {
                     data: 'title',
-                    name: 'title'
+                    name: 'title',
+                    class: 'font-weight-bold'
                 },
                 {
                     data: 'posts_count',

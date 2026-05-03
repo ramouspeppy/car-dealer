@@ -17,23 +17,26 @@ class GallerySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('galleries')->truncate();
+        // DB::table('galleries')->truncate();
         $faker = Factory::create('id_ID');
-        foreach (range(1, 10) as $key => $i) {
+        foreach (range(1, 20) as $key => $i) {
             $title = $faker->sentence(mt_rand(4, 6));
             $gallery = Gallery::create([
-                'title' => $title,
-                'slug'  => Str::slug($title),
+                'title'        => $title,
+                'slug'         => Str::slug($title),
+                'description'  => $faker->paragraphs(mt_rand(2, 4), true),
+                'published_at' => $faker->dateTimeBetween('-6 months', 'now'),
+                'loves'        => $faker->numberBetween(0, 500),
             ]);
 
             $gallery
-                ->addMedia(public_path('seeder/gallery/') . 'images-(' . rand(1, 40) . ').jpg')
+                ->addMedia(public_path('seeder/gallery/') . 'gallery-(' . rand(1, 21) . ').jpg')
                 ->preservingOriginal()
                 ->toMediaCollection('cover');
 
             foreach (range(1, 12) as $key => $i) {
                 $gallery
-                    ->addMedia(public_path('seeder/gallery/') . 'images-(' . rand(1, 40) . ').jpg')
+                    ->addMedia(public_path('seeder/gallery/') . 'gallery-(' . rand(1, 21) . ').jpg')
                     ->preservingOriginal()
                     ->toMediaCollection('images');
             }

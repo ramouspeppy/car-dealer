@@ -27,7 +27,7 @@ class TestimonySeeder extends Seeder
             ]);
 
             $testimony
-                ->addMedia(public_path('seeder/testimony/') . 'person-' . rand(1, 4) . '.jpg')
+                ->addMedia(public_path('seeder/person/') . 'person-' . rand(1, 6) . '.webp')
                 ->preservingOriginal()
                 ->toMediaCollection('image');
         }

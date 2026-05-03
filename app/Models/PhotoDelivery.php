@@ -27,13 +27,13 @@ class PhotoDelivery extends Model implements HasMedia, Viewable
         $this
             ->addMediaCollection('images');
     }
-    
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
             ->width(368)
-            ->sharpen(10)
-            ->nonQueued();
+            ->sharpen(10);
+        // ->nonQueued();
     }
 
     public function getImageUrlAttribute($value)

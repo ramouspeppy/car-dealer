@@ -22,7 +22,7 @@ class PostSeeder extends Seeder
         $faker = Factory::create('id_ID');
         $publishedAt = $faker->dateTimeBetween($startDate = '-1 years', $endDate = '+5 days', $timezone = null);
 
-        foreach (range(1, 10) as $key => $i) {
+        foreach (range(1, 200) as $key => $i) {
             $title = $faker->sentence(mt_rand(4, 6));
             $post = Post::create([
                 'author_id'        => mt_rand(1, 10),
@@ -31,7 +31,7 @@ class PostSeeder extends Seeder
                 'slug'             => Str::slug($title),
                 'excerpt'          => $faker->paragraph(),
                 'body' => collect($faker->paragraphs(mt_rand(6, 15)))
-                    ->map(fn ($p) => "<p> $p </p>")
+                    ->map(fn($p) => "<p> $p </p>")
                     ->implode(''),
                 'published_at' => mt_rand(0, 1) == 1 ? $publishedAt : NULL,
                 'created_at'   => $faker->dateTimeBetween($startDate = '-4 months', $endDate = 'now', $timezone = null),

@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<section id="tesdrive-section" class="tesdrive-section section" data-builder="section">
+<section id="tesdrive-section" class="tesdrive-section section">
 
     <slot type="section-title"></slot>
 
@@ -160,7 +160,7 @@
     </div>
 </section><!-- /Services Section -->
 
-@push('script')
+@push('scripts')
 
 <script>
     $(function() {

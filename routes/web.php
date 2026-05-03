@@ -1,33 +1,33 @@
 <?php
 
-use UniSharp\LaravelFilemanager\Lfm;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\FrontendController;
-use App\Http\Controllers\TestdriveController as FrontendTestdrive;
-use App\Http\Controllers\Backend\HomeController;
-use App\Http\Controllers\Backend\PostController;
-use App\Http\Controllers\Backend\PostCategoryController;
-use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\Backend\AboutController;
-use App\Http\Controllers\Backend\HeaderController;
-use App\Http\Controllers\Backend\BookingController;
 use App\Http\Controllers\Backend\ContactController;
-use App\Http\Controllers\Backend\WelcomeController;
-use App\Http\Controllers\Backend\WebSettingController;
-use App\Http\Controllers\Backend\DestinationController;
 use App\Http\Controllers\Backend\GalleryController;
+use App\Http\Controllers\Backend\HeaderController;
+use App\Http\Controllers\Backend\HomeController;
 use App\Http\Controllers\Backend\ImagesUploadController;
-use App\Http\Controllers\Backend\MediaUploadController;
 use App\Http\Controllers\Backend\PhotoDeliveryController;
-use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\PostCategoryController;
+use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\ProductCategoryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductTypeController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\PromoController;
+use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\TestdriveController as BackendTestdrive;
 use App\Http\Controllers\Backend\TestimonyController;
-use App\Models\PhotoDelivery;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\WebSettingController;
+use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\PostController as FrontendPost;
+use App\Http\Controllers\TestdriveController as FrontendTestdrive;
+use App\Http\Controllers\GalleryController as FrontendGallery;
+use App\Http\Controllers\Backend\ConsultationController as BackendConsultation;
+use App\Http\Controllers\ProductController as FrontendProduct;
+use Illuminate\Support\Facades\Route;
+use UniSharp\LaravelFilemanager\Lfm;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,25 +45,28 @@ use App\Models\PhotoDelivery;
 
 Route::get('/', [FrontendController::class, 'index'])->name('/');
 
-// about
-Route::get('/product/{product:slug}', [FrontendController::class, 'productShow'])->name('product.show');
+Route::post('/consultation', [ConsultationController::class, 'store'])->name('consultation.store');
+
+// product
+Route::get('/product/', [FrontendProduct::class, 'index'])->name('product.index');
+Route::get('/product/{product:slug}', [FrontendProduct::class, 'detail'])->name('product.detail');
 
 Route::get('/testdrive', [FrontendTestdrive::class, 'testdriveShow'])->name('testdrive.show');
 Route::post('/testdrive', [FrontendTestdrive::class, 'testdriveStore'])->name('testdrive.store');
 
 
+// berita post
+Route::get('/berita', [FrontendPost::class, 'index'])->name('post.index');
+Route::get('/berita/kategori/{category:slug}', [FrontendPost::class, 'category'])->name('post.category');
+Route::get('/berita/author/{author:slug}', [FrontendPost::class, 'author'])->name('post.author');
+Route::get('/berita/tag/{tag:slug}', [FrontendPost::class, 'tag'])->name('post.tag');
+Route::get('/berita/{post:slug}', [FrontendPost::class, 'show'])->name('post.show');
+
+
 // gallery
-Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
-Route::get('/gallery/{gallery:slug}', [FrontendController::class, 'galleryShow'])->name('gallery.show');
-
-
-// blog post
-Route::get('/blog', [BlogController::class, 'index'])->name('blog');
-Route::get('/blog/{blog}', [BlogController::class, 'show'])->name('blog.show');
-Route::get('/category/{category:slug}', [BlogController::class, 'category'])->name('category');
-Route::get('/author/{author:slug}', [BlogController::class, 'author'])->name('author');
-Route::get('/tag/{tag:slug}', [BlogController::class, 'tag'])->name('tag');
-
+Route::get('/gallery', [FrontendGallery::class, 'index'])->name('gallery.index');
+Route::get('/gallery/{gallery:slug}', [FrontendGallery::class, 'show'])->name('gallery.show');
+Route::post('/gallery/{gallery:slug}/love', [FrontendGallery::class, 'love'])->name('gallery.love');
 
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::post('/contact', [FrontendController::class, 'contactStore'])->name('contact.store');
@@ -90,9 +93,9 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
     Route::get('post-category/checkSlug', [PostCategoryController::class, 'checkSlug'])->name('post-category.checkSlug');
     Route::resource('post-category', PostCategoryController::class)->except('show');
 
-    // About
-    Route::get('about', [AboutController::class, 'index'])->name('about.index');
-    Route::post('about/update', [AboutController::class, 'update'])->name('about.update');
+    // // About
+    // Route::get('about', [AboutController::class, 'index'])->name('about.index');
+    // Route::post('about/update', [AboutController::class, 'update'])->name('about.update');
 
 
     // Testimony
@@ -116,6 +119,10 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
     // Promo
     Route::get('promo/checkSlug', [PromoController::class, 'checkSlug'])->name('promo.checkSlug');
     Route::resource('promo', PromoController::class)->except('show');
+
+    // Promo
+    Route::resource('service', ServiceController::class)->except('show');
+
 
     // Photo Delivery
     Route::post('photo-delivery/media', [PhotoDeliveryController::class, 'storeMedia'])->name('photo-delivery.storeMedia');
@@ -144,6 +151,12 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
     // Testdrive
     Route::get('testdrive', [BackendTestdrive::class, 'index'])->name('testdrive.index');
     Route::post('testdrive/{testdrive}', [BackendTestdrive::class, 'read'])->name('testdrive.read');
+
+    // Consultation
+    Route::get('consultation', [BackendConsultation::class, 'index'])->name('consultation.index');
+    Route::post('consultation/{consultation}/status', [BackendConsultation::class, 'updateStatus'])->name('consultation.updateStatus');
+    Route::get('consultation/contact/{consultation}', [BackendConsultation::class, 'contact'])->name('consultation.contact');
+    Route::get('consultation/{consultation}', [BackendConsultation::class, 'show'])->name('consultation.show');
 
 
     // Setting
