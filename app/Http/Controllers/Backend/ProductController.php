@@ -20,7 +20,12 @@ class ProductController extends Controller
      */
     private function uploadPath()
     {
-        return storage_path('app/public/tmp/' . auth()->user()->id);
+        return public_path('uploads/tmp/' . auth()->user()->id); // Direct path - no symlink needed
+    }
+
+    private function uploadRelativePath()
+    {
+        return 'tmp/' . auth()->user()->id . '/gallery';
     }
 
     public function index(Request $request)
@@ -70,13 +75,11 @@ class ProductController extends Controller
 
         $product = Product::create($request->all());
 
-        $product
-            ->addMedia($request->header_image)
+        $product->addMedia($request->file('header_image'))
             ->toMediaCollection('header_image');
 
-        $product
-            ->addMedia($request->product_image)
-            ->toMediaCollection('product_image');
+        $product->addMedia($request->file('image'))
+            ->toMediaCollection('image');
 
         foreach ($request->input('product_gallery', []) as $file) {
             $product->addMedia($this->uploadPath() . '/' . $file)->toMediaCollection('product_gallery');
@@ -87,8 +90,7 @@ class ProductController extends Controller
         }
 
         if ($request->hasFile('brochure')) {
-            $product
-                ->addMedia($request->brochure)
+            $product->addMedia($request->file('brochure'))
                 ->toMediaCollection('brochure');
         }
 
@@ -144,19 +146,19 @@ class ProductController extends Controller
 
         if ($request->hasFile('header_image')) {
             $product
-                ->addMedia($request->header_image)
+                ->addMedia($request->file('header_image'))
                 ->toMediaCollection('header_image');
         }
 
-        if ($request->hasFile('product_image')) {
+        if ($request->hasFile('image')) {
             $product
-                ->addMedia($request->product_image)
-                ->toMediaCollection('product_image');
+                ->addMedia($request->file('image'))
+                ->toMediaCollection('image');
         }
 
         if ($request->hasFile('brochure')) {
             $product
-                ->addMedia($request->brochure)
+                ->addMedia($request->file('brochure'))
                 ->toMediaCollection('brochure');
         }
 
@@ -196,68 +198,65 @@ class ProductController extends Controller
     //     return storage_path('app/tmp/' . auth()->user()->id . '/product/galleries');
     // }
 
-    // public function storeMedia(Request $request)
-    // {
-    //     $path = $this->uploadPath();
+    public function storeMedia(Request $request)
+    {
+        $path = $this->uploadPath();
 
-    //     if (!file_exists($path)) {
-    //         mkdir($path, 0777, true);
-    //     }
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
 
-    //     $file = $request->file('file');
+        $file = $request->file('file');
 
-    //     // $name = uniqid() . '_' . trim($file->getClientOriginalName());
-    //     $name = trim($file->getClientOriginalName());
+        // $name = uniqid() . '_' . trim($file->getClientOriginalName());
+        $name = trim($file->getClientOriginalName());
 
-    //     $file->move($path, $name);
+        $file->move($path, $name);
 
-    //     return response()->json([
-    //         'name'          => $name,
-    //         'original_name' => $file->getClientOriginalName(),
-    //     ]);
-    // }
+        return response()->json([
+            'name'          => $name,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
+    }
 
-    // public function deleteMedia(Request $request)
-    // {
-    //     $path = $this->uploadPath();
+    public function deleteMedia(Request $request)
+    {
+        $path = $this->uploadPath();
 
-    //     $filePath = $path . '/' . $request->filename;
+        $filePath = $path . '/' . $request->filename;
 
-    //     if (file_exists($filePath)) unlink($filePath);
-    // }
-    // // =========================================================
-    // private function uploadPath()
-    // {
-    //     return storage_path('app/tmp/' . auth()->user()->id . '/product/colors');
-    // }
+        if (file_exists($filePath)) unlink($filePath);
+    }
+    // =========================================================
 
-    // public function storeMedia2(Request $request)
-    // {
-    //     $path = $this->uploadPath();
 
-    //     if (!file_exists($path)) {
-    //         mkdir($path, 0777, true);
-    //     }
+    public function storeMedia2(Request $request)
+    {
+        $path = $this->uploadPath();
 
-    //     $file = $request->file('file');
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
 
-    //     // $name = uniqid() . '_' . trim($file->getClientOriginalName());
-    //     $name = trim($file->getClientOriginalName());
+        $file = $request->file('file');
 
-    //     $file->move($path, $name);
+        // $name = uniqid() . '_' . trim($file->getClientOriginalName());
+        $name = trim($file->getClientOriginalName());
 
-    //     return response()->json([
-    //         'name'          => $name,
-    //         'original_name' => $file->getClientOriginalName(),
-    //     ]);
-    // }
+        $file->move($path, $name);
 
-    // public function deleteMedia2(Request $request)
-    // {
-    //     $path = $this->uploadPath();
+        return response()->json([
+            'name'          => $name,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
+    }
 
-    //     $filePath = $path . '/' . $request->filename;
+    public function deleteMedia2(Request $request)
+    {
+        $path = $this->uploadPath();
 
-    //     if (file_exists($filePath)) unlink($filePath);
-    // }
+        $filePath = $path . '/' . $request->filename;
+
+        if (file_exists($filePath)) unlink($filePath);
+    }
 }
