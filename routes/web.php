@@ -74,6 +74,7 @@ Route::post('/contact', [FrontendController::class, 'contactStore'])->name('cont
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']], function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home/stats', [HomeController::class, 'stats'])->name('dashboard.stats');
 
     // Header
     Route::get('header', [HeaderController::class, 'index'])->name('header.index');

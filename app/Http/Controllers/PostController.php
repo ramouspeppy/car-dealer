@@ -134,7 +134,7 @@ class PostController extends Controller
             ];
         }
         if (request()->ajax()) {
-            return view('frontend.dealer-theme-v1.post.partials.post-list', compact(
+            return view('frontend.post.partials.post-list', compact(
                 'featuredPost',
                 'sidePost',
                 'listPosts',
@@ -143,7 +143,7 @@ class PostController extends Controller
             ))->render();
         }
 
-        return view('frontend.dealer-theme-v1.post.index', compact(
+        return view('frontend.post.index', compact(
             'featuredPost',
             'sidePost',
             'listPosts',
@@ -252,7 +252,7 @@ class PostController extends Controller
         }
 
         $searchAll = true;
-        return view('frontend.dealer-theme-v1.post.detail', compact(
+        return view('frontend.post.detail', compact(
             'post',
             'relatedPosts',
             'searchAll',
@@ -269,7 +269,7 @@ class PostController extends Controller
             ->latest()
             ->with(['author', 'category', 'tags', 'media'])
             ->paginate($this->limit);
-        return view('frontend.dealer-theme-v1.index', compact('posts', 'categoryName'));
+        return view('frontend.index', compact('posts', 'categoryName'));
     }
 
     public function author(User $author)
@@ -282,7 +282,7 @@ class PostController extends Controller
             ->latest()
             ->with(['author', 'category', 'tags', 'media'])
             ->paginate($this->limit);
-        return view('frontend.dealer-theme-v1.index', compact('posts', 'authorName'));
+        return view('frontend.index', compact('posts', 'authorName'));
     }
 
     public function tag(Tag $tag)
@@ -295,6 +295,6 @@ class PostController extends Controller
             ->latest()
             ->with(['author', 'category', 'tags', 'media'])
             ->paginate($this->limit);
-        return view('frontend.dealer-theme-v1.index', compact('posts', 'tagName'));
+        return view('frontend.index', compact('posts', 'tagName'));
     }
 }

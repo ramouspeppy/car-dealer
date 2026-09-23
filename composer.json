@@ -3,11 +3,15 @@
     "version": "8.81.0",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
         "artesaos/seotools": "^0.20.2",
+        "awssat/laravel-visits": "^4.1",
         "cviebrock/eloquent-sluggable": "^8.0",
         "cyrildewit/eloquent-viewable": "^6.0",
         "fideloper/proxy": "^4.4",
@@ -39,12 +43,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        
-            
-        },
-        "files": [
-            "app/Helpers/ThemeHelper.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

@@ -3026,7 +3026,8 @@ url(/fonts/vendor/bootstrap-icons/bootstrap-icons.woff?1295669cd4e305c97f2cfc16d
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
+  --default-font:
+      "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
       "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
       "Noto Color Emoji";
@@ -3035,42 +3036,64 @@ url(/fonts/vendor/bootstrap-icons/bootstrap-icons.woff?1295669cd4e305c97f2cfc16d
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root {
-  --background-color: #1f1f1f; /* Background color for the entire website, including individual sections */
-  --default-color: #ffffff; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #ececec; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #232323; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #310606; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+:root,
+body[data-theme=light] {
+  --background-color: #f4f9ff; /* Background utama situs yang terang, nyaman untuk mata */
+  --default-color: #1d3557; /* Warna teks utama agar kontras di background terang */
+  --heading-color: #112b46; /* Warna heading yang lebih gelap agar jelas */
+  --accent-color: #3b8ff9; /* Biru muda bersih sebagai accent utama */
+  --surface-color: #ffffff; /* Surface box/card putih bersih */
+  --contrast-color: #12314f; /* Warna teks di atas area accent */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: rgba(17, 43, 70, 0.12);
+  --sidebar-icon-bg: #edf5ff;
+  --sidebar-icon-border: rgba(18, 49, 79, 0.08);
+  --nav-color: rgba(
+      17,
+      41,
+      72,
+      0.72
+  ); /* Warna link nav agar terbaca di background terang */
+  --nav-hover-color: #12314f; /* Warna hover nav yang tegas tapi tetap adem */
+  --nav-mobile-background-color: #edf5ff; /* Background menu mobile terang */
+  --nav-dropdown-background-color: #f2f8ff; /* Background dropdown yang lembut */
+  --nav-dropdown-color: #12314f; /* Teks dropdown agar nyaman dibaca */
+  --nav-dropdown-hover-color: #0d2d4d; /* Hover dropdown */
 }
 
-/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
-:root {
-  --nav-color: rgba(
-      236,
-      236,
-      236,
-      0.59
-  ); /* The default color of the main navmenu links */
-  --nav-hover-color: #ffffff; /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #393939; /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: #393939; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #ffffff; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #ececec; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+body[data-theme=dark] {
+  --background-color: #1f1f1f; /* Background asli gelap sebelum ubah warna */
+  --default-color: #ffffff; /* Teks utama putih */
+  --heading-color: #ffffff; /* Heading putih */
+  --accent-color: #ececec; /* Accent asli gelap */
+  --surface-color: #232323; /* Surface kartu gelap */
+  --contrast-color: #310606; /* Kontras untuk teks pada area accent */
+  --sidebar-bg: #1f1f1f;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-icon-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-icon-border: rgba(255, 255, 255, 0.08);
+  --nav-color: rgba(236, 236, 236, 0.59);
+  --nav-hover-color: #ffffff;
+  --nav-mobile-background-color: #393939;
+  --nav-dropdown-background-color: #393939;
+  --nav-dropdown-color: #ffffff;
+  --nav-dropdown-hover-color: #ececec;
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 .light-background {
-  --background-color: #2c2c2c;
-  --surface-color: #323232;
+  --background-color: #f7fbff;
+  --surface-color: #ffffff;
+  --default-color: #1d3557;
+  --heading-color: #112b46;
 }
 
 .dark-background {
-  --background-color: #040b14;
-  --default-color: #ffffff;
+  --background-color: #0f172a;
+  --default-color: #edf4ff;
   --heading-color: #ffffff;
-  --surface-color: #151f2b;
-  --contrast-color: #ffffff;
+  --surface-color: #1b2433;
+  --contrast-color: #0f172a;
 }
 
 /* Smooth scroll */
@@ -3162,8 +3185,8 @@ h6 {
   # Global Header
   --------------------------------------------------------------*/
 .header {
-  --background-color: #1b1b1b;
-  --contrast-color: #444444;
+  --background-color: var(--sidebar-bg);
+  --contrast-color: var(--contrast-color);
   color: var(--default-color);
   position: fixed;
   top: 0;
@@ -3174,13 +3197,15 @@ h6 {
   transition: all ease-in-out 0.3s;
   overflow-y: auto;
   z-index: 997;
+  background-color: var(--sidebar-bg);
 }
 
 .header .header-container {
   border-radius: 20px;
   padding: 15px;
-  background-color: var(--background-color);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  background-color: var(--sidebar-bg);
+  border: 1px solid var(--sidebar-border);
+  box-shadow: 0 12px 35px rgba(75, 121, 190, 0.08);
 }
 
 .header .social-links {
@@ -3192,14 +3217,15 @@ h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
-  color: var(--default-color);
+  background: var(--sidebar-icon-bg);
+  color: var(--heading-color);
   margin: 0 2px;
   border-radius: 50%;
   text-align: center;
   width: 40px;
   height: 40px;
   transition: 0.3s;
+  border: 1px solid var(--sidebar-icon-border);
 }
 
 .header .social-links a:hover {
@@ -3331,7 +3357,7 @@ h6 {
 
 .navmenu .dropdown a,
 .navmenu .dropdown a:focus {
-  color: --nav-dropdown-color;
+  color: var(--nav-dropdown-color);
 }
 
 .navmenu .dropdown a:hover,
@@ -3353,12 +3379,12 @@ h6 {
 }
 
 .navmenu .dropdown ul ul {
-  background-color: rgba(33, 37, 41, 0.1);
+  background-color: color-mix(in srgb, var(--nav-dropdown-background-color), transparent 25%);
 }
 
 .navmenu .dropdown > .dropdown-active {
   display: block;
-  background-color: rgba(33, 37, 41, 0.03);
+  background-color: color-mix(in srgb, var(--nav-dropdown-background-color), transparent 12%);
 }
 
 /*--------------------------------------------------------------
@@ -5593,20 +5619,74 @@ section,
   /* 🔥 smooth saat tinggi berubah */
 }
 
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  margin: 10px 0 16px;
+  border: 1px solid rgba(18, 49, 79, 0.12);
+  background: #ffffff;
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  color: #12314f;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(52, 92, 160, 0.08);
+}
+
+body[data-theme=light] .theme-toggle {
+  background: #ffffff;
+  border-color: rgba(18, 49, 79, 0.18);
+  color: #12314f;
+}
+
+body[data-theme=dark] .theme-toggle {
+  background: rgba(17, 24, 39, 0.8);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #edf4ff;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.25);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 25px rgba(75, 121, 190, 0.15);
+}
+
+.theme-toggle-icon {
+  font-size: 14px;
+  color: inherit;
+}
+
+body[data-theme=light] .theme-toggle .theme-toggle-icon,
+body[data-theme=light] .theme-toggle .theme-toggle-label,
+body[data-theme=light] .header .social-links a {
+  color: #12314f;
+}
+
+body[data-theme=light] .header .social-links a {
+  background: #ffffff;
+  border: 1px solid rgba(18, 49, 79, 0.15);
+}
+
 .btn-konsultasi {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--accent-color), var(--nav-hover-color, #f0a500));
-  color: var(--contrast-color, #fff);
+  background: linear-gradient(135deg, #cfe6ff, #9bc7ff);
+  color: var(--contrast-color, #12314f);
   border: none;
   border-radius: 50px;
   padding: 10px 20px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(94, 146, 214, 0.22);
   transition: all 0.3s ease;
   cursor: pointer;
   width: 100%;

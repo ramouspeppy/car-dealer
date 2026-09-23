@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('products', Product::latest()->active()->get());
         });
 
-        View::composer('frontend.dealer-theme-v1.*', function ($view) {
+        View::composer('frontend.*', function ($view) {
             $view->with('profile', Profile::first());
         });
 

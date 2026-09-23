@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Views\Composers\AboutComposer;
 use App\Views\Composers\FooterComposer;
 use Illuminate\Support\ServiceProvider;
-use App\Views\Composers\BookingComposer;
 use App\Views\Composers\NavigationComposer;
 
 
@@ -33,7 +31,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('frontend.' . frontend_theme() . '.layouts.sidebar', NavigationComposer::class);
-        view()->composer('frontend.' . frontend_theme() . '.layouts.footer', FooterComposer::class);
+        view()->composer('frontend.layouts.sidebar', NavigationComposer::class);
+        view()->composer('frontend.layouts.footer', FooterComposer::class);
     }
 }

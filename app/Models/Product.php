@@ -68,12 +68,12 @@ class Product extends Model implements HasMedia, Viewable
 
     public function getMinPriceAttribute($value)
     {
-        return "Rp. ". number_format($this->typePrice());
+        return "Rp. " . number_format($this->typePrice());
     }
 
     public function getSpecialMinPriceAttribute($value)
     {
-        return "Rp. ". number_format($this->typePrice() - $this->disc);
+        return "Rp. " . number_format($this->typePrice() - $this->disc);
     }
 
     public function registerMediaCollections(): void
@@ -92,7 +92,7 @@ class Product extends Model implements HasMedia, Viewable
             ->width(368)
             ->sharpen(10)
             ->performOnCollections('image');
-            // ->nonQueued();
+        // ->nonQueued();
     }
 
     public function getImageUrlAttribute($value)
@@ -166,5 +166,10 @@ class Product extends Model implements HasMedia, Viewable
                 'source' => 'name'
             ]
         ];
+    }
+
+    public function visitStats()
+    {
+        return visits($this);
     }
 }

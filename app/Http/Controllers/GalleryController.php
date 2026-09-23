@@ -12,13 +12,13 @@ class GalleryController extends Controller
         $galleries = Gallery::with('media')->whereNotNull('published_at')
             ->orderByDesc('published_at')
             ->get();
-        return view('frontend.dealer-theme-v1.gallery.index', compact('galleries'));
+        return view('frontend.gallery.index', compact('galleries'));
     }
 
     public function show(Gallery $gallery)
     {
         $gallery->load('media');
-        return view('frontend.dealer-theme-v1.gallery.show', compact('gallery'));
+        return view('frontend.gallery.show', compact('gallery'));
     }
 
     public function love(Gallery $gallery)

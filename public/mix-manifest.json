@@ -1,6 +1,6 @@
 {
     "/backend/js/app.js": "/backend/js/app.js",
-    "/frontend/dealer-theme-v1/js/app.js": "/frontend/dealer-theme-v1/js/app.js",
+    "/frontend/js/app.js": "/frontend/js/app.js",
     "/backend/css/app.css": "/backend/css/app.css",
-    "/frontend/dealer-theme-v1/css/app.css": "/frontend/dealer-theme-v1/css/app.css"
+    "/frontend/css/app.css": "/frontend/css/app.css"
 }

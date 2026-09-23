@@ -19,6 +19,11 @@ require("../lib/datatables-checkboxes/dataTables.checkboxes");
 import Swal from "sweetalert2";
 window.swal = Swal;
 
+// chart.js
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
+window.Chart = Chart;
+
 import Chocolat from "chocolat";
 window.chocolat = Chocolat;
 
@@ -27,8 +32,6 @@ window.chocolat = Chocolat;
 
 // jasny bootstrap
 require("../lib/jasny-bootstrap/js/jasny-bootstrap");
-
-
 
 // app js
 require("./backendApp/nicescroll");

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\Testimony;
+use App\Models\Header;
 use App\Models\Product;
 use App\Models\Profile;
 use App\Models\Service;
+use App\Models\Testimony;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -17,11 +18,13 @@ class ProductController extends Controller
         SEOTools::setDescription(config('settings.site_desc'));
         SEOTools::addImages(asset('images/' . config('settings.og_image')));
 
+        $header      = Header::first();
 
         $products    = Product::with(['media', 'product_type', 'product_category', 'photo_delivery'])->get();
 
-        return view('frontend.' . frontend_theme() . '.welcome', compact(
+        return view('frontend.product.index', compact(
             'products',
+            'header'
         ));
     }
     public function detail(Product $product)
@@ -35,6 +38,6 @@ class ProductController extends Controller
         $services  = Service::latest()->get();
 
 
-        return view('frontend.' . frontend_theme() . '.product-detail', compact('product', 'profile', 'testimonies', 'services'));
+        return view('frontend.product-detail', compact('product', 'profile', 'testimonies', 'services'));
     }
 }

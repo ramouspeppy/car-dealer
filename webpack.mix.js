@@ -29,12 +29,12 @@ mix.sass(
 ).sourceMaps();
 
 mix.js(
-    "resources/views/frontend/dealer-theme-v1/assets/js/frontend-wrapper.js",
-    "public/frontend/dealer-theme-v1/js/app.js",
+    "resources/views/frontend/assets/js/frontend-wrapper.js",
+    "public/frontend/js/app.js",
 );
 mix.sass(
-    "resources/views/frontend/dealer-theme-v1/assets/scss/frontend-wrapper.scss",
-    "public/frontend/dealer-theme-v1/css/app.css",
+    "resources/views/frontend/assets/scss/frontend-wrapper.scss",
+    "public/frontend/css/app.css",
 ).sourceMaps();
 
 mix.webpackConfig({

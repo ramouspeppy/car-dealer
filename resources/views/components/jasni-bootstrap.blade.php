@@ -12,12 +12,11 @@
             <span class="fileinput-exists">Change</span>
             <input type="file" name="{{ $name }}" id="{{ $name }}" accept="image/*">
         </span>
-        <a href="#" class="btn btn-primary fileinput-exists"
-            data-dismiss="fileinput">Remove</a>
+        <a href="#" class="btn btn-primary fileinput-exists" data-dismiss="fileinput">Remove</a>
     </div>
 </div>
 @error($name)
-<div class="text-danger">
-    <small>{{ $message }}</small>
-</div>
+    <div class="text-danger">
+        <small>{{ $message }}</small>
+    </div>
 @enderror

@@ -47,7 +47,7 @@ class FrontendController extends Controller
             ->inRandomOrder()
             ->limit(7)
             ->get());
-        return view('frontend.' . frontend_theme() . '.welcome', compact(
+        return view('frontend.welcome', compact(
             'header',
             'profile',
             'products',
@@ -70,7 +70,7 @@ class FrontendController extends Controller
         $products = Product::latest()->active()->get();
         $services  = Service::latest()->get();
         $profile      = Profile::first();
-        return view('frontend.' . frontend_theme() . '.testdrive', compact('products', 'profile', 'services'));
+        return view('frontend.testdrive', compact('products', 'profile', 'services'));
     }
 
     public function gallery()
@@ -80,7 +80,7 @@ class FrontendController extends Controller
         SEOTools::addImages(asset('images/' . config('settings.og_image')));
         $galleries = Gallery::with('media')->latest()->paginate(6);
 
-        return view('frontend.' . frontend_theme() . '.gallery.index', compact('galleries'));
+        return view('frontend.gallery.index', compact('galleries'));
     }
 
     public function galleryShow(Gallery $gallery)
@@ -89,7 +89,7 @@ class FrontendController extends Controller
         SEOTools::setDescription($gallery->desc_meta);
         SEOTools::addImages($gallery->cover_url);
 
-        return view('frontend.' . frontend_theme() . '.gallery.show', compact('gallery'));
+        return view('frontend.gallery.show', compact('gallery'));
     }
 
     public function contact()
@@ -98,7 +98,7 @@ class FrontendController extends Controller
         SEOTools::setDescription(config('settings.site_desc'));
         SEOTools::addImages(asset('images/' . config('settings.og_image')));
 
-        return view('frontend.' . frontend_theme() . '.contact.index');
+        return view('frontend.contact.index');
     }
 
     public function testdriveStore(Request $request)
