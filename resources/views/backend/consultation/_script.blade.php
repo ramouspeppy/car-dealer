@@ -1,6 +1,6 @@
 <script>
-    $(function () {
-        
+    $(function() {
+
         var table = $('#myTable').DataTable({
             processing: true,
             serverSide: true,
@@ -26,17 +26,20 @@
                     name: 'payment_type',
                     class: 'fit'
                 },
-                
+
                 {
                     data: 'phone',
                     name: 'phone',
                     class: 'fit'
-                    
+
                 },
-                
-                
-                
                 {
+                    data: 'source',
+                    name: 'source',
+                    class: 'fit'
+                },
+                {
+
                     data: 'status',
                     name: 'status',
                     class: 'fit'
@@ -59,5 +62,4 @@
             ],
         });
     });
-
 </script>

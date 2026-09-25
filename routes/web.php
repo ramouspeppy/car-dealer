@@ -25,6 +25,8 @@ use App\Http\Controllers\TestdriveController as FrontendTestdrive;
 use App\Http\Controllers\GalleryController as FrontendGallery;
 use App\Http\Controllers\Backend\ConsultationController as BackendConsultation;
 use App\Http\Controllers\ProductController as FrontendProduct;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\Backend\LandingPageController;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Lfm;
 
@@ -70,6 +72,10 @@ Route::post('/gallery/{gallery:slug}/love', [FrontendGallery::class, 'love'])->n
 
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::post('/contact', [FrontendController::class, 'contactStore'])->name('contact.store');
+
+// Landing Page (Ads)
+Route::get('/promo-mobil', [LandingController::class, 'show'])->name('landing.show');
+Route::post('/promo-mobil/lead', [LandingController::class, 'storeLead'])->name('landing.lead.store');
 
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']], function () {
 
@@ -159,6 +165,9 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
     Route::get('consultation/contact/{consultation}', [BackendConsultation::class, 'contact'])->name('consultation.contact');
     Route::get('consultation/{consultation}', [BackendConsultation::class, 'show'])->name('consultation.show');
 
+    // Landing Page (Ads)
+    Route::get('landing-page', [LandingPageController::class, 'index'])->name('landing-page.index');
+    Route::post('landing-page/update', [LandingPageController::class, 'update'])->name('landing-page.update');
 
     // Setting
     Route::get('setting/website', [WebSettingController::class, 'website'])->name('setting.web');

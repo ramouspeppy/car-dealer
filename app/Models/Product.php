@@ -48,7 +48,7 @@ class Product extends Model implements HasMedia, Viewable
     }
     public function scopePriority($query)
     {
-        return $query->orderByRaw('ISNULL (seq), seq, created_at DESC');
+        return $query->orderByRaw('ISNULL (priority), priority, created_at DESC');
     }
     // end Scope ====================================================
     public function productNameLimit($limit = 5)

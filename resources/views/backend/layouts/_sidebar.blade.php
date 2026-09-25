@@ -21,7 +21,12 @@
                 <span>Profile</span>
             </a>
         </li>
-
+        <li class="{{ request()->routeIs('backend.landing-page.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('backend.landing-page.index') }}">
+                <i class="fas fa-bullhorn"></i>
+                <span>Landing Page (Ads)</span>
+            </a>
+        </li>
         {{-- Page --}}
         <li class="nav-item dropdown {{ request()->routeIs('backend.header.*', 'backend.testimony.*') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown">

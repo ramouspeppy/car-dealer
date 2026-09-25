@@ -18,9 +18,10 @@ class ConsultationController extends Controller
             'product_id',
             'payment_type',
             'status',
-            'created_at'
+            'source',
+            'utm_campaign',
+            'created_at' // <- tambahkan 2 kolom ini
         ]);
-
         if ($request->ajax()) {
             return Datatables::eloquent($consultation)
                 ->addIndexColumn()
@@ -38,7 +39,16 @@ class ConsultationController extends Controller
                 ->editColumn('created_at', function ($consultation) {
                     return $consultation->created_at->translatedFormat('d F Y');
                 })
-                ->rawColumns(['action', 'status', 'phone'])
+                ->editColumn('source', function ($consultation) {
+                    if ($consultation->source === 'landing_page') {
+                        $campaign = $consultation->utm_campaign
+                            ? '<br><small class="text-muted">' . e($consultation->utm_campaign) . '</small>'
+                            : '';
+                        return '<span class="badge badge-pill badge-warning text-dark">Landing Page</span>' . $campaign;
+                    }
+                    return '<span class="badge badge-pill badge-secondary">' . ucfirst($consultation->source ?? 'Website') . '</span>';
+                })
+                ->rawColumns(['action', 'status', 'phone', 'source'])
                 ->make(true);
         }
         return view('backend.consultation.index');
