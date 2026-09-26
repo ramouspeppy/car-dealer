@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Consultation;
 use App\Models\LandingPage;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\Profile;
+use App\Models\Service;
+use App\Models\Testimony;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jenssegers\Agent\Agent;
@@ -24,6 +28,73 @@ class LandingController extends Controller
         $promo       = $landingPage->promo;
 
         return view('frontend.landing.show', compact('landingPage', 'products', 'testimonies', 'promo'));
+    }
+
+    /**
+     * Versi 2 (cinematic/editorial) dari landing page yang sama, dipakai untuk
+     * membandingkan mana yang konversinya lebih baik sebelum salah satunya dipilih
+     * secara permanen. Route dan view-nya terpisah dari show(), tapi konten dan
+     * sumber datanya (LandingPage, Product, Testimony, Promo) tetap sama persis.
+     */
+    public function showV2(Request $request)
+    {
+        $landingPage = LandingPage::with('media')->first();
+
+        if (!$landingPage || !$landingPage->is_active) {
+            return redirect()->route('/');
+        }
+
+        // Pool produk pilihan admin (dari tab "Produk & Testimoni").
+        // Item pertama jadi "featured vehicle" di hero/spotlight, sisanya jadi grid eksplorasi.
+        $pool = $landingPage->featuredProducts();
+
+        $featuredVehicle  = $pool->first();
+        $exploreProducts  = $pool->slice(1)->values();
+        $excludeIds       = $pool->pluck('id')->all();
+
+        // Storytelling per kategori ("Dibuat untuk ...") memakai kategori & produk ASLI yang ada
+        // di database (bukan label lifestyle karangan), supaya kontennya selalu akurat.
+        $categoryShowcase = ProductCategory::where('status', 1)
+            ->whereHas('products', function ($q) use ($excludeIds) {
+                $q->active();
+                if (!empty($excludeIds)) {
+                    $q->whereNotIn('id', $excludeIds);
+                }
+            })
+            ->with(['products' => function ($q) use ($excludeIds) {
+                $q->active();
+                if (!empty($excludeIds)) {
+                    $q->whereNotIn('id', $excludeIds);
+                }
+                $q->with(['media', 'product_type'])->priority()->limit(3);
+            }])
+            ->limit(3)
+            ->get()
+            ->filter(fn($category) => $category->products->isNotEmpty())
+            ->values();
+
+        $testimonies = $landingPage->selectedTestimonies();
+        $promo       = $landingPage->promo;
+        $services    = Service::priority()->get();
+
+        // Angka nyata dari database, bukan statistik karangan.
+        $avgRating = Testimony::where('rating', '>', 0)->avg('rating');
+        $stats = [
+            'products_count'    => Product::active()->count(),
+            'testimonies_count' => Testimony::count(),
+            'avg_rating'        => $avgRating ? round($avgRating, 1) : null,
+        ];
+
+        return view('frontend.landing.show-v2', compact(
+            'landingPage',
+            'featuredVehicle',
+            'exploreProducts',
+            'categoryShowcase',
+            'testimonies',
+            'promo',
+            'stats',
+            'services'
+        ));
     }
 
     /**

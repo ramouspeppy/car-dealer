@@ -66,11 +66,11 @@ class LandingPage extends Model implements HasMedia
         $ids = collect($this->featured_product_ids ?? [])->filter()->values();
 
         if ($ids->isEmpty()) {
-            return Product::active()->priority()->with(['media', 'product_type'])->limit(6)->get();
+            return Product::active()->priority()->with(['media', 'product_type', 'product_category'])->limit(6)->get();
         }
 
         return Product::whereIn('id', $ids)
-            ->with(['media', 'product_type'])
+            ->with(['media', 'product_type', 'product_category'])
             ->get()
             ->sortBy(fn($product) => $ids->search($product->id))
             ->values();

@@ -77,6 +77,9 @@ Route::post('/contact', [FrontendController::class, 'contactStore'])->name('cont
 Route::get('/promo-mobil', [LandingController::class, 'show'])->name('landing.show');
 Route::post('/promo-mobil/lead', [LandingController::class, 'storeLead'])->name('landing.lead.store');
 
+// Landing Page V2 (cinematic) - untuk dibandingkan dengan versi di atas
+Route::get('/promo-mobil-v2', [LandingController::class, 'showV2'])->name('landing.showV2');
+
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']], function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
