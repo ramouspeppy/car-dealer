@@ -80,6 +80,9 @@ Route::post('/promo-mobil/lead', [LandingController::class, 'storeLead'])->name(
 // Landing Page V2 (cinematic) - untuk dibandingkan dengan versi di atas
 Route::get('/promo-mobil-v2', [LandingController::class, 'showV2'])->name('landing.showV2');
 
+// Landing Page V3 (Premium Personal Automotive Showroom)
+Route::get('/promo-mobil-v3', [LandingController::class, 'showV3'])->name('landing.showV3');
+
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']], function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
