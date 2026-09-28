@@ -17,12 +17,10 @@
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    {{-- CSS situs utama tetap dipakai supaya bootstrap-icons & swiper (dipakai testimoni) konsisten --}}
     <link rel="stylesheet" href="{{ mix('frontend/css/app.css') }}">
 
-    {{-- GSAP + ScrollTrigger via CDN, khusus dipakai di halaman ini untuk scroll reveal --}}
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
@@ -30,414 +28,347 @@
 
     <style>
         :root {
-            --v-ink: #0a0a0c;
-            --v-ink-2: #131317;
-            --v-paper: #fafafa;
-            --v-muted: #8a8a94;
-            --v-line: rgba(255, 255, 255, .12);
-            --v-line-dark: rgba(10, 10, 12, .1);
-            --v-accent: #e63946;
-            --v-font-display: 'Sora', sans-serif;
-            --v-font-body: 'Roboto', sans-serif;
+            --e-ink: #1b1815;
+            --e-ink-2: #24201b;
+            --e-cream: #f7f3ec;
+            --e-cream-2: #efe8db;
+            --e-gold: #b6904f;
+            --e-gold-light: #d8bd8a;
+            --e-line-d: rgba(247, 243, 236, .14);
+            --e-line-l: rgba(27, 24, 21, .12);
+            --e-font-display: 'Fraunces', serif;
+            --e-font-body: 'Inter', sans-serif;
         }
 
         * { box-sizing: border-box; }
-        html { scroll-behavior: auto; }
 
-        html, body {
-            background: var(--v-ink) !important;
-        }
+        html, body { background: var(--e-ink) !important; }
 
         body {
-            font-family: var(--v-font-body);
-            color: #e8e8ea;
+            font-family: var(--e-font-body);
+            color: var(--e-cream);
             margin: 0;
             overflow-x: hidden;
-            padding-bottom: 76px;
+            padding-bottom: 78px;
         }
 
         img { max-width: 100%; display: block; }
 
-        h1, h2, h3, h4, .v-display {
-            font-family: var(--v-font-display);
-            font-weight: 700;
+        h1, h2, h3, h4, .e-display {
+            font-family: var(--e-font-display);
+            font-weight: 600;
             letter-spacing: -.01em;
             margin: 0;
+            color: var(--e-cream);
         }
 
-        .v-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
-        .v-section { padding: 120px 0; position: relative; }
-        .v-light { background: var(--v-paper); color: var(--v-ink); }
-        .v-light h1, .v-light h2, .v-light h3, .v-light h4 { color: var(--v-ink); }
-        .v-light .v-muted { color: #6b6b74; }
-        .v-muted { color: var(--v-muted); }
+        .e-light h1, .e-light h2, .e-light h3, .e-light h4 { color: var(--e-ink); }
 
-        .v-eyebrow {
-            font-family: var(--v-font-body);
-            font-weight: 700;
+        .e-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .e-dark { background: var(--e-ink); color: var(--e-cream); }
+        .e-dark-2 { background: var(--e-ink-2); color: var(--e-cream); }
+        .e-light { background: var(--e-cream); color: var(--e-ink); }
+        .e-section { padding: 110px 0; position: relative; }
+
+        .e-muted { color: rgba(247, 243, 236, .58); }
+        .e-light .e-muted { color: rgba(27, 24, 21, .58); }
+
+        .e-eyebrow {
+            font-family: var(--e-font-body);
+            font-weight: 600;
             font-size: 12px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--v-accent);
+            color: var(--e-gold);
+            display: inline-block;
             margin-bottom: 18px;
-            display: block;
         }
 
-        .v-line { color: transparent; -webkit-text-stroke: 1px currentColor; }
+        .e-section-head { max-width: 620px; margin-bottom: 54px; }
+        .e-section-head h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.15; }
+        .e-section-head p { font-size: 16px; margin-top: 14px; }
 
-        /* ===== reveal (GSAP target) ===== */
-        .v-reveal { opacity: 0; transform: translateY(40px); }
+        .e-reveal { opacity: 0; transform: translateY(36px); }
 
-        /* ===== Buttons - minimal, no heavy card look ===== */
-        .v-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: var(--v-font-body);
-            font-weight: 700;
-            font-size: 14px;
-            letter-spacing: .3px;
-            padding: 16px 32px;
-            border-radius: 999px;
-            text-decoration: none;
-            border: 1.5px solid currentColor;
-            transition: all .35s cubic-bezier(.16, 1, .3, 1);
-            cursor: pointer;
-            background: transparent;
+        /* ===== Buttons ===== */
+        .e-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-family: var(--e-font-body); font-weight: 600; font-size: 14px;
+            padding: 15px 30px; border-radius: 3px; text-decoration: none;
+            border: 1px solid currentColor; transition: all .35s cubic-bezier(.16, 1, .3, 1);
+            cursor: pointer; background: transparent;
         }
+        .e-btn-gold { background: var(--e-gold); border-color: var(--e-gold); color: var(--e-ink) !important; }
+        .e-btn-gold:hover { background: transparent; color: var(--e-gold) !important; }
+        .e-btn-line { color: var(--e-cream); }
+        .e-btn-line:hover { background: var(--e-cream); color: var(--e-ink) !important; }
+        .e-light .e-btn-line { color: var(--e-ink); }
+        .e-light .e-btn-line:hover { background: var(--e-ink); color: var(--e-cream) !important; }
 
-        .v-btn-solid { background: var(--v-accent); border-color: var(--v-accent); color: #fff !important; }
-        .v-btn-solid:hover { background: transparent; color: var(--v-accent) !important; }
-
-        .v-btn-line { color: #fff; }
-        .v-btn-line:hover { background: #fff; color: var(--v-ink) !important; }
-
-        .v-light .v-btn-line { color: var(--v-ink); }
-        .v-light .v-btn-line:hover { background: var(--v-ink); color: #fff !important; }
-
-        /* ===== Sticky top bar (minimal, no glass card box) ===== */
-        .v-topbar {
+        /* ===== Topbar ===== */
+        .e-topbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 22px 28px;
-            mix-blend-mode: difference;
+            padding: 24px 28px; mix-blend-mode: difference;
         }
-        .v-topbar-brand { font-family: var(--v-font-display); font-weight: 700; font-size: 15px; color: #fff; text-decoration: none; }
-        .v-topbar-cta { font-family: var(--v-font-body); font-weight: 700; font-size: 13px; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .e-topbar-brand { font-family: var(--e-font-display); font-weight: 600; font-size: 16px; color: #fff; text-decoration: none; }
+        .e-topbar-cta { font-family: var(--e-font-body); font-weight: 600; font-size: 13px; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 7px; }
 
-        /* ===== HERO ===== */
-        .v-hero {
+        /* ===== Hero ===== */
+        .e-hero { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; }
+        .e-hero-wash { position: absolute; inset: 0; background: linear-gradient(120deg, var(--e-ink) 35%, var(--e-ink-2) 100%); }
+        .e-hero-content { position: relative; z-index: 2; width: 100%; padding-top: 60px; }
+
+        .e-hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--e-gold-light); margin-bottom: 26px; }
+        .e-hero-eyebrow .e-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--e-gold); }
+
+        .e-hero h1 { font-size: clamp(38px, 6vw, 72px); line-height: 1.05; max-width: 780px; font-weight: 500; }
+        .e-hero h1 em { font-style: italic; color: var(--e-gold-light); font-weight: 500; }
+
+        .e-hero p.e-hero-desc { font-weight: 300; font-size: 18px; line-height: 1.75; color: rgba(247, 243, 236, .68); max-width: 480px; margin: 26px 0 40px; }
+
+        .e-hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 50px; }
+
+        .e-hero-grid { display: grid; grid-template-columns: 1fr; gap: 50px; align-items: center; }
+        @media (min-width: 992px) { .e-hero-grid { grid-template-columns: 1.15fr .85fr; gap: 70px; } }
+
+        .e-hero-profile { position: relative; max-width: 380px; margin: 0 auto; }
+        .e-hero-profile-img { border-radius: 6px; overflow: hidden; aspect-ratio: 3/4; }
+        .e-hero-profile-img img { width: 100%; height: 100%; object-fit: cover; }
+        .e-hero-profile-img::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--e-gold); border-radius: 6px; transform: translate(14px, 14px); z-index: -1; }
+
+        .e-hero-greet {
             position: relative;
-            min-height: 100svh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
+            margin-top: -50px;
+            margin-left: 24px;
+            margin-right: -10px;
+            background: var(--e-cream);
+            color: var(--e-ink);
+            border-radius: 4px;
+            padding: 22px 24px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, .35);
         }
-
-        .v-hero-glow {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(100deg, transparent 40%, rgba(230, 57, 70, .16) 70%, rgba(230, 57, 70, .05) 100%);
-            pointer-events: none;
-        }
-
-        .v-hero-content { position: relative; z-index: 2; width: 100%; padding-top: 60px; }
-
-        .v-hero-eyebrow {
-            display: inline-flex; align-items: center; gap: 10px;
-            font-size: 12.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-            color: #cfcfd4; margin-bottom: 26px;
-        }
-        .v-hero-eyebrow .v-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--v-accent); box-shadow: 0 0 12px var(--v-accent); }
-
-        .v-hero h1 {
-            font-size: clamp(40px, 7vw, 92px);
-            line-height: .98;
-            color: #fff;
-            max-width: 900px;
-        }
-
-        .v-hero p.v-hero-desc {
-            font-family: var(--v-font-body);
-            font-weight: 300;
-            font-size: 19px;
-            line-height: 1.7;
-            color: #a9a9b2;
-            max-width: 480px;
-            margin: 28px 0 40px;
-        }
-
-        .v-hero-actions { display: flex; flex-wrap: wrap; gap: 16px; }
-
-        .v-hero-vehicle {
-            position: absolute;
-            right: -4%;
-            bottom: 0;
-            width: 62%;
-            max-width: 900px;
-            z-index: 1;
-        }
-
-        .v-hero-vehicle img {
-            width: 100%;
-            filter: drop-shadow(0 40px 60px rgba(0, 0, 0, .6));
-        }
-
-        .v-scroll-cue {
-            position: absolute; bottom: 36px; left: 24px;
-            display: flex; align-items: center; gap: 12px;
-            font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #7a7a82;
-            z-index: 2;
-        }
-        .v-scroll-cue::before {
-            content: ''; width: 1px; height: 46px; background: linear-gradient(#fff, transparent);
-            animation: vScrollLine 2s ease-in-out infinite;
-        }
-        @keyframes vScrollLine { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
-
-        /* ===== Statement (giant scroll text) ===== */
-        .v-statement { padding: 160px 0; text-align: center; }
-        .v-statement h2 {
-            font-size: clamp(28px, 5vw, 58px);
-            line-height: 1.25;
-            max-width: 900px;
-            margin: 0 auto;
-            color: #d8d8dc;
-        }
-        .v-statement h2 em { font-style: normal; color: #fff; }
-
-        /* ===== Feature / Service rows (minimal, no card box) ===== */
-        .v-feature-item { display: flex; gap: 18px; align-items: flex-start; }
-        .v-feature-icon {
-            width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
-            background: rgba(230, 57, 70, .12);
-            color: var(--v-accent);
-            display: flex; align-items: center; justify-content: center; font-size: 20px;
-        }
-        .v-light .v-feature-icon { background: rgba(230, 57, 70, .08); }
-        .v-feature-item h4 { font-size: 16px; margin-bottom: 6px; }
-        .v-feature-item p { font-size: 14px; color: #a9a9b2; margin: 0; line-height: 1.7; }
-        .v-light .v-feature-item p { color: #6b6b74; }
-
-        /* ===== Spotlight (sticky editorial) ===== */
-        .v-spotlight { padding: 0; }
-        .v-spotlight-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
-
-        @media (min-width: 992px) {
-            .v-spotlight-grid { grid-template-columns: 1.1fr .9fr; }
-        }
-
-        .v-spotlight-media { position: relative; }
-        .v-spotlight-media-inner {
-            position: sticky;
-            top: 0;
-            height: 100svh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: linear-gradient(180deg, #14141a, #0a0a0c);
-        }
-        .v-spotlight-media-inner img { width: 100%; height: 100%; object-fit: cover; opacity: .92; }
-
-        .v-spotlight-text { padding: 100px 0; }
-        .v-spotlight-block { padding: 60px 48px; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
-
-        .v-spotlight-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--v-accent); font-weight: 700; margin-bottom: 16px; }
-        .v-spotlight-block h3 { font-size: clamp(26px, 3.2vw, 40px); margin-bottom: 18px; color: #fff; }
-        .v-spotlight-block p { color: #a9a9b2; font-size: 15.5px; line-height: 1.8; max-width: 420px; margin-bottom: 24px; }
-
-        .v-spec-list { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 12px; }
-        .v-spec-list li {
-            display: flex; justify-content: space-between; gap: 20px;
-            padding-bottom: 12px; border-bottom: 1px solid var(--v-line);
-            font-size: 13.5px; color: #cfcfd4;
-        }
-        .v-spec-list li span:first-child { color: #7a7a82; }
-
-        .v-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 26px; }
-        .v-price-now { font-family: var(--v-font-display); font-size: 26px; font-weight: 700; color: #fff; }
-        .v-price-old { font-size: 14px; color: #7a7a82; text-decoration: line-through; }
-        .v-price-badge { font-size: 11px; font-weight: 700; color: var(--v-accent); border: 1px solid var(--v-accent); padding: 3px 10px; border-radius: 999px; }
-
-        .v-view-count { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: #7a7a82; margin-bottom: 26px; }
-        .v-view-count i { color: var(--v-accent); }
-
-        /* ===== Explore lineup (editorial grid, no card box) ===== */
-        .v-explore-item { position: relative; overflow: hidden; margin-bottom: 6px; }
-        .v-explore-img { position: relative; overflow: hidden; aspect-ratio: 4/3; background: #111; }
-        .v-explore-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(.16, 1, .3, 1), filter .5s ease; filter: brightness(.82); }
-        .v-explore-item:hover .v-explore-img img { transform: scale(1.06); filter: brightness(1); }
-
-        .v-explore-meta { display: flex; justify-content: space-between; align-items: baseline; padding-top: 16px; }
-        .v-explore-meta h4 { font-size: 17px; color: #fff; }
-        .v-explore-meta span { font-size: 13.5px; color: #7a7a82; font-family: var(--v-font-body); }
-
-        .v-explore-link {
-            position: absolute; top: 16px; right: 16px;
-            width: 40px; height: 40px; border-radius: 50%;
-            background: rgba(255, 255, 255, .12);
-            backdrop-filter: blur(6px);
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; font-size: 16px;
-            opacity: 0; transform: translateY(-8px);
-            transition: all .35s ease;
-        }
-        .v-explore-item:hover .v-explore-link { opacity: 1; transform: translateY(0); }
-        .v-light .v-explore-link { background: rgba(10, 10, 12, .08); color: var(--v-ink); }
-
-        /* ===== Category storytelling ===== */
-        .v-story-section { padding: 100px 0; position: relative; }
-        .v-story-heading { font-size: clamp(34px, 5vw, 64px); margin-bottom: 44px; }
-        .v-story-row { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
-        .v-story-row::-webkit-scrollbar { display: none; }
-        .v-story-card { flex: 0 0 auto; width: min(78vw, 320px); }
-        .v-story-card .v-explore-img { aspect-ratio: 3/4; }
-        .v-story-card h4 { font-size: 15.5px; margin-top: 14px; }
-        .v-story-card span { font-size: 13px; color: #9a9aa4; }
-        .v-light .v-story-card span { color: #6b6b74; }
-
-        /* ===== Promo (full bleed, no card) ===== */
-        .v-promo { padding: 140px 0; text-align: center; position: relative; overflow: hidden; background: linear-gradient(135deg, #1a1015 0%, var(--v-ink) 55%); }
-        .v-promo h2 { font-size: clamp(30px, 5vw, 56px); color: #fff; margin-bottom: 20px; position: relative; }
-        .v-promo p { color: #a9a9b2; max-width: 480px; margin: 0 auto 34px; position: relative; }
-
-        /* ===== Stats (inline numbers, no cards) ===== */
-        .v-stats-row { display: flex; flex-wrap: wrap; gap: 60px; justify-content: center; text-align: center; }
-        .v-stat-num { font-family: var(--v-font-display); font-size: clamp(38px, 5vw, 60px); font-weight: 700; color: #fff; line-height: 1; }
-        .v-stat-label { font-size: 12.5px; letter-spacing: 1px; text-transform: uppercase; color: #7a7a82; margin-top: 10px; }
-
-        /* ===== Testimonial (minimal quote) ===== */
-        .v-testi-quote-mark { font-family: var(--v-font-display); font-size: 90px; color: var(--v-accent); opacity: .3; line-height: .5; margin-bottom: 10px; }
-        .v-testi-text { font-size: clamp(20px, 2.6vw, 30px); font-family: var(--v-font-display); font-weight: 500; line-height: 1.5; color: #fff; max-width: 780px; margin: 0 auto 32px; }
-        .v-testi-name { font-weight: 700; font-size: 14.5px; color: #fff; }
-        .v-testi-job { font-size: 13px; color: #7a7a82; }
-        .v-testi-stars { color: var(--v-accent); font-size: 13px; margin-top: 6px; }
-
-        /* ===== FAQ (line list, no cards) ===== */
-        .v-faq-item { border-bottom: 1px solid var(--v-line-dark); }
-        .v-faq-btn {
-            width: 100%; text-align: left; background: none; border: none;
-            padding: 26px 0; display: flex; justify-content: space-between; align-items: center;
-            font-family: var(--v-font-display); font-weight: 600; font-size: 17px; color: var(--v-ink);
-            cursor: pointer;
-        }
-        .v-faq-icon { font-size: 20px; color: var(--v-accent); transition: transform .35s ease; flex-shrink: 0; margin-left: 20px; }
-        .v-faq-btn[aria-expanded="true"] .v-faq-icon { transform: rotate(135deg); }
-        .v-faq-panel { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
-        .v-faq-panel-inner { padding-bottom: 26px; color: #5a5a64; font-size: 14.5px; line-height: 1.8; max-width: 640px; }
-
-        /* ===== Final CTA / Form ===== */
-        .v-cta-section { padding: 130px 0 100px; }
-        .v-cta-grid { display: grid; grid-template-columns: 1fr; gap: 60px; }
-        @media (min-width: 992px) { .v-cta-grid { grid-template-columns: .9fr 1.1fr; } }
-
-        .v-cta-left h2 { font-size: clamp(30px, 4vw, 48px); color: #fff; margin-bottom: 20px; }
-        .v-cta-left p { color: #a9a9b2; font-size: 16px; line-height: 1.8; max-width: 420px; margin-bottom: 36px; }
-
-        .v-benefit-row { display: flex; align-items: center; gap: 14px; padding: 16px 0; border-top: 1px solid var(--v-line); }
-        .v-benefit-row:last-child { border-bottom: 1px solid var(--v-line); }
-        .v-benefit-row i { color: var(--v-accent); font-size: 18px; }
-        .v-benefit-row span { font-size: 14px; color: #cfcfd4; }
-
-        .v-field { position: relative; margin-bottom: 30px; }
-        .v-field label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #7a7a82; margin-bottom: 10px; }
-        .v-field input, .v-field select, .v-field textarea {
-            width: 100%; background: transparent; border: none; border-bottom: 1.5px solid var(--v-line);
-            color: #fff; font-family: var(--v-font-body); font-size: 16px; padding: 8px 2px 12px;
-            border-radius: 0; transition: border-color .3s ease;
-        }
-        .v-field select option { color: #000; }
-        .v-field input:focus, .v-field select:focus, .v-field textarea:focus {
-            outline: none; border-color: var(--v-accent);
-        }
-        .v-field textarea { resize: vertical; min-height: 70px; }
-
-        .v-submit { width: 100%; justify-content: center; margin-top: 10px; }
-
-        /* ===== Footer ===== */
-        .v-footer { padding: 40px 0; text-align: center; font-size: 13px; color: #5a5a64; border-top: 1px solid var(--v-line); }
-
-        /* ===== Sticky mobile bar ===== */
-        .v-sticky-bar {
-            position: fixed; bottom: 0; left: 0; right: 0; z-index: 1040;
-            background: #0a0a0c; border-top: 1px solid var(--v-line);
-            padding: 12px 20px; display: flex; gap: 10px;
-        }
-        .v-sticky-bar a { flex: 1; text-align: center; padding: 13px; border-radius: 999px; font-weight: 700; font-size: 13.5px; text-decoration: none; }
-        .v-sticky-call { border: 1.5px solid #fff; color: #fff; }
-        .v-sticky-wa { background: #25d366; color: #fff; }
-
-        @media (min-width: 992px) {
-            .v-sticky-bar { display: none; }
-            body { padding-bottom: 0; }
-        }
+        .e-hero-greet .e-testi-mark { font-size: 44px; margin-bottom: 2px; color: var(--e-gold); opacity: .5; }
+        .e-hero-greet p { font-size: 13.5px; line-height: 1.7; color: rgba(27,24,21,.72); margin-bottom: 12px; font-style: italic; }
+        .e-hero-greet strong { display: block; font-family: var(--e-font-display); font-size: 15px; }
+        .e-hero-greet span { font-size: 12px; color: rgba(27,24,21,.55); }
 
         @media (max-width: 767px) {
-            .v-section { padding: 80px 0; }
-            .v-hero-vehicle { position: relative; width: 100%; right: 0; margin-top: 40px; }
-            .v-hero { min-height: auto; padding: 130px 0 60px; flex-direction: column; }
-            .v-hero-content { padding-top: 0; }
-            .v-spotlight-block { padding: 40px 24px; min-height: auto; }
-            .v-spotlight-media-inner { height: 46vh; position: relative; top: auto; }
+            .e-hero-profile { max-width: 260px; }
+            .e-hero-greet { margin-left: 10px; margin-right: 0; }
         }
+
+        .e-scroll-cue { position: absolute; bottom: 34px; left: 24px; display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(247,243,236,.4); z-index: 2; }
+        .e-scroll-cue::before { content: ''; width: 1px; height: 44px; background: linear-gradient(var(--e-gold-light), transparent); }
+
+        /* ===== Trust marquee ===== */
+        .e-marquee-wrap { padding: 24px 0; overflow: hidden; border-top: 1px solid var(--e-line-d); border-bottom: 1px solid var(--e-line-d); }
+        .e-marquee { display: flex; width: max-content; animation: eMarquee 24s linear infinite; }
+        .e-marquee:hover { animation-play-state: paused; }
+        .e-marquee-item { display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 13.5px; letter-spacing: .3px; padding: 0 30px; white-space: nowrap; color: rgba(247,243,236,.75); }
+        .e-marquee-item i { color: var(--e-gold); }
+        @keyframes eMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* ===== Feature rows (Services, minimal no card) ===== */
+        .e-feature { display: flex; gap: 18px; align-items: flex-start; }
+        .e-feature-icon {
+            width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+            background: rgba(182, 144, 79, .12); color: var(--e-gold);
+            display: flex; align-items: center; justify-content: center; font-size: 19px;
+        }
+        .e-feature h4 { font-size: 16.5px; margin-bottom: 6px; }
+        .e-feature p { font-size: 14px; margin: 0; line-height: 1.7; }
+
+        /* ===== Spotlight ===== */
+        .e-spotlight-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+        @media (min-width: 992px) { .e-spotlight-grid { grid-template-columns: 1fr 1fr; gap: 70px; } }
+        .e-spotlight-img { border-radius: 4px; overflow: hidden; aspect-ratio: 4/3; }
+        .e-spotlight-img img { width: 100%; height: 100%; object-fit: cover; }
+        .e-spotlight-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--e-gold); font-weight: 600; margin-bottom: 16px; }
+        .e-spotlight-text h3 { font-size: clamp(26px, 3.2vw, 38px); margin-bottom: 16px; }
+        .e-spotlight-text p.e-desc { font-size: 15.5px; line-height: 1.8; max-width: 440px; margin-bottom: 26px; }
+
+        .e-spec-list { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 12px; }
+        .e-spec-list li { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--e-line-d); font-size: 13.5px; }
+
+        .e-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; }
+        .e-price-now { font-family: var(--e-font-display); font-size: 25px; font-weight: 600; }
+        .e-price-old { font-size: 14px; color: rgba(247,243,236,.4); text-decoration: line-through; }
+        .e-price-badge { font-size: 11px; font-weight: 700; color: var(--e-ink); background: var(--e-gold); padding: 3px 10px; border-radius: 3px; }
+
+        /* ===== Explore lineup ===== */
+        .e-product-item { position: relative; }
+        .e-product-img { position: relative; overflow: hidden; aspect-ratio: 4/3; border-radius: 3px; }
+        .e-product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.16,1,.3,1); }
+        .e-product-item:hover .e-product-img img { transform: scale(1.06); }
+        .e-product-meta { display: flex; justify-content: space-between; align-items: baseline; padding-top: 16px; }
+        .e-product-meta h4 { font-size: 16.5px; }
+        .e-product-meta span { font-size: 13.5px; }
+
+        /* ===== Promo (countdown) ===== */
+        .e-promo-card { display: grid; grid-template-columns: 1fr; gap: 0; overflow: hidden; border-radius: 4px; margin-bottom: 28px; background: var(--e-ink-2); }
+        @media (min-width: 768px) { .e-promo-card { grid-template-columns: .9fr 1.1fr; } }
+        .e-promo-img { aspect-ratio: 16/10; overflow: hidden; }
+        .e-promo-img img { width: 100%; height: 100%; object-fit: cover; }
+        .e-promo-body { padding: 36px; display: flex; flex-direction: column; justify-content: center; }
+        .e-promo-body h3 { font-size: 24px; margin-bottom: 10px; }
+        .e-promo-body p { font-size: 14.5px; margin-bottom: 22px; }
+
+        .e-countdown { display: flex; gap: 14px; margin-bottom: 26px; }
+        .e-countdown-unit { text-align: center; }
+        .e-countdown-num { font-family: var(--e-font-display); font-size: 26px; font-weight: 600; color: var(--e-gold-light); line-height: 1; }
+        .e-countdown-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: rgba(247,243,236,.45); margin-top: 4px; }
+
+        /* ===== Gallery ===== */
+        .e-gallery-item { position: relative; overflow: hidden; border-radius: 3px; aspect-ratio: 1/1; }
+        .e-gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease, filter .4s ease; filter: brightness(.9); }
+        .e-gallery-item:hover img { transform: scale(1.08); filter: brightness(1); }
+        .e-gallery-overlay {
+            position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 18px;
+            background: linear-gradient(0deg, rgba(27,24,21,.85), transparent 55%);
+        }
+        .e-gallery-overlay h4 { color: #fff; font-size: 14.5px; }
+        .e-gallery-overlay span { color: rgba(255,255,255,.65); font-size: 12px; display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+
+        /* ===== Delivery (serah terima) ===== */
+        .e-delivery-item { }
+        .e-delivery-img { border-radius: 3px; overflow: hidden; aspect-ratio: 5/4; margin-bottom: 14px; }
+        .e-delivery-img img { width: 100%; height: 100%; object-fit: cover; }
+        .e-delivery-item h4 { font-size: 15px; margin-bottom: 4px; }
+        .e-delivery-item span { font-size: 12.5px; }
+        .e-delivery-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--e-gold); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .5px; }
+
+        /* ===== Stats ===== */
+        .e-stats-row { display: flex; flex-wrap: wrap; gap: 54px; }
+        .e-stat-num { font-family: var(--e-font-display); font-size: clamp(34px, 4.4vw, 52px); font-weight: 600; }
+        .e-stat-label { font-size: 12.5px; letter-spacing: .5px; margin-top: 8px; }
+
+        /* ===== Testimonial ===== */
+        .e-testi-mark { font-family: var(--e-font-display); font-size: 80px; color: var(--e-gold); opacity: .35; line-height: .4; margin-bottom: 18px; }
+        .e-testi-text { font-size: clamp(19px, 2.4vw, 27px); font-family: var(--e-font-display); font-weight: 400; font-style: italic; line-height: 1.55; max-width: 760px; margin-bottom: 30px; }
+        .e-testi-name { font-weight: 600; font-size: 14.5px; }
+        .e-testi-job { font-size: 13px; }
+        .e-testi-stars { color: var(--e-gold); font-size: 13px; margin-top: 6px; }
+
+        /* ===== FAQ ===== */
+        .e-faq-item { border-bottom: 1px solid var(--e-line-l); }
+        .e-faq-btn { width: 100%; text-align: left; background: none; border: none; padding: 26px 0; display: flex; justify-content: space-between; align-items: center; font-family: var(--e-font-display); font-weight: 500; font-size: 18px; color: var(--e-ink); cursor: pointer; }
+        .e-faq-icon { font-size: 18px; color: var(--e-gold); transition: transform .35s ease; flex-shrink: 0; margin-left: 20px; }
+        .e-faq-btn[aria-expanded="true"] .e-faq-icon { transform: rotate(135deg); }
+        .e-faq-panel { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+        .e-faq-panel-inner { padding-bottom: 26px; font-size: 14.5px; line-height: 1.8; max-width: 640px; color: rgba(27,24,21,.65); }
+
+        /* ===== CTA / Form ===== */
+        .e-cta-grid { display: grid; grid-template-columns: 1fr; gap: 60px; }
+        @media (min-width: 992px) { .e-cta-grid { grid-template-columns: .85fr 1.15fr; } }
+        .e-cta-left h2 { font-size: clamp(30px, 4vw, 46px); margin-bottom: 20px; }
+        .e-cta-left p { font-size: 16px; line-height: 1.8; max-width: 420px; margin-bottom: 36px; }
+        .e-benefit-row { display: flex; align-items: center; gap: 14px; padding: 16px 0; border-top: 1px solid var(--e-line-d); }
+        .e-benefit-row:last-child { border-bottom: 1px solid var(--e-line-d); }
+        .e-benefit-row i { color: var(--e-gold); font-size: 18px; }
+        .e-benefit-row span { font-size: 14px; }
+
+        .e-field { position: relative; margin-bottom: 28px; }
+        .e-field label { display: block; font-size: 11.5px; letter-spacing: 1px; text-transform: uppercase; color: rgba(247,243,236,.5); margin-bottom: 10px; }
+        .e-field input, .e-field select, .e-field textarea {
+            width: 100%; background: transparent; border: none; border-bottom: 1.5px solid var(--e-line-d);
+            color: var(--e-cream); font-family: var(--e-font-body); font-size: 16px; padding: 8px 2px 12px; border-radius: 0;
+            transition: border-color .3s ease;
+        }
+        .e-field select option { color: #000; }
+        .e-field input:focus, .e-field select:focus, .e-field textarea:focus { outline: none; border-color: var(--e-gold); }
+        .e-field textarea { resize: vertical; min-height: 70px; }
+        .e-submit { width: 100%; justify-content: center; margin-top: 8px; }
+
+        /* ===== Footer ===== */
+        .e-footer { padding: 40px 0; text-align: center; font-size: 13px; color: rgba(247,243,236,.4); border-top: 1px solid var(--e-line-d); }
+
+        /* ===== Sticky mobile bar ===== */
+        .e-sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1040; background: var(--e-ink); border-top: 1px solid var(--e-line-d); padding: 12px 20px; display: flex; gap: 10px; }
+        .e-sticky-bar a { flex: 1; text-align: center; padding: 13px; border-radius: 3px; font-weight: 600; font-size: 13.5px; text-decoration: none; }
+        .e-sticky-call { border: 1.5px solid var(--e-cream); color: var(--e-cream); }
+        .e-sticky-wa { background: #25d366; color: #fff; }
+
+        @media (min-width: 992px) { .e-sticky-bar { display: none; } body { padding-bottom: 0; } }
+        @media (max-width: 767px) { .e-section { padding: 70px 0; } .e-hero { min-height: auto; padding: 130px 0 50px; } }
     </style>
 </head>
 
 <body>
 
-    <div class="v-topbar">
-        <a href="#" class="v-topbar-brand">{{ $profile->name ?? config('settings.site_name') }}</a>
-        <a href="{{ $profile->wa_url }}" target="_blank" class="v-topbar-cta"><i class="bi bi-whatsapp"></i> {{ $profile->phone ?? 'Chat Kami' }}</a>
+    <div class="e-topbar">
+        <a href="#" class="e-topbar-brand">{{ $profile->name ?? config('settings.site_name') }}</a>
+        <a href="{{ $profile->wa_url }}" target="_blank" class="e-topbar-cta"><i class="bi bi-whatsapp"></i> {{ $profile->phone ?? 'Chat Kami' }}</a>
     </div>
 
     {{-- ============ HERO ============ --}}
-    <section class="v-hero">
-        <div class="v-hero-glow" data-parallax="glow"></div>
-        <div class="v-hero-grid"></div>
+    <section class="e-hero">
+        <div class="e-hero-wash"></div>
+        <div class="e-wrap e-hero-content">
+            <div class="e-hero-grid">
+                <div>
+                    <div class="e-hero-eyebrow e-reveal"><span class="e-dot"></span> {{ $landingPage->hero_badge ?: 'Digital Showroom' }}</div>
+                    <h1 class="e-reveal">{!! nl2br(e($landingPage->headline)) !!}</h1>
+                    @if($landingPage->subheadline)
+                    <p class="e-hero-desc e-reveal">{{ $landingPage->subheadline }}</p>
+                    @endif
+                    <div class="e-hero-actions e-reveal">
+                        <a href="#konsultasi" class="e-btn e-btn-gold">{{ $landingPage->hero_cta_label ?: 'Konsultasi Sekarang' }}</a>
+                        @if($featuredVehicle)
+                        <a href="#spotlight" class="e-btn e-btn-line">Lihat Unit Pilihan</a>
+                        @endif
+                    </div>
+                </div>
 
-        <div class="v-wrap v-hero-content">
-            <div class="v-hero-eyebrow v-reveal"><span class="v-dot"></span> {{ $landingPage->hero_badge ?: 'Digital Showroom' }}</div>
-            <h1 class="v-reveal">{{ $landingPage->headline }}</h1>
-            @if($landingPage->subheadline)
-            <p class="v-hero-desc v-reveal">{{ $landingPage->subheadline }}</p>
-            @endif
-            <div class="v-hero-actions v-reveal">
-                <a href="#konsultasi" class="v-btn v-btn-solid">{{ $landingPage->hero_cta_label ?: 'Konsultasi Sekarang' }}</a>
-                @if($featuredVehicle)
-                <a href="#spotlight" class="v-btn v-btn-line"><i class="bi bi-arrow-down"></i> Lihat Mobilnya</a>
+                @if($profile->image_url ?? null)
+                <div class="e-hero-profile e-reveal">
+                    <div class="e-hero-profile-img">
+                        <img src="{{ $profile->image_url }}" alt="{{ $profile->name }}">
+                    </div>
+                    @if($profile->bio)
+                    <div class="e-hero-greet">
+                        <div class="e-testi-mark">&rdquo;</div>
+                        <p>{{ Str::limit(strip_tags($profile->bio), 150) }}</p>
+                        <strong>{{ $profile->name }}</strong>
+                        @if($profile->job_title)<span>{{ $profile->job_title }}</span>@endif
+                    </div>
+                    @endif
+                </div>
                 @endif
             </div>
         </div>
+        <div class="e-scroll-cue">Scroll</div>
+    </section>
 
-        @php $heroImg = $featuredVehicle ? ($featuredVehicle->header_image_url ?: $featuredVehicle->image_url) : ($landingPage->hero_image_url ?: null); @endphp
-        @if($heroImg)
-        <div class="v-hero-vehicle" data-parallax="car">
-            <img src="{{ $heroImg }}" alt="{{ $featuredVehicle->name ?? $landingPage->headline }}">
+    {{-- ============ TRUST MARQUEE ============ --}}
+    @if(!empty($landingPage->trust_badges))
+    <div class="e-dark e-marquee-wrap">
+        <div class="e-marquee">
+            @for($r = 0; $r < 2; $r++)
+                @foreach($landingPage->trust_badges as $badge)
+                <span class="e-marquee-item"><i class="bi bi-gem"></i> {{ $badge }}</span>
+                @endforeach
+            @endfor
         </div>
-        @endif
+    </div>
+    @endif
 
-        <div class="v-scroll-cue">Scroll untuk eksplorasi</div>
-    </section>
-
-    {{-- ============ STATEMENT ============ --}}
-    <section class="v-statement v-wrap">
-        <h2 class="v-reveal">Dibuat untuk mereka yang <em>tidak mau menunggu lama</em> demi mobil yang tepat, <em>bukan sekadar mobil yang ada.</em></h2>
-    </section>
-
-    {{-- ============ USP (dari admin, tab "Kenapa Pilih Kami") ============ --}}
-    @if(!empty($landingPage->usp_items))
-    <section class="v-section">
-        <div class="v-wrap">
-            <span class="v-eyebrow v-reveal">Kenapa Pilih Kami</span>
+    {{-- ============ SERVICES (data nyata) ============ --}}
+    @if($services->count())
+    <section class="e-light e-section">
+        <div class="e-wrap">
+            <div class="e-section-head e-reveal">
+                <span class="e-eyebrow">Layanan Kami</span>
+                <h2>Bukan cuma jual mobil, kami dampingi sampai tuntas</h2>
+            </div>
             <div class="row g-4 g-lg-5">
-                @foreach($landingPage->usp_items as $item)
-                <div class="col-md-6 col-lg-3 v-reveal">
-                    <div class="v-feature-item">
-                        <div class="v-feature-icon"><i class="{{ $item['icon'] ?? 'bi bi-check-circle' }}"></i></div>
+                @foreach($services as $service)
+                <div class="col-md-6 col-lg-4 e-reveal">
+                    <div class="e-feature">
+                        <div class="e-feature-icon"><i class="bi {{ $service->icon }}"></i></div>
                         <div>
-                            <h4>{{ $item['title'] ?? '' }}</h4>
-                            <p>{{ $item['desc'] ?? '' }}</p>
+                            <h4>{{ $service->title }}</h4>
+                            @if($service->desc)<p class="e-muted">{{ Str::limit(strip_tags($service->desc), 110) }}</p>@endif
                         </div>
                     </div>
                 </div>
@@ -447,49 +378,39 @@
     </section>
     @endif
 
-    {{-- ============ SPOTLIGHT (featured vehicle) ============ --}}
+    {{-- ============ SPOTLIGHT ============ --}}
     @if($featuredVehicle)
-    <section id="spotlight" class="v-spotlight">
-        <div class="v-spotlight-grid">
-            <div class="v-spotlight-media">
-                <div class="v-spotlight-media-inner">
-                    <img src="{{ $featuredVehicle->header_image_url ?: $featuredVehicle->image_url }}" alt="{{ $featuredVehicle->name }}">
+    <section id="spotlight" class="e-dark e-section">
+        <div class="e-wrap">
+            <div class="e-spotlight-grid">
+                <div class="e-spotlight-img e-reveal">
+                    <img src="{{ $featuredVehicle->image_url }}" alt="{{ $featuredVehicle->name }}">
                 </div>
-            </div>
+                <div class="e-spotlight-text e-reveal">
+                    <span class="e-spotlight-kicker">Unit Pilihan</span>
+                    <h3>{{ $featuredVehicle->name }}</h3>
+                    @if($featuredVehicle->tagline)<p class="e-desc e-muted">{{ $featuredVehicle->tagline }}</p>@endif
 
-            <div class="v-spotlight-text">
-                <div class="v-spotlight-block v-reveal">
-                    <span class="v-spotlight-kicker">Unit Pilihan</span>
-                    <h3>{{ $featuredVehicle->hero_name ?: $featuredVehicle->name }}</h3>
-                    @if($featuredVehicle->tagline)
-                    <p>{{ $featuredVehicle->tagline }}</p>
-                    @endif
-
-                    <div class="v-price-row">
+                    <div class="e-price-row">
                         @if($featuredVehicle->disc > 0)
-                        <span class="v-price-now">{{ $featuredVehicle->special_min_price }}</span>
-                        <span class="v-price-old">{{ $featuredVehicle->min_price }}</span>
-                        <span class="v-price-badge">Promo</span>
+                        <span class="e-price-now">{{ $featuredVehicle->special_min_price }}</span>
+                        <span class="e-price-old">{{ $featuredVehicle->min_price }}</span>
+                        <span class="e-price-badge">Promo</span>
                         @else
-                        <span class="v-price-now">{{ $featuredVehicle->min_price }}</span>
+                        <span class="e-price-now">{{ $featuredVehicle->min_price }}</span>
                         @endif
                     </div>
 
-                    @php $featuredVehicleViews = $featuredVehicle->visitStats()->count(); @endphp
-                    @if($featuredVehicleViews > 0)
-                    <div class="v-view-count"><i class="bi bi-eye-fill"></i> Dilihat {{ number_format($featuredVehicleViews) }} kali oleh calon pembeli lain</div>
-                    @endif
-
-                    <ul class="v-spec-list">
-                        <li><span>Kategori</span><span>{{ $featuredVehicle->product_category->category ?? '-' }}</span></li>
+                    <ul class="e-spec-list">
+                        <li><span class="e-muted">Kategori</span><span>{{ $featuredVehicle->product_category->category ?? '-' }}</span></li>
                         @if($featuredVehicle->product_type->count())
-                        <li><span>Varian Tersedia</span><span>{{ $featuredVehicle->product_type->pluck('type')->implode(' / ') }}</span></li>
+                        <li><span class="e-muted">Varian</span><span>{{ $featuredVehicle->product_type->pluck('type')->implode(' / ') }}</span></li>
                         @endif
                     </ul>
 
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="{{ route('product.detail', $featuredVehicle->slug) }}" class="v-btn v-btn-line">Detail Lengkap</a>
-                        <a href="#konsultasi" class="v-btn v-btn-solid lp-pilih-produk" data-product-id="{{ $featuredVehicle->id }}">Tanya Harga</a>
+                        <a href="{{ route('product.detail', $featuredVehicle->slug) }}" class="e-btn e-btn-line">Detail Lengkap</a>
+                        <a href="#konsultasi" class="e-btn e-btn-gold lp-pilih-produk" data-product-id="{{ $featuredVehicle->id }}">Tanya Harga</a>
                     </div>
                 </div>
             </div>
@@ -499,22 +420,22 @@
 
     {{-- ============ EXPLORE LINEUP ============ --}}
     @if($exploreProducts->count())
-    <section class="v-section">
-        <div class="v-wrap">
-            <span class="v-eyebrow v-reveal">Jajaran Lainnya</span>
-            <h2 class="v-story-heading v-reveal">Mobil mana yang <span style="color:var(--v-accent);">terasa seperti Anda?</span></h2>
-
+    <section class="e-light e-section">
+        <div class="e-wrap">
+            <div class="e-section-head e-reveal">
+                <span class="e-eyebrow">Jajaran Lainnya</span>
+                <h2>Pilihan lain yang mungkin lebih cocok untuk Anda</h2>
+            </div>
             <div class="row g-4">
                 @foreach($exploreProducts as $product)
-                <div class="col-md-6 col-lg-4 v-reveal">
-                    <div class="v-explore-item">
-                        <div class="v-explore-img">
+                <div class="col-md-6 col-lg-4 e-reveal">
+                    <div class="e-product-item">
+                        <div class="e-product-img">
                             <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy">
-                            <a href="{{ route('product.detail', $product->slug) }}" class="v-explore-link"><i class="bi bi-arrow-up-right"></i></a>
                         </div>
-                        <div class="v-explore-meta">
+                        <div class="e-product-meta">
                             <h4>{{ $product->name }}</h4>
-                            <span>{{ $product->min_price }}</span>
+                            <span class="e-muted">{{ $product->min_price }}</span>
                         </div>
                     </div>
                 </div>
@@ -524,25 +445,58 @@
     </section>
     @endif
 
-    {{-- ============ LAYANAN (data nyata dari menu Service admin) ============ --}}
-    @if($services->count())
-    <section class="v-section v-light">
-        <div class="v-wrap">
-            <span class="v-eyebrow v-reveal">Layanan Kami</span>
-            <h2 class="v-story-heading v-reveal">Bukan cuma jual mobil, <span style="color:var(--v-accent);">kami dampingi sampai tuntas.</span></h2>
+    {{-- ============ PROMO (countdown) ============ --}}
+    @if($promos->count())
+    <section class="e-dark-2 e-section">
+        <div class="e-wrap">
+            <div class="e-section-head e-reveal">
+                <span class="e-eyebrow">Promo Berjalan</span>
+                <h2>Penawaran terbatas, jangan sampai terlewat</h2>
+            </div>
+            @foreach($promos as $promo)
+            <div class="e-promo-card e-reveal">
+                @if($promo->promo_image_url)
+                <div class="e-promo-img"><img src="{{ $promo->promo_image_url }}" alt="{{ $promo->promo }}" loading="lazy"></div>
+                @endif
+                <div class="e-promo-body">
+                    <h3>{{ $promo->promo }}</h3>
+                    @if($promo->desc)<p class="e-muted">{{ Str::limit(strip_tags($promo->desc), 140) }}</p>@endif
 
-            <div class="row g-4 g-lg-5">
-                @foreach($services as $service)
-                <div class="col-md-6 col-lg-4 v-reveal">
-                    <div class="v-feature-item">
-                        <div class="v-feature-icon"><i class="bi {{ $service->icon }}"></i></div>
-                        <div>
-                            <h4>{{ $service->title }}</h4>
-                            @if($service->desc)
-                            <p>{{ Str::limit(strip_tags($service->desc), 110) }}</p>
-                            @endif
+                    @if($promo->effective_date)
+                    <div class="e-countdown" data-countdown="{{ $promo->effective_date->format('Y-m-d') }} 23:59:59">
+                        <div class="e-countdown-unit"><div class="e-countdown-num" data-unit="days">00</div><div class="e-countdown-label">Hari</div></div>
+                        <div class="e-countdown-unit"><div class="e-countdown-num" data-unit="hours">00</div><div class="e-countdown-label">Jam</div></div>
+                        <div class="e-countdown-unit"><div class="e-countdown-num" data-unit="minutes">00</div><div class="e-countdown-label">Menit</div></div>
+                        <div class="e-countdown-unit"><div class="e-countdown-num" data-unit="seconds">00</div><div class="e-countdown-label">Detik</div></div>
+                    </div>
+                    @endif
+
+                    <a href="#konsultasi" class="e-btn e-btn-gold">Klaim Promo Ini</a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </section>
+    @endif
+
+    {{-- ============ GALLERY ============ --}}
+    @if($galleries->count())
+    <section class="e-light e-section">
+        <div class="e-wrap">
+            <div class="e-section-head e-reveal">
+                <span class="e-eyebrow">Galeri</span>
+                <h2>Momen di showroom &amp; acara kami</h2>
+            </div>
+            <div class="row g-3">
+                @foreach($galleries as $gallery)
+                <div class="col-6 col-lg-4 e-reveal">
+                    <a href="{{ route('gallery.show', $gallery->slug) }}" class="e-gallery-item text-decoration-none">
+                        <img src="{{ $gallery->cover_url }}" alt="{{ $gallery->title }}" loading="lazy">
+                        <div class="e-gallery-overlay">
+                            <h4>{{ $gallery->title }}</h4>
+                            <span><i class="bi bi-heart-fill"></i> {{ $gallery->loves }}</span>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 @endforeach
             </div>
@@ -550,61 +504,58 @@
     </section>
     @endif
 
-    {{-- ============ CATEGORY STORYTELLING ============ --}}
-    @foreach($categoryShowcase as $category)
-    <section class="v-story-section {{ $loop->even ? 'v-light' : '' }}">
-        <div class="v-wrap">
-            <span class="v-eyebrow v-reveal">Dibuat untuk</span>
-            <h2 class="v-story-heading v-reveal">{{ $category->category }}</h2>
-
-            <div class="v-story-row">
-                @foreach($category->products as $product)
-                <div class="v-story-card v-reveal">
-                    <div class="v-explore-img">
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy">
-                        <a href="{{ route('product.detail', $product->slug) }}" class="v-explore-link"><i class="bi bi-arrow-up-right"></i></a>
+    {{-- ============ SERAH TERIMA TERBARU ============ --}}
+    @if($deliveries->count())
+    <section class="e-dark e-section">
+        <div class="e-wrap">
+            <div class="e-section-head e-reveal">
+                <span class="e-eyebrow">Bukti Nyata</span>
+                <h2>Serah Terima Unit Terbaru</h2>
+                <p class="e-muted">Bukan janji, ini unit yang benar-benar sudah kami serahkan ke pelanggan.</p>
+            </div>
+            <div class="row g-4">
+                @foreach($deliveries as $delivery)
+                @php $deliveryImg = $delivery->getFirstMediaUrl('images'); @endphp
+                @if($deliveryImg)
+                <div class="col-6 col-lg-4 e-reveal">
+                    <div class="e-delivery-item">
+                        <div class="e-delivery-img"><img src="{{ $deliveryImg }}" alt="Serah terima {{ $delivery->product->name ?? '' }}" loading="lazy"></div>
+                        <div class="e-delivery-badge"><i class="bi bi-patch-check-fill"></i> Sudah Diserahkan</div>
+                        @if($delivery->product)<h4>{{ $delivery->product->name }}</h4>@endif
+                        <span class="e-muted">{{ $delivery->created_at->translatedFormat('d F Y') }}</span>
                     </div>
-                    <h4 style="{{ $loop->parent->even ? 'color:var(--v-ink)' : 'color:#fff' }}">{{ $product->name }}</h4>
-                    <span>{{ $product->min_price }}</span>
                 </div>
+                @endif
                 @endforeach
             </div>
         </div>
     </section>
-    @endforeach
-
-    {{-- ============ PROMO ============ --}}
-    @if($promo)
-    <section class="v-promo">
-        <div class="v-wrap">
-            <span class="v-eyebrow v-reveal">Promo Berjalan</span>
-            <h2 class="v-reveal">{{ $promo->promo }}</h2>
-            @if($promo->desc ?? null)
-            <p class="v-reveal">{{ Str::limit(strip_tags($promo->desc), 150) }}</p>
-            @endif
-            <a href="#konsultasi" class="v-btn v-btn-solid v-reveal">Klaim Promo Ini</a>
-        </div>
-    </section>
     @endif
 
-    {{-- ============ STATS (data asli) ============ --}}
-    <section class="v-section" style="padding-top:60px; padding-bottom:60px;">
-        <div class="v-wrap">
-            <div class="v-stats-row">
-                <div class="v-reveal">
-                    <div class="v-stat-num"><span class="v-count" data-count="{{ $stats['products_count'] }}">0</span>+</div>
-                    <div class="v-stat-label">Pilihan Mobil Tersedia</div>
+    {{-- ============ STATS ============ --}}
+    <section class="e-light e-section" style="padding-top:70px; padding-bottom:70px;">
+        <div class="e-wrap">
+            <div class="e-stats-row">
+                <div class="e-reveal">
+                    <div class="e-stat-num"><span class="e-count" data-count="{{ $stats['products_count'] }}">0</span>+</div>
+                    <div class="e-stat-label e-muted">Pilihan Mobil</div>
                 </div>
+                @if($stats['deliveries_count'] > 0)
+                <div class="e-reveal">
+                    <div class="e-stat-num"><span class="e-count" data-count="{{ $stats['deliveries_count'] }}">0</span>+</div>
+                    <div class="e-stat-label e-muted">Unit Diserahkan</div>
+                </div>
+                @endif
                 @if($stats['testimonies_count'] > 0)
-                <div class="v-reveal">
-                    <div class="v-stat-num"><span class="v-count" data-count="{{ $stats['testimonies_count'] }}">0</span>+</div>
-                    <div class="v-stat-label">Cerita Pelanggan</div>
+                <div class="e-reveal">
+                    <div class="e-stat-num"><span class="e-count" data-count="{{ $stats['testimonies_count'] }}">0</span>+</div>
+                    <div class="e-stat-label e-muted">Cerita Pelanggan</div>
                 </div>
                 @endif
                 @if($stats['avg_rating'])
-                <div class="v-reveal">
-                    <div class="v-stat-num">{{ $stats['avg_rating'] }}<span style="font-size:.5em;">/5</span></div>
-                    <div class="v-stat-label">Rata-rata Rating</div>
+                <div class="e-reveal">
+                    <div class="e-stat-num">{{ $stats['avg_rating'] }}<span style="font-size:.5em;">/5</span></div>
+                    <div class="e-stat-label e-muted">Rata-rata Rating</div>
                 </div>
                 @endif
             </div>
@@ -613,10 +564,9 @@
 
     {{-- ============ TESTIMONIAL ============ --}}
     @if($testimonies->count())
-    <section class="v-section" style="padding-top:60px;">
-        <div class="v-wrap text-center">
-            <span class="v-eyebrow v-reveal">Testimoni</span>
-
+    <section class="e-dark e-section">
+        <div class="e-wrap">
+            <span class="e-eyebrow e-reveal">Testimoni</span>
             <div class="swiper init-swiper">
                 <script type="application/json" class="swiper-config">
                     { "loop": true, "speed": 700, "autoplay": { "delay": 5000, "disableOnInteraction": false }, "slidesPerView": 1 }
@@ -624,11 +574,11 @@
                 <div class="swiper-wrapper">
                     @foreach($testimonies as $testimony)
                     <div class="swiper-slide">
-                        <div class="v-testi-quote-mark">&rdquo;</div>
-                        <p class="v-testi-text">{{ Str::limit(strip_tags($testimony->message), 180) }}</p>
-                        <div class="v-testi-name">{{ $testimony->name }}</div>
-                        @if($testimony->job)<div class="v-testi-job">{{ $testimony->job }}</div>@endif
-                        <div class="v-testi-stars">
+                        <div class="e-testi-mark">&rdquo;</div>
+                        <p class="e-testi-text">{{ Str::limit(strip_tags($testimony->message), 180) }}</p>
+                        <div class="e-testi-name">{{ $testimony->name }}</div>
+                        @if($testimony->job)<div class="e-testi-job e-muted">{{ $testimony->job }}</div>@endif
+                        <div class="e-testi-stars">
                             @for($i = 0; $i < ($testimony->rating ?: 5); $i++)<i class="bi bi-star-fill"></i>@endfor
                         </div>
                     </div>
@@ -641,20 +591,21 @@
 
     {{-- ============ FAQ ============ --}}
     @if(!empty($landingPage->faqs))
-    <section class="v-section v-light">
-        <div class="v-wrap" style="max-width:760px;">
-            <span class="v-eyebrow v-reveal">FAQ</span>
-            <h2 class="v-story-heading v-reveal" style="font-size:clamp(28px,3.6vw,42px);">Pertanyaan Umum</h2>
-
+    <section class="e-light e-section">
+        <div class="e-wrap" style="max-width:760px;">
+            <div class="e-section-head e-reveal">
+                <span class="e-eyebrow">FAQ</span>
+                <h2>Pertanyaan Umum</h2>
+            </div>
             <div>
                 @foreach($landingPage->faqs as $faq)
-                <div class="v-faq-item v-reveal">
-                    <button class="v-faq-btn" type="button" aria-expanded="{{ $loop->first ? 'true' : 'false' }}" data-faq-toggle>
+                <div class="e-faq-item e-reveal">
+                    <button class="e-faq-btn" type="button" aria-expanded="{{ $loop->first ? 'true' : 'false' }}" data-faq-toggle>
                         {{ $faq['question'] ?? '' }}
-                        <span class="v-faq-icon"><i class="bi bi-plus"></i></span>
+                        <span class="e-faq-icon"><i class="bi bi-plus"></i></span>
                     </button>
-                    <div class="v-faq-panel" style="{{ $loop->first ? 'max-height:400px;' : '' }}">
-                        <div class="v-faq-panel-inner">{{ $faq['answer'] ?? '' }}</div>
+                    <div class="e-faq-panel" style="{{ $loop->first ? 'max-height:400px;' : '' }}">
+                        <div class="e-faq-panel-inner">{{ $faq['answer'] ?? '' }}</div>
                     </div>
                 </div>
                 @endforeach
@@ -665,35 +616,27 @@
 
     {{-- ============ CTA / FORM ============ --}}
     @php $allProducts = $featuredVehicle ? $exploreProducts->prepend($featuredVehicle) : $exploreProducts; @endphp
-    <section id="konsultasi" class="v-cta-section">
-        <div class="v-wrap">
-            <div class="v-cta-grid">
-                <div class="v-cta-left v-reveal">
-                    <span class="v-eyebrow">Mulai Sekarang</span>
+    <section id="konsultasi" class="e-dark e-section" style="padding-bottom:90px;">
+        <div class="e-wrap">
+            <div class="e-cta-grid">
+                <div class="e-cta-left e-reveal">
+                    <span class="e-eyebrow">Mulai Sekarang</span>
                     <h2>{{ $landingPage->form_title ?: 'Konsultasi Gratis Sekarang' }}</h2>
-                    <p>{{ $landingPage->form_subtitle ?: 'Isi data di bawah, tim kami akan segera menghubungi Anda via WhatsApp.' }}</p>
+                    <p class="e-muted">{{ $landingPage->form_subtitle ?: 'Isi data di bawah, tim kami akan segera menghubungi Anda via WhatsApp.' }}</p>
 
-                    <div class="v-benefit-row"><i class="bi bi-lightning-charge"></i><span>Respon cepat, dibalas kurang dari 1 jam</span></div>
-                    <div class="v-benefit-row"><i class="bi bi-calculator"></i><span>Simulasi cicilan sesuai budget Anda</span></div>
-                    <div class="v-benefit-row"><i class="bi bi-shield-check"></i><span>Konsultasi 100% gratis, tanpa paksaan</span></div>
+                    <div class="e-benefit-row"><i class="bi bi-lightning-charge"></i><span>Respon cepat, dibalas kurang dari 1 jam</span></div>
+                    <div class="e-benefit-row"><i class="bi bi-calculator"></i><span>Simulasi cicilan sesuai budget Anda</span></div>
+                    <div class="e-benefit-row"><i class="bi bi-shield-check"></i><span>Konsultasi 100% gratis, tanpa paksaan</span></div>
                 </div>
 
-                <div class="v-reveal">
+                <div class="e-reveal">
                     <div id="lp-form-alert"></div>
                     <form id="lp-lead-form">
-                        <div class="v-field">
-                            <label>Nama Lengkap</label>
-                            <input type="text" name="name" required>
-                        </div>
-                        <div class="v-field">
-                            <label>No. WhatsApp</label>
-                            <input type="text" name="phone" placeholder="08xxxxxxxxxx" required>
-                        </div>
-                        <div class="v-field">
-                            <label>Kota</label>
-                            <input type="text" name="city">
-                        </div>
-                        <div class="v-field">
+                        <input type="hidden" name="page_version" value="v2">
+                        <div class="e-field"><label>Nama Lengkap</label><input type="text" name="name" required></div>
+                        <div class="e-field"><label>No. WhatsApp</label><input type="text" name="phone" placeholder="08xxxxxxxxxx" required></div>
+                        <div class="e-field"><label>Kota</label><input type="text" name="city"></div>
+                        <div class="e-field">
                             <label>Mobil yang Diminati</label>
                             <select name="product_id" id="lp-product-select">
                                 <option value="">Belum tahu / bebas</option>
@@ -702,11 +645,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="v-field">
-                            <label>Pesan (opsional)</label>
-                            <textarea name="message" placeholder="Contoh: mau tanya simulasi kredit DP 20 juta"></textarea>
-                        </div>
-                        <button type="submit" class="v-btn v-btn-solid v-submit" id="lp-submit-btn">
+                        <div class="e-field"><label>Pesan (opsional)</label><textarea name="message" placeholder="Contoh: mau tanya simulasi kredit DP 20 juta"></textarea></div>
+                        <button type="submit" class="e-btn e-btn-gold e-submit" id="lp-submit-btn">
                             <i class="bi bi-send-fill"></i> Kirim &amp; Chat WhatsApp
                         </button>
                     </form>
@@ -715,55 +655,63 @@
         </div>
     </section>
 
-    <footer class="v-footer">
+    <footer class="e-footer">
         &copy; {{ date('Y') }} {{ $profile->name ?? config('settings.site_name') }}. Semua hak dilindungi.
         @if($profile->phone ?? null) &bull; {{ $profile->phone }} @endif
     </footer>
 
-    <div class="v-sticky-bar">
-        <a href="tel:{{ $profile->phone ?? '' }}" class="v-sticky-call"><i class="bi bi-telephone-fill me-1"></i> Telepon</a>
-        <a href="{{ $profile->wa_url }}" target="_blank" class="v-sticky-wa"><i class="bi bi-whatsapp me-1"></i> WhatsApp</a>
+    <div class="e-sticky-bar">
+        <a href="tel:{{ $profile->phone ?? '' }}" class="e-sticky-call"><i class="bi bi-telephone-fill me-1"></i> Telepon</a>
+        <a href="{{ $profile->wa_url }}" target="_blank" class="e-sticky-wa"><i class="bi bi-whatsapp me-1"></i> WhatsApp</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ mix('frontend/js/app.js') }}"></script>
     <script>
         (function () {
-            /* ---------- GSAP reveals (ringan: fade-in sekali saat masuk viewport, bukan scroll-linked) ---------- */
+            /* ---------- GSAP reveal ringan (sekali, bukan scroll-linked) ---------- */
             if (window.gsap && window.ScrollTrigger) {
                 gsap.registerPlugin(ScrollTrigger);
-
-                gsap.timeline()
-                    .to('.v-hero .v-reveal', { opacity: 1, y: 0, duration: 1, stagger: .12, ease: 'power3.out', delay: .2 });
-
-                document.querySelectorAll('.v-reveal:not(.v-hero .v-reveal)').forEach(function (el) {
-                    gsap.to(el, {
-                        opacity: 1, y: 0, duration: .9, ease: 'power3.out',
-                        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-                    });
+                gsap.timeline().to('.e-hero .e-reveal', { opacity: 1, y: 0, duration: 1, stagger: .12, ease: 'power3.out', delay: .2 });
+                document.querySelectorAll('.e-reveal:not(.e-hero .e-reveal)').forEach(function (el) {
+                    gsap.to(el, { opacity: 1, y: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
                 });
-
-                /* Animated counter untuk stats asli */
-                document.querySelectorAll('.v-count').forEach(function (el) {
+                document.querySelectorAll('.e-count').forEach(function (el) {
                     const target = parseInt(el.dataset.count, 10) || 0;
                     const obj = { val: 0 };
                     ScrollTrigger.create({
-                        trigger: el,
-                        start: 'top 90%',
-                        once: true,
+                        trigger: el, start: 'top 90%', once: true,
                         onEnter: function () {
-                            gsap.to(obj, {
-                                val: target, duration: 1.6, ease: 'power2.out',
-                                onUpdate: function () { el.textContent = Math.floor(obj.val); }
-                            });
+                            gsap.to(obj, { val: target, duration: 1.6, ease: 'power2.out', onUpdate: function () { el.textContent = Math.floor(obj.val); } });
                         }
                     });
                 });
             } else {
-                // fallback kalau CDN gagal load: tampilkan langsung tanpa animasi
-                document.querySelectorAll('.v-reveal').forEach(function (el) { el.style.opacity = 1; el.style.transform = 'none'; });
-                document.querySelectorAll('.v-count').forEach(function (el) { el.textContent = el.dataset.count; });
+                document.querySelectorAll('.e-reveal').forEach(function (el) { el.style.opacity = 1; el.style.transform = 'none'; });
+                document.querySelectorAll('.e-count').forEach(function (el) { el.textContent = el.dataset.count; });
             }
+
+            /* ---------- Countdown promo ---------- */
+            document.querySelectorAll('[data-countdown]').forEach(function (box) {
+                const target = new Date(box.dataset.countdown.replace(' ', 'T')).getTime();
+                function tick() {
+                    const diff = target - Date.now();
+                    if (diff <= 0) {
+                        box.innerHTML = '<span class="e-countdown-label">Promo sudah berakhir</span>';
+                        return;
+                    }
+                    const d = Math.floor(diff / 86400000);
+                    const h = Math.floor((diff % 86400000) / 3600000);
+                    const m = Math.floor((diff % 3600000) / 60000);
+                    const s = Math.floor((diff % 60000) / 1000);
+                    box.querySelector('[data-unit="days"]').textContent = String(d).padStart(2, '0');
+                    box.querySelector('[data-unit="hours"]').textContent = String(h).padStart(2, '0');
+                    box.querySelector('[data-unit="minutes"]').textContent = String(m).padStart(2, '0');
+                    box.querySelector('[data-unit="seconds"]').textContent = String(s).padStart(2, '0');
+                }
+                tick();
+                setInterval(tick, 1000);
+            });
 
             /* ---------- FAQ toggle ---------- */
             document.querySelectorAll('[data-faq-toggle]').forEach(function (btn) {
@@ -791,7 +739,7 @@
                 });
             });
 
-            /* ---------- Submit lead (logika sama dengan sistem Consultation existing) ---------- */
+            /* ---------- Submit lead ---------- */
             const form = document.getElementById('lp-lead-form');
             const alertBox = document.getElementById('lp-form-alert');
             const submitBtn = document.getElementById('lp-submit-btn');

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Models\Gallery;
 use App\Models\LandingPage;
+use App\Models\LandingPageV2;
+use App\Models\LandingPageV3;
+use App\Models\LandingPageV4;
+use App\Models\PhotoDelivery;
 use App\Models\Product;
-use App\Models\ProductCategory;
 use App\Models\Profile;
 use App\Models\Service;
 use App\Models\Testimony;
@@ -31,57 +35,43 @@ class LandingController extends Controller
     }
 
     /**
-     * Versi 2 (cinematic/editorial) dari landing page yang sama, dipakai untuk
-     * membandingkan mana yang konversinya lebih baik sebelum salah satunya dipilih
-     * secara permanen. Route dan view-nya terpisah dari show(), tapi konten dan
-     * sumber datanya (LandingPage, Product, Testimony, Promo) tetap sama persis.
+     * Landing Page V2. Punya CMS admin sendiri (LandingPageV2, menu "Landing Page V2"),
+     * terpisah total dari V1, dan lebih banyak memanfaatkan modul yang sudah ada:
+     * Service (layanan), Promo (dengan countdown), Gallery (galeri foto), dan
+     * PhotoDelivery (bukti serah terima unit terbaru) sebagai social proof nyata.
      */
     public function showV2(Request $request)
     {
-        $landingPage = LandingPage::with('media')->first();
+        $landingPage = LandingPageV2::with('media')->first();
 
         if (!$landingPage || !$landingPage->is_active) {
             return redirect()->route('/');
         }
 
-        // Pool produk pilihan admin (dari tab "Produk & Testimoni").
-        // Item pertama jadi "featured vehicle" di hero/spotlight, sisanya jadi grid eksplorasi.
+        // Pool produk pilihan admin. Item pertama jadi "featured vehicle" utama,
+        // sisanya jadi jajaran eksplorasi.
         $pool = $landingPage->featuredProducts();
 
-        $featuredVehicle  = $pool->first();
-        $exploreProducts  = $pool->slice(1)->values();
-        $excludeIds       = $pool->pluck('id')->all();
-
-        // Storytelling per kategori ("Dibuat untuk ...") memakai kategori & produk ASLI yang ada
-        // di database (bukan label lifestyle karangan), supaya kontennya selalu akurat.
-        $categoryShowcase = ProductCategory::where('status', 1)
-            ->whereHas('products', function ($q) use ($excludeIds) {
-                $q->active();
-                if (!empty($excludeIds)) {
-                    $q->whereNotIn('id', $excludeIds);
-                }
-            })
-            ->with(['products' => function ($q) use ($excludeIds) {
-                $q->active();
-                if (!empty($excludeIds)) {
-                    $q->whereNotIn('id', $excludeIds);
-                }
-                $q->with(['media', 'product_type'])->priority()->limit(3);
-            }])
-            ->limit(3)
-            ->get()
-            ->filter(fn($category) => $category->products->isNotEmpty())
-            ->values();
+        $featuredVehicle = $pool->first();
+        $exploreProducts = $pool->slice(1)->values();
 
         $testimonies = $landingPage->selectedTestimonies();
-        $promo       = $landingPage->promo;
+        $promos      = $landingPage->featuredPromos();
+        $galleries   = $landingPage->featuredGalleries();
         $services    = Service::priority()->get();
+
+        // Serah terima unit terbaru: bukti transaksi nyata, otomatis ambil yang terbaru,
+        // tidak perlu dipilih manual dari admin.
+        $deliveries = PhotoDelivery::with(['media', 'product' => function ($q) {
+            $q->with('media');
+        }])->latest()->limit(6)->get();
 
         // Angka nyata dari database, bukan statistik karangan.
         $avgRating = Testimony::where('rating', '>', 0)->avg('rating');
         $stats = [
             'products_count'    => Product::active()->count(),
             'testimonies_count' => Testimony::count(),
+            'deliveries_count'  => PhotoDelivery::count(),
             'avg_rating'        => $avgRating ? round($avgRating, 1) : null,
         ];
 
@@ -89,70 +79,11 @@ class LandingController extends Controller
             'landingPage',
             'featuredVehicle',
             'exploreProducts',
-            'categoryShowcase',
             'testimonies',
-            'promo',
-            'stats',
-            'services'
-        ));
-    }
-
-    /**
-     * Versi 3 — Premium Personal Automotive Showroom.
-     * Redesign besar: storytelling, service experience, personal sales,
-     * photo delivery, conversion flow. Semua data dari modul existing.
-     */
-    public function showV3(Request $request)
-    {
-        $landingPage = LandingPage::with('media')->first();
-
-        if (!$landingPage || !$landingPage->is_active) {
-            return redirect()->route('/');
-        }
-
-        $pool = $landingPage->featuredProducts();
-
-        $featuredVehicle = $pool->first();
-        $exploreProducts = $pool->slice(1)->values();
-
-        // Service dari modul admin Service existing — priority order
-        $services = Service::priority()->get();
-
-        $testimonies = $landingPage->selectedTestimonies();
-        $promo       = $landingPage->promo;
-        $profile     = Profile::with('media')->first();
-
-        // Photo delivery sebagai social proof (real customers)
-        $deliveries = \App\Models\PhotoDelivery::with(['media', 'product'])
-            ->latest()
-            ->limit(12)
-            ->get();
-
-        // Gallery fallback jika delivery kosong
-        $galleries = \Spatie\MediaLibrary\MediaCollections\Models\Media::where('model_type', \App\Models\Gallery::class)
-            ->inRandomOrder()
-            ->limit(8)
-            ->get();
-
-        $avgRating = Testimony::where('rating', '>', 0)->avg('rating');
-        $stats = [
-            'products_count'    => Product::active()->count(),
-            'testimonies_count' => Testimony::count(),
-            'avg_rating'        => $avgRating ? round($avgRating, 1) : null,
-            'experience'        => optional($profile)->experience_number,
-            'clients'           => optional($profile)->client_number,
-        ];
-
-        return view('frontend.landing.show-v3', compact(
-            'landingPage',
-            'featuredVehicle',
-            'exploreProducts',
-            'services',
-            'testimonies',
-            'promo',
-            'profile',
-            'deliveries',
+            'promos',
             'galleries',
+            'services',
+            'deliveries',
             'stats'
         ));
     }
@@ -163,6 +94,79 @@ class LandingController extends Controller
      * data UTM/gclid/fbclid supaya bisa dilacak dari kampanye iklan mana.
      * Otomatis muncul juga di Dashboard & menu Konsultasi admin.
      */
+    /**
+     * Landing Page V3 (playful/doodle). CMS admin sendiri (LandingPageV3), terpisah dari
+     * V1 dan V2, tapi memanfaatkan modul yang sama: Product, Service, Promo, Gallery,
+     * PhotoDelivery, dan Testimony.
+     */
+    public function showV3(Request $request)
+    {
+        $landingPage = LandingPageV3::with('media')->first();
+
+        if (!$landingPage || !$landingPage->is_active) {
+            return redirect()->route('/');
+        }
+
+        $products    = $landingPage->featuredProducts();
+        $testimonies = $landingPage->selectedTestimonies();
+        $promos      = $landingPage->featuredPromos();
+        $galleries   = $landingPage->featuredGalleries();
+        $services    = Service::priority()->get();
+
+        $deliveries = PhotoDelivery::with(['media', 'product'])->latest()->limit(6)->get();
+
+        return view('frontend.landing.show-v3', compact(
+            'landingPage',
+            'products',
+            'testimonies',
+            'promos',
+            'galleries',
+            'services',
+            'deliveries'
+        ));
+    }
+
+    /**
+     * Landing Page V4 (modern-tech). CMS admin sendiri (LandingPageV4), terpisah dari V1-V3,
+     * memakai modul yang sama: Product, Service, Promo, Gallery, PhotoDelivery, Testimony,
+     * plus foto/bio dari Profile. Angka statistik dihitung asli dari database.
+     */
+    public function showV4(Request $request)
+    {
+        $landingPage = LandingPageV4::with('media')->first();
+
+        if (!$landingPage || !$landingPage->is_active) {
+            return redirect()->route('/');
+        }
+
+        $products    = $landingPage->featuredProducts();
+        $testimonies = $landingPage->selectedTestimonies();
+        $promos      = $landingPage->featuredPromos();
+        $galleries   = $landingPage->featuredGalleries();
+        $services    = Service::priority()->get();
+
+        $deliveries = PhotoDelivery::with(['media', 'product'])->latest()->limit(6)->get();
+
+        $avgRating = Testimony::where('rating', '>', 0)->avg('rating');
+        $stats = [
+            'products_count'    => Product::active()->count(),
+            'deliveries_count'  => PhotoDelivery::count(),
+            'testimonies_count' => Testimony::count(),
+            'avg_rating'        => $avgRating ? round($avgRating, 1) : null,
+        ];
+
+        return view('frontend.landing.show-v4', compact(
+            'landingPage',
+            'products',
+            'testimonies',
+            'promos',
+            'galleries',
+            'services',
+            'deliveries',
+            'stats'
+        ));
+    }
+
     public function storeLead(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -182,14 +186,23 @@ class LandingController extends Controller
             ], 422);
         }
 
-        $landingPage = LandingPage::first();
+        $pageVersion = $request->input('page_version', 'v1');
+        if ($pageVersion === 'v4') {
+            $headline = optional(LandingPageV4::first())->headline;
+        } elseif ($pageVersion === 'v3') {
+            $headline = optional(LandingPageV3::first())->headline;
+        } elseif ($pageVersion === 'v2') {
+            $headline = optional(LandingPageV2::first())->headline;
+        } else {
+            $headline = optional(LandingPage::first())->headline;
+        }
 
         $consultation = Consultation::create([
             'name'         => $request->name,
             'phone'        => $request->phone,
             'city'         => $request->city,
             'product_id'   => $request->product_id,
-            'message'      => $request->message ?: 'Tertarik dengan penawaran di halaman "' . ($landingPage->headline ?? 'promo') . '"',
+            'message'      => $request->message ?: 'Tertarik dengan penawaran di halaman "' . ($headline ?: 'promo') . '"',
             'source'       => 'landing_page',
             'ip_address'   => $request->ip(),
             'utm_source'   => $request->utm_source,

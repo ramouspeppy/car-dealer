@@ -84,5 +84,17 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfileSeeder::class);
         $this->call(ServiceSeeder::class);
         $this->call(ConsultationSeeder::class);
+
+        DB::table('landing_pages')->truncate();
+        $this->call(LandingPageSeeder::class);
+
+        DB::table('landing_page_v2s')->truncate();
+        $this->call(LandingPageV2Seeder::class);
+
+        DB::table('landing_page_v3s')->truncate();
+        $this->call(LandingPageV3Seeder::class);
+
+        DB::table('landing_page_v4s')->truncate();
+        $this->call(LandingPageV4Seeder::class);
     }
 }

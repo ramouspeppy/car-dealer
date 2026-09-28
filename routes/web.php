@@ -27,6 +27,9 @@ use App\Http\Controllers\Backend\ConsultationController as BackendConsultation;
 use App\Http\Controllers\ProductController as FrontendProduct;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Backend\LandingPageController;
+use App\Http\Controllers\Backend\LandingPageV2Controller;
+use App\Http\Controllers\Backend\LandingPageV3Controller;
+use App\Http\Controllers\Backend\LandingPageV4Controller;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Lfm;
 
@@ -80,8 +83,10 @@ Route::post('/promo-mobil/lead', [LandingController::class, 'storeLead'])->name(
 // Landing Page V2 (cinematic) - untuk dibandingkan dengan versi di atas
 Route::get('/promo-mobil-v2', [LandingController::class, 'showV2'])->name('landing.showV2');
 
-// Landing Page V3 (Premium Personal Automotive Showroom)
 Route::get('/promo-mobil-v3', [LandingController::class, 'showV3'])->name('landing.showV3');
+
+Route::get('/promo-mobil-v4', [LandingController::class, 'showV4'])->name('landing.showV4');
+
 
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']], function () {
 
@@ -174,6 +179,16 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
     // Landing Page (Ads)
     Route::get('landing-page', [LandingPageController::class, 'index'])->name('landing-page.index');
     Route::post('landing-page/update', [LandingPageController::class, 'update'])->name('landing-page.update');
+
+    // Landing Page V2 (CMS terpisah)
+    Route::get('landing-page-v2', [LandingPageV2Controller::class, 'index'])->name('landing-page-v2.index');
+    Route::post('landing-page-v2/update', [LandingPageV2Controller::class, 'update'])->name('landing-page-v2.update');
+
+    Route::get('landing-page-v3', [LandingPageV3Controller::class, 'index'])->name('landing-page-v3.index');
+    Route::post('landing-page-v3/update', [LandingPageV3Controller::class, 'update'])->name('landing-page-v3.update');
+
+    Route::get('landing-page-v4', [LandingPageV4Controller::class, 'index'])->name('landing-page-v4.index');
+    Route::post('landing-page-v4/update', [LandingPageV4Controller::class, 'update'])->name('landing-page-v4.update');
 
     // Setting
     Route::get('setting/website', [WebSettingController::class, 'website'])->name('setting.web');

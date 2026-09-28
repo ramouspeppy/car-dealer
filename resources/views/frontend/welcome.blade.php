@@ -181,8 +181,8 @@
 
     <section id="product-cards" class="product-list-cards section">
         <div class="container section-title" data-aos="fade-up" data-builder="section-title">
-            <h2 class="text-white">Drive Your Future with Suzuki</h2>
-            <p class="text-white">Rasakan kenyamanan, performa, dan kebanggaan memiliki mobil Suzuki terbaru</p>
+            <h2>Drive Your Future with Suzuki</h2>
+            <p>Rasakan kenyamanan, performa, dan kebanggaan memiliki mobil Suzuki terbaru</p>
         </div>
         <slot type="section-title"></slot>
 
