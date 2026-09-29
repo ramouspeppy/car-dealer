@@ -148,7 +148,7 @@
     </section>
     <section id="promo-list" class="promo-list section">
         <div class="container section-title" data-aos="fade-up" data-builder="section-title">
-            <h2>Promo Spesial Suzuki Bulan Ini</h2>
+            <h2>Promo Spesial {{ config('settings.site_brand') }} Bulan Ini</h2>
             <p>Dapatkan penawaran terbaik, cicilan ringan, dan bonus menarik khusus untuk Anda</p>
         </div>
         <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -181,8 +181,8 @@
 
     <section id="product-cards" class="product-list-cards section">
         <div class="container section-title" data-aos="fade-up" data-builder="section-title">
-            <h2>Drive Your Future with Suzuki</h2>
-            <p>Rasakan kenyamanan, performa, dan kebanggaan memiliki mobil Suzuki terbaru</p>
+            <h2>Drive Your Future with {{ config('settings.site_brand') }}</h2>
+            <p>Rasakan kenyamanan, performa, dan kebanggaan memiliki mobil {{ config('settings.site_brand') }} terbaru</p>
         </div>
         <slot type="section-title"></slot>
 
@@ -226,7 +226,7 @@
                     <div class="scribble scribble-3" data-aos="fade-right" data-aos-delay="400"></div>
 
                     <h2 class="display-4 mb-4 builder-editable-editing">Siap Bantu Anda Wujudkan Mobil Impian</h2>
-                    <p class="lead mb-5">Hubungi saya untuk konsultasi gratis seputar mobil Suzuki terbaru. Dapatkan
+                    <p class="lead mb-5">Hubungi saya untuk konsultasi gratis seputar mobil {{ config('settings.site_brand') }} terbaru. Dapatkan
                         informasi promo, cicilan ringan, dan proses cepat tanpa ribet..</p>
 
                     <div class="cta-buttons" data-aos="zoom-in" data-aos-delay="500">
@@ -245,7 +245,7 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Kenapa Harus Memilih Saya Sebagai Sales Suzuki Anda?</h2>
+            <h2>Kenapa Harus Memilih Saya Sebagai Sales {{ config('settings.site_brand') }} Anda?</h2>
             <p>Saya percaya membeli mobil bukan hanya soal transaksi, tapi tentang kepercayaan, kenyamanan, dan pengalaman
                 terbaik untuk Anda.</p>
         </div><!-- End Section Title -->
@@ -257,7 +257,7 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="service-intro">
                             <h2 class="service-heading">
-                                <div>Solusi Lengkap untuk Beli Mobil Suzuki</div>
+                                <div>Solusi Lengkap untuk Beli Mobil {{ config('settings.site_brand') }}</div>
                             </h2>
                         </div>
                     </div>
@@ -265,7 +265,7 @@
                         <div class="service-summary">
                             <p>
                                 Saya selalu berkomitmen memberikan layanan menyeluruh untuk memastikan Anda mendapatkan
-                                mobil Suzuki impian dengan pengalaman pembelian yang mudah, cepat, dan menyenangkan.
+                                mobil {{ config('settings.site_brand') }} impian dengan pengalaman pembelian yang mudah, cepat, dan menyenangkan.
                             </p>
                             <a href="" class="service-btn">
                                 View All Products
@@ -482,7 +482,7 @@
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Saatnya Punya Mobil Baru!</h2>
-            <p>"Jangan tunggu besok. Hubungi saya hari ini dan dapatkan penawaran terbaik Suzuki khusus untuk Anda."</p>
+            <p>"Jangan tunggu besok. Hubungi saya hari ini dan dapatkan penawaran terbaik {{ config('settings.site_brand') }} khusus untuk Anda."</p>
         </div><!-- End Section Title -->
 
         <div class="container">
@@ -491,7 +491,7 @@
                 <div class="col-lg-5">
                     <div class="info-box">
                         <h3>Contact Info</h3>
-                        <p>“Yuk, hubungi saya untuk info promo, konsultasi, atau test drive. Siap bantu cari mobil Suzuki
+                        <p>“Yuk, hubungi saya untuk info promo, konsultasi, atau test drive. Siap bantu cari mobil {{ config('settings.site_brand') }}
                             yang cocok buat Anda!”</p>
 
                         <div class="info-item">
@@ -539,7 +539,7 @@
                 <div class="col-lg-7">
                     <div class="contact-form">
                         <h3>Hubungi Sekarang !!</h3>
-                        <p>Siap bantu Anda menemukan mobil Suzuki impian. Konsultasi gratis, cepat, dan tanpa ribet.</p>
+                        <p>Siap bantu Anda menemukan mobil {{ config('settings.site_brand') }} impian. Konsultasi gratis, cepat, dan tanpa ribet.</p>
                         <div id="card-contact">
                             <form action="{{ route('contact.store') }}" id="form-contact" method="post">
                                 @csrf

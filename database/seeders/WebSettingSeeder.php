@@ -58,6 +58,10 @@ class WebSettingSeeder extends Seeder
                 'value' => 'logo.png',
             ],
             [
+                'name'  => 'site_brand',
+                'value' => 'Suzuki',
+            ],
+            [
                 'name'  => 'favicon',
                 'value' => 'favicon.ico',
             ],

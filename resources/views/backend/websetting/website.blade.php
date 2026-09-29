@@ -29,11 +29,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="site_name">Site Name</label>
                                             <input type="text" class="form-control @error('site_name') is-invalid @enderror" id="site_name" name="site_name" value="{{ old('site_name', $website->findValue('site_name')) }}">
                                             @error('site_name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="site_brand">Site Brand</label>
+                                            <input type="text" class="form-control @error('site_brand') is-invalid @enderror" id="site_brand" name="site_brand" value="{{ old('site_brand', $website->findValue('site_brand')) }}">
+                                            @error('site_brand')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
