@@ -32,7 +32,7 @@ class FrontendController extends Controller
         $header      = Header::first();
         $posts       = Post::with('media')->published()->latest()->limit(3)->get();
         $testimonies = Testimony::with('media')->randomLimit()->get();
-        $promos      = Promo::with('media')->active()->get();
+        $promos      = Promo::with('media')->active()->priority()->get();
         $profile     = Profile::first();
         $products    = Product::with(['media', 'product_type', 'product_category', 'photo_delivery'])->get();
         $services    = Service::latest()->get();

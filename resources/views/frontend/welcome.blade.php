@@ -151,63 +151,115 @@
             <h2>Promo Spesial {{ config('settings.site_brand') }} Bulan Ini</h2>
             <p>Dapatkan penawaran terbaik, cicilan ringan, dan bonus menarik khusus untuk Anda</p>
         </div>
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-            <div class="row gy-4">
-                @foreach ($promos as $promo)
-                    @php
-                        $promoWaText = 'Halo, saya tertarik dengan promo "' . $promo->promo . '". Boleh minta info lebih lanjut?';
-                        $promoWaLink = 'https://wa.me/' . $profile->wa_formatted . '?text=' . urlencode($promoWaText);
-                    @endphp
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="promo-list-card">
-                            <div class="promo-image">
-                                <img src="{{ $promo->promo_image_url }}" alt="{{ $promo->promo }}" class="img-fluid">
-                                <div class="promo-category {{ $promo->days_left !== null && $promo->days_left <= 2 ? 'is-urgent' : '' }}">
-                                    @if ($promo->days_left === null)
-                                        {{ $promo->effective_status }}
-                                    @elseif($promo->days_left <= 0)
-                                        Hari Terakhir!
-                                    @else
-                                        {{ $promo->days_left }} Hari Lagi
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            @if ($promos->isEmpty())
+                <div class="promo-empty" data-aos="fade-up">
+                    <div class="promo-empty-icon"><i class="bi bi-tags"></i></div>
+                    <h3>Belum ada promo aktif</h3>
+                    <p>Pantau terus halaman ini — penawaran terbaik {{ config('settings.site_brand') }} akan segera hadir.</p>
+                    <a href="{{ route('testdrive.show') }}" class="btn btn-primary">Jadwalkan Test Drive</a>
+                </div>
+            @else
+                <div class="row g-4">
+                    @foreach ($promos as $index => $promo)
+                        @php
+                            $promoWaText = 'Halo, saya tertarik dengan promo "' . $promo->promo . '". Boleh minta info lebih lanjut?';
+                            $promoWaLink = 'https://wa.me/' . $profile->wa_formatted . '?text=' . urlencode($promoWaText);
+                            $isFeatured = $index === 0 && $promos->count() > 1;
+                            $daysLeft = $promo->days_left;
+                            $isUrgent = $daysLeft !== null && $daysLeft <= 2;
+                            // Progress bar: anggap 30 hari sebagai penuh, clamp 0–100
+                            $progress = null;
+                            if ($daysLeft !== null) {
+                                $progress = max(8, min(100, (int) round(($daysLeft / 30) * 100)));
+                            }
+                        @endphp
+
+                        <div class="{{ $isFeatured ? 'col-12' : 'col-lg-4 col-md-6' }}" data-aos="fade-up" data-aos-delay="{{ 100 + $index * 50 }}">
+                            <article class="promo-list-card {{ $isFeatured ? 'is-featured' : '' }} {{ $isUrgent ? 'is-urgent-card' : '' }}">
+                                <div class="promo-image">
+                                    <img src="{{ $promo->promo_image_url }}" alt="{{ $promo->promo }}" class="img-fluid" loading="lazy">
+                                    <div class="promo-image-overlay"></div>
+
+                                    <div class="promo-category {{ $isUrgent ? 'is-urgent' : '' }}">
+                                        <i class="bi bi-clock{{ $isUrgent ? '-fill' : '' }}"></i>
+                                        @if ($daysLeft === null)
+                                            {{ $promo->effective_status }}
+                                        @elseif ($daysLeft <= 0)
+                                            Hari Terakhir!
+                                        @else
+                                            {{ $daysLeft }} Hari Lagi
+                                        @endif
+                                    </div>
+
+                                    @if ($isFeatured)
+                                        <span class="promo-featured-tag"><i class="bi bi-stars"></i> Promo Utama</span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="promo-info">
-                                <h3>{{ $promo->promo }}</h3>
-                                <div class="promo-meta">
-                                    <span><i class="bi bi-calendar3"></i> Berlaku sampai {{ $promo->effective_format }}</span>
+
+                                <div class="promo-info">
+                                    <div class="promo-info-top">
+                                        <h3>{{ $promo->promo }}</h3>
+                                        <div class="promo-meta">
+                                            <span><i class="bi bi-calendar3"></i> Berlaku sampai {{ $promo->effective_format ?? '—' }}</span>
+                                        </div>
+                                        <p>{{ $promo->desc_limit }}</p>
+
+                                        @if ($progress !== null)
+                                            <div class="promo-deadline" aria-hidden="true">
+                                                <div class="promo-deadline-bar">
+                                                    <span style="width: {{ $progress }}%"></span>
+                                                </div>
+                                                <small>
+                                                    @if ($daysLeft <= 0)
+                                                        Segera berakhir
+                                                    @else
+                                                        Masih {{ $daysLeft }} hari tersisa
+                                                    @endif
+                                                </small>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="promo-actions">
+                                        <button type="button" class="btn-details" data-bs-toggle="modal" data-bs-target="#promoModal" data-title="{{ $promo->promo }}" data-image="{{ $promo->promo_image_url }}" data-date="{{ $promo->effective_format }}" data-desc="{{ $promo->desc }}" data-wa="{{ $promoWaLink }}">
+                                            Detail Promo
+                                        </button>
+                                        <a href="{{ $promoWaLink }}" target="_blank" rel="noopener" class="btn-purchase">
+                                            <i class="bi bi-whatsapp"></i> Ambil Promo
+                                        </a>
+                                    </div>
                                 </div>
-                                <p>{{ $promo->desc_limit }}</p>
-                                <div class="promo-actions">
-                                    <button type="button" class="btn-details" data-bs-toggle="modal" data-bs-target="#promoModal" data-title="{{ $promo->promo }}" data-image="{{ $promo->promo_image_url }}" data-date="{{ $promo->effective_format }}" data-desc="{{ $promo->desc }}" data-wa="{{ $promoWaLink }}">
-                                        Lihat Selengkapnya..
-                                    </button>
-                                    <a href="{{ $promoWaLink }}" target="_blank" class="btn-purchase">Ambil Promo</a>
-                                </div>
-                            </div>
+                            </article>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </section>
 
-    <!-- Modal Detail Promo (dipakai bergantian untuk semua promo, isinya diganti lewat JS) -->
+    {{-- Modal Detail Promo (satu modal untuk semua kartu, diisi lewat JS) --}}
     <div class="modal fade" id="promoModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="promoModalTitle">Detail Promo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <img id="promoModalImage" src="" alt="" class="img-fluid w-100">
-                <div class="modal-body">
-                    <p class="text-muted small mb-2"><i class="bi bi-calendar3"></i> Berlaku sampai <span id="promoModalDate"></span></p>
-                    <div id="promoModalDesc"></div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" id="promoModalWa" target="_blank" class="btn btn-primary w-100"><i class="bi bi-whatsapp"></i> Ambil Promo Ini</a>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content promo-modal-content">
+                <button type="button" class="btn-close promo-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <div class="promo-modal-image">
+                            <img id="promoModalImage" src="" alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="promo-modal-body">
+                            <span class="promo-modal-eyebrow"><i class="bi bi-calendar3"></i> Berlaku sampai <span id="promoModalDate"></span></span>
+                            <h5 class="modal-title" id="promoModalTitle">Detail Promo</h5>
+                            <div id="promoModalDesc" class="promo-modal-desc"></div>
+                            <a href="#" id="promoModalWa" target="_blank" rel="noopener" class="btn btn-primary promo-modal-cta">
+                                <i class="bi bi-whatsapp"></i> Ambil Promo Ini
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -221,6 +273,7 @@
                 if (!btn) return;
                 document.getElementById('promoModalTitle').textContent = btn.getAttribute('data-title') || '';
                 document.getElementById('promoModalImage').src = btn.getAttribute('data-image') || '';
+                document.getElementById('promoModalImage').alt = btn.getAttribute('data-title') || '';
                 document.getElementById('promoModalDate').textContent = btn.getAttribute('data-date') || '-';
                 document.getElementById('promoModalDesc').innerHTML = btn.getAttribute('data-desc') || '';
                 document.getElementById('promoModalWa').href = btn.getAttribute('data-wa') || '#';
