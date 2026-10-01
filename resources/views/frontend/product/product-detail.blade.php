@@ -35,9 +35,9 @@
                                     </div>
                                     <div class="product-detail-more">
                                         <a href="{{ route('testdrive.show') }}" class="btn btn-primary">TestDrive ?</a>
-                                        <button>
+                                        <a href="#card-contact" class="btn btn-primary">
                                             <i class="fa-solid fa-play"></i> Tanya Angsuran ?
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -117,63 +117,7 @@
                                 Detail {{ $product->name }}</h3>
                             {!! $product->detail !!}
                         </div>
-                        <div class="features-showcase mb-5">
-                            <h3 class="section-heading mb-4" data-aos="fade-up" data-aos-delay="100">Pelayanan</h3>
-                            <div class="features-tabs" data-aos="fade-up" data-aos-delay="200">
-                                <div class="row g-4">
-                                    @foreach ($services as $service)
-                                        <div class="col-md-6">
-                                            <div class="feature-card">
-                                                <div class="feature-icon">
-                                                    <i class="bi {{ $service->icon }}"></i>
-                                                </div>
-                                                <h5>{{ $service->title }}</h5>
-                                                <p>{{ $service->desc }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="client-success mb-5" data-aos="fade-up" data-aos-delay="100">
-                            <div class="success-card">
-                                <div class="init-swiper swiper">
-                                    <div class="swiper-wrapper">
-                                        @foreach ($testimonies as $testimony)
-                                            <div class="swiper-slide p-3">
-                                                <div class="success-header d-flex align-items-center mb-4">
-                                                    <img src="{{ $testimony->image_thumb_url }}" alt="Client" class="client-avatar">
-                                                    <div class="client-info ms-3">
-                                                        <h5 class="client-name mb-1">{{ $testimony->name }}</h5>
-                                                        <span class="client-role">{{ $testimony->job }}</span>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <div class="stars" data-value="{{ $testimony->rating }}"></div>
-                                                    </div>
-                                                </div>
-                                                <blockquote class="success-quote mb-4">
-                                                    {{ $testimony->message }}
-                                                </blockquote>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    <script type="application/json" class="swiper-config">
-                                    {
-                                        "slidesPerView": 1,
-                                        "spaceBetween": 24,
-                                        "loop": true,
-                                        "grabCursor": true,
-                                        "speed": 650,
-                                        "autoplay": {
-                                          "delay": 3200,
-                                          "disableOnInteraction": false
-                                        }
-                                      }
-                                </script>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-5">
@@ -242,16 +186,78 @@
                 </div>
 
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="service-content">
+                        <div class="features-showcase mb-5">
+                            <h3 class="section-heading mb-4" data-aos="fade-up" data-aos-delay="100">Pelayanan</h3>
+                            <div class="features-tabs" data-aos="fade-up" data-aos-delay="200">
+                                <div class="row g-4">
+                                    @foreach ($services as $service)
+                                        <div class="col-md-6">
+                                            <div class="feature-card">
+                                                <div class="feature-icon">
+                                                    <i class="bi {{ $service->icon }}"></i>
+                                                </div>
+                                                <h5>{{ $service->title }}</h5>
+                                                <p>{{ $service->desc }}</p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="client-success mb-5" data-aos="fade-up" data-aos-delay="100">
+                            <div class="success-card">
+                                <div class="init-swiper swiper">
+                                    <div class="swiper-wrapper">
+                                        @foreach ($testimonies as $testimony)
+                                            <div class="swiper-slide p-3">
+                                                <div class="success-header d-flex align-items-center mb-4">
+                                                    <img src="{{ $testimony->image_thumb_url }}" alt="Client" class="client-avatar">
+                                                    <div class="client-info ms-3">
+                                                        <h5 class="client-name mb-1">{{ $testimony->name }}</h5>
+                                                        <span class="client-role">{{ $testimony->job }}</span>
+                                                    </div>
+                                                    <div class="ms-auto">
+                                                        <div class="stars" data-value="{{ $testimony->rating }}"></div>
+                                                    </div>
+                                                </div>
+                                                <blockquote class="success-quote mb-4">
+                                                    {{ $testimony->message }}
+                                                </blockquote>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <script type="application/json" class="swiper-config">
+                                    {
+                                        "slidesPerView": 1,
+                                        "spaceBetween": 24,
+                                        "loop": true,
+                                        "grabCursor": true,
+                                        "speed": 650,
+                                        "autoplay": {
+                                          "delay": 3200,
+                                          "disableOnInteraction": false
+                                        }
+                                      }
+                                </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="action-section text-center mt-5 pt-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="action-buttons d-flex flex-wrap gap-3 justify-content-center">
-                    <a href="#" class="action-btn secondary">
+                    <a href="#card-contact" class="action-btn secondary">
                         <i class="bi bi-calendar3"></i>
                         <span>Schedule Meeting</span>
                     </a>
-                    <a href="#" class="action-btn primary">
+                    <a href="{{ route('product.index') }}" class="action-btn primary">
                         <i class="bi bi-folder2-open"></i>
-                        <span>View Portfolio</span>
+                        <span>Lihat Semua Produk</span>
                     </a>
                     @if ($product->brochure_url)
                         <a href="{{ $product->brochure_url }}" class="action-btn secondary">

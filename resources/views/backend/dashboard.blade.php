@@ -227,6 +227,53 @@
             </div>
 
             <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Halaman Terbaru</h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Pengunjung</th>
+                                            <th>Halaman</th>
+                                            <th>Perangkat</th>
+                                            <th>Browser / OS</th>
+                                            <th>Waktu</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($recentVisits as $visit)
+                                            <tr>
+                                                <td><code>{{ substr($visit->visitor_key, 0, 10) }}</code></td>
+                                                <td>
+                                                    <strong>{{ $visit->page_title ?: $visit->path }}</strong><br>
+                                                    <a href="{{ $visit->url ?: url($visit->path) }}" target="_blank" rel="noopener">
+                                                        {{ $visit->path }}
+                                                    </a>
+                                                </td>
+                                                <td>{{ ucfirst($visit->device ?: '-') }}</td>
+                                                <td>{{ $visit->browser ?: '-' }} / {{ $visit->os ?: '-' }}</td>
+                                                <td title="{{ $visit->created_at->format('d/m/Y H:i:s') }}">
+                                                    {{ $visit->created_at->diffForHumans() }}
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="5" class="text-center py-4">Belum ada kunjungan pada periode ini</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
                 <div class="col-lg-6 col-md-12 col-12">
                     <div class="card">
                         <div class="card-header">

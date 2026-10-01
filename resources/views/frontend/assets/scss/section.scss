@@ -2067,6 +2067,11 @@ select.form-control.is-invalid {
     transform: translateY(-1px);
 }
 
+.service-details-2 .contact-form .submit-btn:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent-color), transparent 35%);
+    outline-offset: 3px;
+}
+
 .service-details-2 .contact-form .submit-btn i {
     transition: transform 0.3s ease;
 }
@@ -2109,6 +2114,11 @@ select.form-control.is-invalid {
     border-color: var(--accent-color);
     color: var(--accent-color);
     transform: translateY(-2px);
+}
+
+.service-details-2 .action-section .action-buttons .action-btn:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent-color), transparent 35%);
+    outline-offset: 3px;
 }
 
 .service-details-2 .action-section .action-buttons .action-btn i {

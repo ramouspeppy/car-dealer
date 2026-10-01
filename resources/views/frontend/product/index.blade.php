@@ -482,12 +482,9 @@
                 inset: 0;
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
-                transition: transform 0.5s ease;
-            }
-
-            .product-card:hover .product-card-image img {
-                transform: scale(1.07);
+                box-sizing: border-box;
+                padding: 14px;
+                object-fit: contain;
             }
 
             .product-card-body {
@@ -563,6 +560,59 @@
                 border-radius: 12px;
                 padding: 0.8rem 1.1rem;
                 font-weight: 700;
+            }
+
+            .product-index-page .product-hero-actions .btn,
+            .product-price .btn,
+            .product-cta-panel .cta-actions .btn {
+                min-height: 46px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 999px;
+                font-weight: 700;
+                text-decoration: none;
+                transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .product-index-page .product-hero-actions .btn-primary,
+            .product-price .btn-primary,
+            .product-cta-panel .cta-actions .btn-primary {
+                background: var(--accent-color);
+                border-color: var(--accent-color);
+                color: var(--contrast-color);
+            }
+
+            .product-index-page .product-hero-actions .btn-primary:hover,
+            .product-price .btn-primary:hover,
+            .product-cta-panel .cta-actions .btn-primary:hover {
+                background: color-mix(in srgb, var(--accent-color), black 10%);
+                border-color: color-mix(in srgb, var(--accent-color), black 10%);
+                color: var(--contrast-color);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color), transparent 72%);
+            }
+
+            .product-index-page .product-hero-actions .btn-outline-primary,
+            .product-cta-panel .cta-actions .btn-outline-primary {
+                background: transparent;
+                border-color: var(--accent-color);
+                color: var(--accent-color);
+            }
+
+            .product-index-page .product-hero-actions .btn-outline-primary:hover,
+            .product-cta-panel .cta-actions .btn-outline-primary:hover {
+                background: color-mix(in srgb, var(--accent-color), transparent 90%);
+                color: var(--accent-color);
+                transform: translateY(-2px);
+            }
+
+            .product-index-page .product-hero-actions .btn:focus-visible,
+            .product-price .btn:focus-visible,
+            .product-cta-panel .cta-actions .btn:focus-visible {
+                outline: 3px solid color-mix(in srgb, var(--accent-color), transparent 45%);
+                outline-offset: 3px;
+                box-shadow: none;
             }
 
             .product-cta-panel {
@@ -776,7 +826,7 @@
                             </p>
                             <div class="product-hero-actions">
                                 <a href="#product-grid" class="btn btn-primary btn-lg">Lihat Semua Produk</a>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#consultationModal" class="btn btn-outline btn-lg">Konsultasi Gratis</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#consultationModal" class="btn btn-outline-primary btn-lg">Konsultasi Gratis</a>
                             </div>
                             <div class="product-hero-badges">
                                 <span><i class="bi bi-shield-check"></i> Garansi Terpercaya</span>
@@ -934,7 +984,7 @@
                     <div class="col-lg-5">
                         <div class="cta-actions">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#consultationModal" class="btn btn-primary btn-lg">Konsultasi Gratis</a>
-                            <a href="{{ route('testdrive.show') }}" class="btn btn-outline btn-lg">Booking Test Drive</a>
+                            <a href="{{ route('testdrive.show') }}" class="btn btn-outline-primary btn-lg">Booking Test Drive</a>
                         </div>
                     </div>
                 </div>

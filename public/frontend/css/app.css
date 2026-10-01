@@ -7467,6 +7467,11 @@ select.form-control.is-invalid {
   transform: translateY(-1px);
 }
 
+.service-details-2 .contact-form .submit-btn:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent-color), transparent 35%);
+  outline-offset: 3px;
+}
+
 .service-details-2 .contact-form .submit-btn i {
   transition: transform 0.3s ease;
 }
@@ -7508,6 +7513,11 @@ select.form-control.is-invalid {
   border-color: var(--accent-color);
   color: var(--accent-color);
   transform: translateY(-2px);
+}
+
+.service-details-2 .action-section .action-buttons .action-btn:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent-color), transparent 35%);
+  outline-offset: 3px;
 }
 
 .service-details-2 .action-section .action-buttons .action-btn i {
@@ -9544,30 +9554,42 @@ select.form-control.is-invalid {
   display: grid;
   grid-template-columns: repeat(2, 120px);
   gap: 20px;
-  grid-template-rows: 35px;
+  grid-template-rows: minmax(44px, auto);
 }
 
-.product-detail-carousel .product-detail-more button {
+.product-detail-carousel .product-detail-more > a.btn,
+.product-detail-carousel .product-detail-more > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 30px;
   font-family: "League Gothic";
   text-transform: uppercase;
-  color: #fff;
-  background-color: transparent;
-  border: none;
-  position: relative;
-}
-
-.product-detail-carousel .product-detail-more button:nth-child(1) {
-  background-image: linear-gradient(to right, #81baa0, #46a39c);
-}
-
-.product-detail-carousel .product-detail-more button:nth-child(2) {
-  border: 2px solid transparent;
-  color: var(--surface-color);
+  color: var(--contrast-color);
   background: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: 0.4rem 0.65rem;
+  min-height: 44px;
+  text-decoration: none;
+  position: relative;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.product-detail-carousel .product-detail-more button:nth-child(2) i {
+.product-detail-carousel .product-detail-more > a.btn:hover,
+.product-detail-carousel .product-detail-more > button:hover {
+  color: var(--contrast-color);
+  background: color-mix(in srgb, var(--accent-color), black 10%);
+  border-color: color-mix(in srgb, var(--accent-color), black 10%);
+  transform: translateY(-2px);
+}
+
+.product-detail-carousel .product-detail-more > a.btn:focus-visible,
+.product-detail-carousel .product-detail-more > button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent-color), transparent 35%);
+  outline-offset: 3px;
+}
+
+.product-detail-carousel .product-detail-more > a.btn:nth-child(2) i {
   margin-right: 10px;
 }
 

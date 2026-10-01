@@ -52,7 +52,9 @@
     /* state default (non-aktif), biar ada depth tapi tetap terlihat */
     opacity: 0.6;
     transform: translateZ(0) scale(0.98);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
 }
 
 /* slide aktif dari Swiper → ganti efek 'aktif' lama */
@@ -110,7 +112,9 @@
     /* animasi masuk (gantikan .active lama) */
     opacity: 0;
     transform: translateX(50px);
-    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+    transition:
+        opacity 0.5s ease 0.2s,
+        transform 0.5s ease 0.2s;
 }
 
 .product-detail-carousel .swiper-slide-active .product-hero-name,
@@ -139,7 +143,9 @@
     /* animasi masuk (gantikan .active lama) */
     opacity: 0;
     transform: translateX(50px);
-    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+    transition:
+        opacity 0.5s ease 0.2s,
+        transform 0.5s ease 0.2s;
 }
 
 .product-detail-carousel .product-hero-name h2 {
@@ -173,30 +179,45 @@
     display: grid;
     grid-template-columns: repeat(2, 120px);
     gap: 20px;
-    grid-template-rows: 35px;
+    grid-template-rows: minmax(44px, auto);
 }
 
-.product-detail-carousel .product-detail-more button {
+.product-detail-carousel .product-detail-more > a.btn,
+.product-detail-carousel .product-detail-more > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 30px;
     font-family: "League Gothic";
     text-transform: uppercase;
-    color: #fff;
-    background-color: transparent;
-    border: none;
-    position: relative;
-}
-
-.product-detail-carousel .product-detail-more button:nth-child(1) {
-    background-image: linear-gradient(to right, #81baa0, #46a39c);
-}
-
-.product-detail-carousel .product-detail-more button:nth-child(2) {
-    border: 2px solid transparent;
-    color: var(--surface-color);
+    color: var(--contrast-color);
     background: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 0.4rem 0.65rem;
+    min-height: 44px;
+    text-decoration: none;
+    position: relative;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.product-detail-carousel .product-detail-more button:nth-child(2) i {
+.product-detail-carousel .product-detail-more > a.btn:hover,
+.product-detail-carousel .product-detail-more > button:hover {
+    color: var(--contrast-color);
+    background: color-mix(in srgb, var(--accent-color), black 10%);
+    border-color: color-mix(in srgb, var(--accent-color), black 10%);
+    transform: translateY(-2px);
+}
+
+.product-detail-carousel .product-detail-more > a.btn:focus-visible,
+.product-detail-carousel .product-detail-more > button:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent-color), transparent 35%);
+    outline-offset: 3px;
+}
+
+.product-detail-carousel .product-detail-more > a.btn:nth-child(2) i {
     margin-right: 10px;
 }
 

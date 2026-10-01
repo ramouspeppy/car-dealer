@@ -123,12 +123,16 @@ class HomeController extends Controller
         $latestConsultations = Consultation::with('product')->latest()->take(5)->get();
         $chartData = $this->buildChartData($period, $currentRange['start'], $currentRange['end']);
         $popularProducts = $this->getPopularProducts($currentRange);
+        $recentVisits = VisitorLog::whereBetween('created_at', [$currentRange['start'], $currentRange['end']])
+            ->latest()
+            ->take(15)
+            ->get();
         $leadTypeData = [
             'labels' => ['Inquiry', 'Test Drive', 'Konsultasi Gratis'],
             'values' => [$currentInquiries, $currentTestdrives, $currentConsultations],
         ];
 
-        return view('backend.dashboard', compact('stats', 'recentLeads', 'latestTestdrives', 'latestConsultations', 'period', 'chartData', 'popularProducts', 'leadTypeData'));
+        return view('backend.dashboard', compact('stats', 'recentLeads', 'latestTestdrives', 'latestConsultations', 'period', 'chartData', 'popularProducts', 'leadTypeData', 'recentVisits'));
     }
 
     public function stats(Request $request)

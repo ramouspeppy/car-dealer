@@ -4,41 +4,29 @@
     @push('css')
         <style>
             .promo-detail-page {
-                --pd-surface: rgba(255, 255, 255, 0.94);
-                --pd-border: rgba(17, 24, 39, 0.08);
-                --pd-text: #111827;
-                --pd-muted: rgba(17, 24, 39, 0.68);
                 --pd-shadow: 0 18px 40px rgba(17, 24, 39, 0.07);
-                --pd-accent: var(--accent-color, #3b8ff9);
-                --pd-accent-soft: color-mix(in srgb, var(--pd-accent), transparent 88%);
-                background: linear-gradient(180deg, rgba(246, 247, 249, 0.96) 0%, #eef1f5 100%);
                 padding: 30px 0 70px;
             }
 
             body[data-theme="dark"] .promo-detail-page {
-                --pd-surface: rgba(17, 24, 39, 0.94);
-                --pd-border: rgba(148, 163, 184, 0.18);
-                --pd-text: #edf2f7;
-                --pd-muted: rgba(226, 232, 240, 0.72);
                 --pd-shadow: 0 24px 44px rgba(2, 6, 23, 0.4);
-                background: linear-gradient(180deg, #0d1117 0%, #111827 100%);
             }
 
             .promo-detail-breadcrumb {
                 font-size: 13px;
-                color: var(--pd-muted);
+                color: color-mix(in srgb, var(--default-color), transparent 30%);
                 margin-bottom: 18px;
             }
 
             .promo-detail-breadcrumb a {
-                color: var(--pd-accent);
+                color: var(--accent-color);
                 text-decoration: none;
                 font-weight: 600;
             }
 
             .promo-detail-main {
-                background: var(--pd-surface);
-                border: 1px solid var(--pd-border);
+                background: var(--surface-color);
+                border: 1px solid var(--sidebar-border);
                 border-radius: 24px;
                 overflow: hidden;
                 box-shadow: var(--pd-shadow);
@@ -47,7 +35,7 @@
             .promo-detail-cover {
                 position: relative;
                 min-height: 320px;
-                background: color-mix(in srgb, var(--pd-accent), var(--pd-surface) 85%);
+                background: color-mix(in srgb, var(--accent-color), var(--surface-color) 85%);
             }
 
             .promo-detail-cover img {
@@ -62,7 +50,7 @@
                 position: absolute;
                 top: 18px;
                 left: 18px;
-                background: var(--pd-accent);
+                background: var(--accent-color);
                 color: var(--contrast-color, #12314f);
                 font-size: 12px;
                 font-weight: 700;
@@ -85,7 +73,7 @@
             .promo-detail-body h1 {
                 font-family: var(--heading-font);
                 font-size: clamp(1.6rem, 3vw, 2.2rem);
-                color: var(--pd-text);
+                color: var(--heading-color);
                 line-height: 1.25;
                 margin-bottom: 12px;
             }
@@ -103,14 +91,14 @@
                 gap: 6px;
                 font-size: 13px;
                 font-weight: 600;
-                color: var(--pd-accent);
-                background: var(--pd-accent-soft);
+                color: var(--accent-color);
+                background: color-mix(in srgb, var(--accent-color), transparent 88%);
                 padding: 6px 12px;
                 border-radius: 999px;
             }
 
             .promo-detail-desc {
-                color: var(--pd-muted);
+                color: color-mix(in srgb, var(--default-color), transparent 30%);
                 font-size: 1rem;
                 line-height: 1.8;
                 margin-bottom: 8px;
@@ -126,8 +114,8 @@
             }
 
             .promo-side-card {
-                background: var(--pd-surface);
-                border: 1px solid var(--pd-border);
+                background: var(--surface-color);
+                border: 1px solid var(--sidebar-border);
                 border-radius: 22px;
                 padding: 24px;
                 box-shadow: var(--pd-shadow);
@@ -137,19 +125,19 @@
             .promo-side-card h3 {
                 font-family: var(--heading-font);
                 font-size: 1.15rem;
-                color: var(--pd-text);
+                color: var(--heading-color);
                 margin-bottom: 8px;
             }
 
             .promo-side-card p {
-                color: var(--pd-muted);
+                color: color-mix(in srgb, var(--default-color), transparent 30%);
                 font-size: 0.92rem;
                 line-height: 1.6;
                 margin-bottom: 16px;
             }
 
             .promo-side-deadline {
-                background: var(--pd-accent-soft);
+                background: color-mix(in srgb, var(--accent-color), transparent 88%);
                 border-radius: 14px;
                 padding: 14px 16px;
                 margin-bottom: 16px;
@@ -157,14 +145,14 @@
 
             .promo-side-deadline strong {
                 display: block;
-                color: var(--pd-text);
+                color: var(--heading-color);
                 font-size: 1.05rem;
                 margin-bottom: 4px;
             }
 
             .promo-side-deadline span {
                 font-size: 13px;
-                color: var(--pd-muted);
+                color: color-mix(in srgb, var(--default-color), transparent 30%);
                 font-weight: 600;
             }
 
@@ -177,10 +165,19 @@
                 background: linear-gradient(135deg, #25d366, #1da851);
                 color: #fff !important;
                 border-radius: 999px;
+                min-height: 48px;
                 padding: 13px 18px;
                 font-weight: 700;
                 text-decoration: none;
                 margin-bottom: 10px;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .promo-side-card .btn-wa:hover,
+            .promo-side-card .btn-wa:focus-visible {
+                color: #fff !important;
+                transform: translateY(-1px);
+                box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
             }
 
             .promo-side-card .btn-outline-soft {
@@ -189,17 +186,27 @@
                 justify-content: center;
                 gap: 8px;
                 width: 100%;
-                border: 1.5px solid color-mix(in srgb, var(--pd-text), transparent 80%);
-                color: var(--pd-text);
+                border: 1.5px solid color-mix(in srgb, var(--default-color), transparent 80%);
+                color: var(--default-color);
                 border-radius: 999px;
+                min-height: 48px;
                 padding: 12px 18px;
                 font-weight: 600;
                 text-decoration: none;
+                transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
             }
 
-            .promo-side-card .btn-outline-soft:hover {
-                border-color: var(--pd-accent);
-                color: var(--pd-accent);
+            .promo-side-card .btn-outline-soft:hover,
+            .promo-side-card .btn-outline-soft:focus-visible {
+                border-color: var(--accent-color);
+                color: var(--accent-color);
+                background: color-mix(in srgb, var(--accent-color), transparent 92%);
+            }
+
+            .promo-side-card .btn-wa:focus-visible,
+            .promo-side-card .btn-outline-soft:focus-visible {
+                outline: 3px solid color-mix(in srgb, var(--accent-color), transparent 45%);
+                outline-offset: 2px;
             }
 
             .promo-related {
@@ -209,13 +216,13 @@
             .promo-related h2 {
                 font-family: var(--heading-font);
                 font-size: 1.5rem;
-                color: var(--pd-text);
+                color: var(--heading-color);
                 margin-bottom: 18px;
             }
 
             .promo-related-card {
-                background: var(--pd-surface);
-                border: 1px solid var(--pd-border);
+                background: var(--surface-color);
+                border: 1px solid var(--sidebar-border);
                 border-radius: 18px;
                 overflow: hidden;
                 height: 100%;
@@ -239,7 +246,7 @@
 
             .promo-related-card h4 {
                 font-size: 1rem;
-                color: var(--pd-text);
+                color: var(--heading-color);
                 margin-bottom: 8px;
                 font-family: var(--heading-font);
             }
@@ -306,7 +313,7 @@
                                     <strong>{{ $card->badge_label }}</strong>
                                     <span>{{ $card->deadline_text }} · sampai {{ $card->effective_label }}</span>
                                     <div class="promo-deadline-bar mt-2">
-                                        <span style="width: {{ $card->progress }}%; display:block; height:6px; border-radius:999px; background: var(--pd-accent);"></span>
+                                        <span style="width: {{ $card->progress }}%; display:block; height:6px; border-radius:999px; background: var(--accent-color);"></span>
                                     </div>
                                 </div>
                             @endif
