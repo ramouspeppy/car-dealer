@@ -25,6 +25,7 @@ use App\Http\Controllers\TestdriveController as FrontendTestdrive;
 use App\Http\Controllers\GalleryController as FrontendGallery;
 use App\Http\Controllers\Backend\ConsultationController as BackendConsultation;
 use App\Http\Controllers\ProductController as FrontendProduct;
+use App\Http\Controllers\PromoController as FrontendPromo;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Backend\LandingPageController;
 use App\Http\Controllers\Backend\LandingPageV2Controller;
@@ -55,6 +56,10 @@ Route::post('/consultation', [ConsultationController::class, 'store'])->name('co
 // product
 Route::get('/product/', [FrontendProduct::class, 'index'])->name('product.index');
 Route::get('/product/{product:slug}', [FrontendProduct::class, 'detail'])->name('product.detail');
+
+// promo
+Route::get('/promo', [FrontendPromo::class, 'index'])->name('promo.index');
+Route::get('/promo/{promo:slug}', [FrontendPromo::class, 'detail'])->name('promo.detail');
 
 Route::get('/testdrive', [FrontendTestdrive::class, 'testdriveShow'])->name('testdrive.show');
 Route::post('/testdrive', [FrontendTestdrive::class, 'testdriveStore'])->name('testdrive.store');

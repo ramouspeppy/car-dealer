@@ -52,6 +52,7 @@
                 <ul>
                     <li><a href="{{ url('/') }}" class="active"><i class="bi bi-house-door-fill navicon"></i>Home</a></li>
                     <li><a href="{{ route('product.index') }}"><i class="bi bi-car-front-fill navicon"></i> Produk</a></li>
+                    <li><a href="{{ route('promo.index') }}"><i class="bi bi-tags-fill navicon"></i> Promo</a></li>
                     <li><a href="{{ route('testdrive.show') }}"><i class="bi bi-steering-wheel navicon"></i> TestDrive</a></li>
                     <li><a href="{{ route('gallery.index') }}"><i class="bi bi-images navicon"></i> Gallery</a></li>
                     <li><a href="{{ route('post.index') }}"><i class="bi bi-newspaper navicon"></i> Berita</a></li>

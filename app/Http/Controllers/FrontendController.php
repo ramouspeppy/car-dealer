@@ -43,10 +43,66 @@ class FrontendController extends Controller
 
         // Ambil semua photo delivery beserta relasi product
         $deliveries = PhotoDelivery::with(['media', 'product'])->get();
-        ($galleries =  Media::where('model_type', Gallery::class)
+        $galleries = Media::where('model_type', Gallery::class)
             ->inRandomOrder()
             ->limit(7)
-            ->get());
+            ->get();
+
+        // Siapkan data tampilan promo di controller (tanpa @php di Blade)
+        $promoCount = $promos->count();
+        $waNumber = optional($profile)->wa_formatted;
+        $promoCards = $promos->values()->map(function ($promo, $index) use ($promoCount, $waNumber) {
+            $daysLeft = $promo->days_left;
+            $isFeatured = $index === 0 && $promoCount > 1;
+            $isUrgent = $daysLeft !== null && $daysLeft <= 2;
+
+            $progress = null;
+            $showProgress = false;
+            $deadlineText = null;
+            if ($daysLeft !== null) {
+                $showProgress = true;
+                $progress = max(8, min(100, (int) round(($daysLeft / 30) * 100)));
+                $deadlineText = $daysLeft <= 0
+                    ? 'Segera berakhir'
+                    : 'Masih ' . $daysLeft . ' hari tersisa';
+            }
+
+            if ($daysLeft === null) {
+                $badgeLabel = $promo->effective_status;
+            } elseif ($daysLeft <= 0) {
+                $badgeLabel = 'Hari Terakhir!';
+            } else {
+                $badgeLabel = $daysLeft . ' Hari Lagi';
+            }
+
+            $waText = 'Halo, saya tertarik dengan promo "' . $promo->promo . '". Boleh minta info lebih lanjut?';
+            $waLink = $waNumber
+                ? 'https://wa.me/' . $waNumber . '?text=' . urlencode($waText)
+                : '#';
+
+            return (object) [
+                'title'           => $promo->promo,
+                'image_url'       => $promo->promo_image_url,
+                'excerpt'         => $promo->desc_limit,
+                'description'     => $promo->desc,
+                'effective_label' => $promo->effective_format ?: '—',
+                'wa_link'         => $waLink,
+                'is_featured'     => $isFeatured,
+                'is_urgent'       => $isUrgent,
+                'badge_label'     => $badgeLabel,
+                'badge_class'     => $isUrgent ? 'is-urgent' : '',
+                'badge_icon'      => $isUrgent ? 'bi-clock-fill' : 'bi-clock',
+                'show_progress'   => $showProgress,
+                'progress'        => $progress,
+                'deadline_text'   => $deadlineText,
+                'col_class'       => $isFeatured ? 'col-12' : 'col-lg-4 col-md-6',
+                'card_class'      => trim('promo-list-card'
+                    . ($isFeatured ? ' is-featured' : '')
+                    . ($isUrgent ? ' is-urgent-card' : '')),
+                'aos_delay'       => 100 + ($index * 50),
+            ];
+        });
+
         return view('frontend.welcome', compact(
             'header',
             'profile',
@@ -54,6 +110,7 @@ class FrontendController extends Controller
             'deliveries',
             'deliveriesByProduct',
             'promos',
+            'promoCards',
             'testimonies',
             'posts',
             'services',

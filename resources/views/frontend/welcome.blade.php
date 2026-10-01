@@ -153,80 +153,56 @@
         </div>
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
-            @if ($promos->isEmpty())
-                <div class="promo-empty" data-aos="fade-up">
-                    <div class="promo-empty-icon"><i class="bi bi-tags"></i></div>
-                    <h3>Belum ada promo aktif</h3>
-                    <p>Pantau terus halaman ini — penawaran terbaik {{ config('settings.site_brand') }} akan segera hadir.</p>
-                    <a href="{{ route('testdrive.show') }}" class="btn btn-primary">Jadwalkan Test Drive</a>
-                </div>
-            @else
+            @if ($promoCards->isNotEmpty())
                 <div class="row g-4">
-                    @foreach ($promos as $index => $promo)
-                        @php
-                            $promoWaText = 'Halo, saya tertarik dengan promo "' . $promo->promo . '". Boleh minta info lebih lanjut?';
-                            $promoWaLink = 'https://wa.me/' . $profile->wa_formatted . '?text=' . urlencode($promoWaText);
-                            $isFeatured = $index === 0 && $promos->count() > 1;
-                            $daysLeft = $promo->days_left;
-                            $isUrgent = $daysLeft !== null && $daysLeft <= 2;
-                            // Progress bar: anggap 30 hari sebagai penuh, clamp 0–100
-                            $progress = null;
-                            if ($daysLeft !== null) {
-                                $progress = max(8, min(100, (int) round(($daysLeft / 30) * 100)));
-                            }
-                        @endphp
-
-                        <div class="{{ $isFeatured ? 'col-12' : 'col-lg-4 col-md-6' }}" data-aos="fade-up" data-aos-delay="{{ 100 + $index * 50 }}">
-                            <article class="promo-list-card {{ $isFeatured ? 'is-featured' : '' }} {{ $isUrgent ? 'is-urgent-card' : '' }}">
+                    @foreach ($promoCards as $card)
+                        <div class="{{ $card->col_class }}" data-aos="fade-up" data-aos-delay="{{ $card->aos_delay }}">
+                            <article class="{{ $card->card_class }}">
                                 <div class="promo-image">
-                                    <img src="{{ $promo->promo_image_url }}" alt="{{ $promo->promo }}" class="img-fluid" loading="lazy">
+                                    <img src="{{ $card->image_url }}" alt="{{ $card->title }}" class="img-fluid" loading="lazy">
                                     <div class="promo-image-overlay"></div>
 
-                                    <div class="promo-category {{ $isUrgent ? 'is-urgent' : '' }}">
-                                        <i class="bi bi-clock{{ $isUrgent ? '-fill' : '' }}"></i>
-                                        @if ($daysLeft === null)
-                                            {{ $promo->effective_status }}
-                                        @elseif ($daysLeft <= 0)
-                                            Hari Terakhir!
-                                        @else
-                                            {{ $daysLeft }} Hari Lagi
-                                        @endif
+                                    <div class="promo-category {{ $card->badge_class }}">
+                                        <i class="bi {{ $card->badge_icon }}"></i>
+                                        {{ $card->badge_label }}
                                     </div>
 
-                                    @if ($isFeatured)
+                                    @if ($card->is_featured)
                                         <span class="promo-featured-tag"><i class="bi bi-stars"></i> Promo Utama</span>
                                     @endif
                                 </div>
 
                                 <div class="promo-info">
                                     <div class="promo-info-top">
-                                        <h3>{{ $promo->promo }}</h3>
+                                        <h3>{{ $card->title }}</h3>
                                         <div class="promo-meta">
-                                            <span><i class="bi bi-calendar3"></i> Berlaku sampai {{ $promo->effective_format ?? '—' }}</span>
+                                            <span><i class="bi bi-calendar3"></i> Berlaku sampai {{ $card->effective_label }}</span>
                                         </div>
-                                        <p>{{ $promo->desc_limit }}</p>
+                                        <p>{{ $card->excerpt }}</p>
 
-                                        @if ($progress !== null)
+                                        @if ($card->show_progress)
                                             <div class="promo-deadline" aria-hidden="true">
                                                 <div class="promo-deadline-bar">
-                                                    <span style="width: {{ $progress }}%"></span>
+                                                    <span style="width: {{ $card->progress }}%"></span>
                                                 </div>
-                                                <small>
-                                                    @if ($daysLeft <= 0)
-                                                        Segera berakhir
-                                                    @else
-                                                        Masih {{ $daysLeft }} hari tersisa
-                                                    @endif
-                                                </small>
+                                                <small>{{ $card->deadline_text }}</small>
                                             </div>
                                         @endif
                                     </div>
 
                                     <div class="promo-actions">
-                                        <button type="button" class="btn-details" data-bs-toggle="modal" data-bs-target="#promoModal" data-title="{{ $promo->promo }}" data-image="{{ $promo->promo_image_url }}" data-date="{{ $promo->effective_format }}" data-desc="{{ $promo->desc }}" data-wa="{{ $promoWaLink }}">
+                                        <button type="button"
+                                            class="btn-details"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#promoModal"
+                                            data-title="{{ $card->title }}"
+                                            data-image="{{ $card->image_url }}"
+                                            data-date="{{ $card->effective_label }}"
+                                            data-desc="{{ $card->description }}"
+                                            data-wa="{{ $card->wa_link }}">
                                             Detail Promo
                                         </button>
-                                        <a href="{{ $promoWaLink }}" target="_blank" rel="noopener" class="btn-purchase">
+                                        <a href="{{ $card->wa_link }}" target="_blank" rel="noopener" class="btn-purchase">
                                             <i class="bi bi-whatsapp"></i> Ambil Promo
                                         </a>
                                     </div>
@@ -234,6 +210,13 @@
                             </article>
                         </div>
                     @endforeach
+                </div>
+            @else
+                <div class="promo-empty" data-aos="fade-up">
+                    <div class="promo-empty-icon"><i class="bi bi-tags"></i></div>
+                    <h3>Belum ada promo aktif</h3>
+                    <p>Pantau terus halaman ini — penawaran terbaik {{ config('settings.site_brand') }} akan segera hadir.</p>
+                    <a href="{{ route('testdrive.show') }}" class="btn btn-primary">Jadwalkan Test Drive</a>
                 </div>
             @endif
         </div>

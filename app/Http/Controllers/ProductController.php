@@ -38,6 +38,6 @@ class ProductController extends Controller
         $services  = Service::latest()->get();
 
 
-        return view('frontend.product-detail', compact('product', 'profile', 'testimonies', 'services'));
+        return view('frontend.product.product-detail', compact('product', 'profile', 'testimonies', 'services'));
     }
 }
