@@ -65,6 +65,21 @@ class Promo extends Model implements HasMedia, Viewable
         }
     }
 
+    /**
+     * Sisa hari sampai promo berakhir. null kalau tidak ada tanggal efektif.
+     * Dipakai untuk badge urgency ("3 Hari Lagi") di halaman depan.
+     */
+    public function getDaysLeftAttribute()
+    {
+        if (!$this->effective_date) {
+            return null;
+        }
+
+        $days = (int) Carbon::now()->startOfDay()->diffInDays($this->effective_date->copy()->startOfDay(), false);
+
+        return $days;
+    }
+
     public function getEffectiveLabelAttribute()
     {
         if (!$this->effective_date) {
@@ -136,7 +151,7 @@ class Promo extends Model implements HasMedia, Viewable
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'promo'
             ]
         ];
     }

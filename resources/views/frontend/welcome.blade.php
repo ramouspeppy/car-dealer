@@ -155,29 +155,78 @@
 
             <div class="row gy-4">
                 @foreach ($promos as $promo)
+                    @php
+                        $promoWaText = 'Halo, saya tertarik dengan promo "' . $promo->promo . '". Boleh minta info lebih lanjut?';
+                        $promoWaLink = 'https://wa.me/' . $profile->wa_formatted . '?text=' . urlencode($promoWaText);
+                    @endphp
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="promo-list-card">
                             <div class="promo-image">
                                 <img src="{{ $promo->promo_image_url }}" alt="{{ $promo->promo }}" class="img-fluid">
-                                <div class="promo-category">{{ $promo->effective_status }}</div>
+                                <div class="promo-category {{ $promo->days_left !== null && $promo->days_left <= 2 ? 'is-urgent' : '' }}">
+                                    @if ($promo->days_left === null)
+                                        {{ $promo->effective_status }}
+                                    @elseif($promo->days_left <= 0)
+                                        Hari Terakhir!
+                                    @else
+                                        {{ $promo->days_left }} Hari Lagi
+                                    @endif
+                                </div>
                             </div>
                             <div class="promo-info">
                                 <h3>{{ $promo->promo }}</h3>
                                 <div class="promo-meta">
-                                    <span><i class="bi bi-calendar3"></i> {{ $promo->effective_format }}</span>
-                                    <span><i class="bi bi-box2-heart"></i> </span>
+                                    <span><i class="bi bi-calendar3"></i> Berlaku sampai {{ $promo->effective_format }}</span>
                                 </div>
                                 <p>{{ $promo->desc_limit }}</p>
                                 <div class="promo-actions">
-                                    <a href="#" class="btn-details">Lihat Selengkapnya..</a>
-                                    <a href="#" class="btn-purchase">Buy Now</a>
+                                    <button type="button" class="btn-details" data-bs-toggle="modal" data-bs-target="#promoModal" data-title="{{ $promo->promo }}" data-image="{{ $promo->promo_image_url }}" data-date="{{ $promo->effective_format }}" data-desc="{{ $promo->desc }}" data-wa="{{ $promoWaLink }}">
+                                        Lihat Selengkapnya..
+                                    </button>
+                                    <a href="{{ $promoWaLink }}" target="_blank" class="btn-purchase">Ambil Promo</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
+        </div>
     </section>
+
+    <!-- Modal Detail Promo (dipakai bergantian untuk semua promo, isinya diganti lewat JS) -->
+    <div class="modal fade" id="promoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="promoModalTitle">Detail Promo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <img id="promoModalImage" src="" alt="" class="img-fluid w-100">
+                <div class="modal-body">
+                    <p class="text-muted small mb-2"><i class="bi bi-calendar3"></i> Berlaku sampai <span id="promoModalDate"></span></p>
+                    <div id="promoModalDesc"></div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" id="promoModalWa" target="_blank" class="btn btn-primary w-100"><i class="bi bi-whatsapp"></i> Ambil Promo Ini</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            var promoModal = document.getElementById('promoModal');
+            if (!promoModal) return;
+            promoModal.addEventListener('show.bs.modal', function(event) {
+                var btn = event.relatedTarget;
+                if (!btn) return;
+                document.getElementById('promoModalTitle').textContent = btn.getAttribute('data-title') || '';
+                document.getElementById('promoModalImage').src = btn.getAttribute('data-image') || '';
+                document.getElementById('promoModalDate').textContent = btn.getAttribute('data-date') || '-';
+                document.getElementById('promoModalDesc').innerHTML = btn.getAttribute('data-desc') || '';
+                document.getElementById('promoModalWa').href = btn.getAttribute('data-wa') || '#';
+            });
+        })();
+    </script>
 
     <section id="product-cards" class="product-list-cards section">
         <div class="container section-title" data-aos="fade-up" data-builder="section-title">
@@ -189,27 +238,32 @@
         <div class="container" data-aos="fade-up" data-aos-delay="100">
 
             <div class="row g-4">
-                <!-- Category Card 1 -->
                 @foreach ($products as $product)
-                    <!-- Category Card 2 -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="product-list-card card-{{ rand(1, 15) }}">
+                        <div class="product-list-card bg-white rounded shadow-sm h-100">
                             <div class="product-list-content">
-                                <a href="{{ route('product.detail', $product->slug) }}">
+                                <a href="{{ route('product.detail', $product->slug) }}" class="text-decoration-none">
                                     <h2 class="product-list-title">{{ $product->name }}</h2>
-                                    <p class="product-list-subtitle">Nullam auctor diam sed</p>
+                                    @if ($product->tagline)
+                                        <p class="product-list-subtitle">{{ Str::limit($product->tagline, 60) }}</p>
+                                    @endif
                                     <h1 class="product-list-hero text-uppercase">{{ $product->hero_name }}</h1>
                                     <div class="product-list-image">
-                                        <img src="{{ $product->image_url }}" alt="{{ $product->product }}" class="img-fluid" loading="lazy">
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="img-fluid" loading="lazy">
+                                    </div>
+                                    <div class="product-list-footer d-flex justify-content-between align-items-end">
+                                        <div class="shop-now">Mulai dari <i class="bi bi-arrow-right"></i></div>
+                                        <div class="text-end">
+                                            @if ($product->disc > 0)
+                                                <div class="badge-discount">Hemat Rp {{ number_format($product->disc) }}</div>
+                                            @endif
+                                            <span class="price fw-bold">{{ $product->min_price }}</span>
+                                        </div>
                                     </div>
                                 </a>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="shop-now">Mulai dari <i class="bi bi-arrow-right"></i></div>
-                                    <span class="price fw-bold">{{ $product->min_price }}</span>
-                                </div>
                             </div>
                         </div>
-                    </div><!-- End Category Card 2 -->
+                    </div>
                 @endforeach
             </div>
         </div>

@@ -667,67 +667,110 @@ select.form-control.is-invalid {
 }
 .promo-list .promo-list-card {
     background-color: var(--surface-color);
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    border-top: 4px solid var(--accent-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
     height: 100%;
-    transition: all 0.3s ease;
-    overflow: hidden;
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+    overflow: visible;
+    position: relative;
 }
 .promo-list .promo-list-card .promo-image {
     position: relative;
     overflow: hidden;
-    display: grid;
-    place-items: center;
-    padding: 20px;
+    height: 210px;
+    border-radius: 12px 12px 0 0;
+    background: color-mix(
+        in srgb,
+        var(--accent-color),
+        var(--surface-color) 88%
+    );
 }
 .promo-list .promo-list-card .promo-image img {
-    width: 60%;
-    transition: transform 0.5s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.promo-list .promo-list-card .promo-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 55%,
+        color-mix(in srgb, var(--surface-color), transparent 0%) 100%
+    );
+    pointer-events: none;
 }
 .promo-list .promo-list-card .promo-image .promo-category {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 16px;
+    left: 16px;
     background-color: var(--accent-color);
     color: var(--contrast-color);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 5px 15px;
-    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    padding: 7px 16px;
+    border-radius: 50px;
+    box-shadow: 0 6px 16px
+        color-mix(in srgb, var(--accent-color), transparent 55%);
+    z-index: 2;
+}
+/* Badge urgency, aktif kalau promo tinggal <= 2 hari lagi (ditambahkan) */
+.promo-list .promo-list-card .promo-image .promo-category.is-urgent {
+    background-color: #dc3545;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(220, 53, 69, 0.45);
+    animation: promoUrgentPulse 1.6s ease-in-out infinite;
+}
+@keyframes promoUrgentPulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
 }
 .promo-list .promo-list-card .promo-info {
-    padding: 25px;
+    padding: 30px 25px 25px;
 }
 .promo-list .promo-list-card .promo-info h3 {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 21px;
+    font-weight: 700;
     color: var(--heading-color);
-    margin-bottom: 10px;
+    font-family: var(--heading-font);
+    margin-bottom: 12px;
     line-height: 1.3;
 }
 .promo-list .promo-list-card .promo-info .promo-meta {
     display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
 }
 .promo-list .promo-list-card .promo-info .promo-meta span {
-    font-size: 14px;
-    color: color-mix(in srgb, var(--default-color), transparent 30%);
-    display: flex;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color), transparent 90%);
+    display: inline-flex;
     align-items: center;
+    padding: 5px 12px;
+    border-radius: 50px;
 }
 .promo-list .promo-list-card .promo-info .promo-meta span i {
-    color: var(--accent-color);
-    margin-right: 5px;
-}
-.promo-list .promo-list-card .promo-info .promo-meta span:last-child i {
-    color: #ffd700;
+    margin-right: 6px;
 }
 .promo-list .promo-list-card .promo-info p {
     font-size: 15px;
-    color: var(--default-color);
-    line-height: 1.6;
-    margin-bottom: 20px;
+    color: color-mix(in srgb, var(--default-color), transparent 10%);
+    line-height: 1.65;
+    margin-bottom: 22px;
 }
 .promo-list .promo-list-card .promo-info .promo-actions {
     display: flex;
@@ -735,39 +778,51 @@ select.form-control.is-invalid {
 }
 .promo-list .promo-list-card .promo-info .promo-actions .btn-details {
     background-color: transparent;
-    border: 2px solid var(--accent-color);
-    color: var(--accent-color);
-    padding: 8px 18px;
+    border: 2px solid color-mix(in srgb, var(--default-color), transparent 75%);
+    color: var(--heading-color);
+    padding: 10px 16px;
     border-radius: 50px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.3s ease;
-    display: grid;
-    place-items: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 .promo-list .promo-list-card .promo-info .promo-actions .btn-details:hover {
-    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
 }
 .promo-list .promo-list-card .promo-info .promo-actions .btn-purchase {
-    background-color: var(--accent-color);
+    background: linear-gradient(
+        135deg,
+        var(--accent-color),
+        color-mix(in srgb, var(--accent-color), #000 15%)
+    );
     color: var(--contrast-color);
-    padding: 8px 18px;
+    padding: 10px 20px;
     border-radius: 50px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     transition: all 0.3s ease;
-    display: grid;
-    place-items: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 1;
 }
 .promo-list .promo-list-card .promo-info .promo-actions .btn-purchase:hover {
-    background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px
+        color-mix(in srgb, var(--accent-color), transparent 55%);
 }
 .promo-list .promo-list-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 .promo-list .promo-list-card:hover .promo-image img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 .promo-list .coming-soon {
     background-color: var(--surface-color);
@@ -895,11 +950,20 @@ select.form-control.is-invalid {
 }
 
 .product-list-cards .product-list-card {
-    border-radius: 8px;
+    border-radius: 16px;
     overflow: hidden;
     height: 100%;
     position: relative;
     padding: 2.5rem 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.4s ease;
+}
+
+.product-list-cards .product-list-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
 .product-list-cards .product-list-card:hover .shop-now i {
@@ -908,83 +972,64 @@ select.form-control.is-invalid {
 
 .product-list-hero {
     position: absolute;
-    top: 25%;
-    font-size: 74px;
+    top: 16%;
+    right: -4%;
+    font-size: 92px;
     font-weight: 900;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px
+        color-mix(in srgb, var(--heading-color), transparent 78%);
+    letter-spacing: -2px;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 1;
 }
 
 .product-list-cards .product-list-card:hover .product-list-image img {
     transform: scale(1.08) rotate(1deg);
-    filter: brightness(1.1);
+    filter: brightness(1.05);
 }
 
-.product-list-cards .product-list-card.card-1 {
-    background-color: #fff5e6;
-}
-
-.product-list-cards .product-list-card.card-2 {
-    background-color: #f0f5f0;
-}
-
-.product-list-cards .product-list-card.card-3 {
-    background-color: #fffbf0;
-}
-
-.product-list-cards .product-list-card.card-4 {
-    background-color: #f5f5f5;
-}
-
-.product-list-cards .product-list-card.card-5 {
-    background-color: #f0f5ff;
-}
-
-.product-list-cards .product-list-card.card-6 {
-    background-color: #fffaf0;
-}
-
-.product-list-cards .product-list-card.card-7 {
-    background-color: #fff5e1;
-    /* cream lembut */
-}
-
-.product-list-cards .product-list-card.card-8 {
-    background-color: #ffffff;
-    /* putih bersih */
-}
-
-.product-list-cards .product-list-card.card-9 {
-    background-color: #f0f8ff;
-    /* putih agak biru (AliceBlue) */
-}
-
-.product-list-cards .product-list-card.card-10 {
-    background-color: #fffae6;
-    /* putih agak kuning pastel */
-}
-
-.product-list-cards .product-list-card.card-11 {
-    background-color: #f8f6ff;
-    /* putih agak ungu muda */
-}
-
-.product-list-cards .product-list-card.card-12 {
-    background-color: #faf3dd;
-    /* ivory cream */
-}
-
+.product-list-cards .product-list-card.card-1,
+.product-list-cards .product-list-card.card-7,
 .product-list-cards .product-list-card.card-13 {
-    background-color: #fdfbf3;
-    /* putih gading natural */
+    background: color-mix(
+        in srgb,
+        var(--accent-color),
+        var(--background-color) 84%
+    );
 }
 
+.product-list-cards .product-list-card.card-2,
+.product-list-cards .product-list-card.card-8,
 .product-list-cards .product-list-card.card-14 {
-    background-color: #e6f7f9;
-    /* putih kebiruan pastel (aqua soft) */
+    background: color-mix(in srgb, #ff8a65, var(--background-color) 88%);
 }
 
+.product-list-cards .product-list-card.card-3,
+.product-list-cards .product-list-card.card-9,
 .product-list-cards .product-list-card.card-15 {
-    background-color: #fffde7;
-    /* putih kekuningan (lemon chiffon) */
+    background: color-mix(in srgb, #26c6da, var(--background-color) 88%);
+}
+
+.product-list-cards .product-list-card.card-4,
+.product-list-cards .product-list-card.card-10 {
+    background: color-mix(
+        in srgb,
+        var(--accent-color),
+        var(--background-color) 72%
+    );
+}
+
+.product-list-cards .product-list-card.card-5,
+.product-list-cards .product-list-card.card-11 {
+    background: color-mix(in srgb, #ffca28, var(--background-color) 88%);
+}
+
+.product-list-cards .product-list-card.card-6,
+.product-list-cards .product-list-card.card-12 {
+    background: color-mix(in srgb, #ab47bc, var(--background-color) 90%);
 }
 
 .product-list-cards .product-list-content {
@@ -995,23 +1040,36 @@ select.form-control.is-invalid {
 
 .product-list-cards .product-list-title {
     font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
     color: var(--heading-color);
     font-family: var(--heading-font);
+    position: relative;
+    z-index: 2;
 }
 
 .product-list-cards .price {
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--heading-color);
     font-family: var(--heading-font);
 }
 
+/* Badge "Hemat Rp X", tampil kalau produk punya disc (ditambahkan) */
+.product-list-cards .badge-discount {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 2px;
+    white-space: nowrap;
+}
+
 .product-list-cards .product-list-subtitle {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     margin-bottom: 1.5rem;
-    color: var(--default-color);
+    color: color-mix(in srgb, var(--default-color), transparent 15%);
+    position: relative;
+    z-index: 2;
 }
 
 .product-list-cards .product-list-image {
@@ -1020,16 +1078,44 @@ select.form-control.is-invalid {
     align-items: center;
     justify-content: center;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
+    z-index: 2;
+}
+
+.product-list-cards .product-list-image::before {
+    content: "";
+    position: absolute;
+    width: 76%;
+    height: 76%;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--surface-color), transparent 12%);
+    box-shadow: inset 0 0 0 1px
+        color-mix(in srgb, var(--heading-color), transparent 92%);
+    z-index: -1;
+    transition: transform 0.4s ease;
+}
+
+.product-list-cards .product-list-card:hover .product-list-image::before {
+    transform: scale(1.06);
 }
 
 .product-list-cards .product-list-image img {
     max-height: 200px;
     object-fit: contain;
+    position: relative;
     transition:
         transform 0.5s ease,
         filter 0.3s ease;
+}
+
+.product-list-cards .product-list-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid
+        color-mix(in srgb, var(--heading-color), transparent 88%);
 }
 
 .product-list-cards .shop-now {
@@ -1038,18 +1124,33 @@ select.form-control.is-invalid {
     color: var(--heading-color);
     font-weight: 500;
     font-size: 0.95rem;
-    margin-top: auto;
     text-decoration: none;
     position: relative;
 }
 
 .product-list-cards .shop-now i {
-    margin-left: 0.5rem;
-    transition: transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-left: 0.6rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent-color), transparent 85%);
+    color: var(--heading-color);
+    font-size: 0.8rem;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
 }
 
 .product-list-cards .shop-now:hover {
     color: var(--accent-color);
+}
+
+.product-list-cards .shop-now:hover i {
+    background: var(--accent-color);
+    color: var(--contrast-color);
 }
 
 @media (max-width: 991px) {
