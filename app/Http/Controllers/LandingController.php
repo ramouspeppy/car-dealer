@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
-use App\Models\Gallery;
 use App\Models\LandingPage;
 use App\Models\LandingPageV2;
 use App\Models\LandingPageV3;
@@ -13,6 +12,7 @@ use App\Models\Product;
 use App\Models\Profile;
 use App\Models\Service;
 use App\Models\Testimony;
+use App\Support\LeadAttribution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jenssegers\Agent\Agent;
@@ -197,23 +197,14 @@ class LandingController extends Controller
             $headline = optional(LandingPage::first())->headline;
         }
 
-        $consultation = Consultation::create([
+        $consultation = Consultation::create(array_merge([
             'name'         => $request->name,
             'phone'        => $request->phone,
             'city'         => $request->city,
             'product_id'   => $request->product_id,
             'message'      => $request->message ?: 'Tertarik dengan penawaran di halaman "' . ($headline ?: 'promo') . '"',
-            'source'       => 'landing_page',
             'ip_address'   => $request->ip(),
-            'utm_source'   => $request->utm_source,
-            'utm_medium'   => $request->utm_medium,
-            'utm_campaign' => $request->utm_campaign,
-            'utm_term'     => $request->utm_term,
-            'utm_content'  => $request->utm_content,
-            'gclid'        => $request->gclid,
-            'fbclid'       => $request->fbclid,
-            'landing_url'  => $request->landing_url,
-        ]);
+        ], LeadAttribution::fromRequest($request)));
 
         $profile = Profile::first();
         $wa      = $profile->wa_formatted;

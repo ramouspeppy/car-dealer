@@ -24,6 +24,8 @@ class TrackVisitor
             return $response;
         }
 
+        $response = $this->captureAttribution($request, $response);
+
         $visitorKey = $request->cookie('visitor_key');
 
         if (!$visitorKey) {
@@ -63,6 +65,55 @@ class TrackVisitor
 
         if ($trackedProduct) {
             visits($trackedProduct)->increment();
+        }
+
+        return $response;
+    }
+
+    protected function captureAttribution(Request $request, $response)
+    {
+        $cookieMinutes = 60 * 24 * 30;
+        $utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+
+        foreach ($utmKeys as $key) {
+            $value = trim((string) $request->query($key, ''));
+
+            if ($value !== '' && !$request->cookie('visitor_' . $key)) {
+                $response = $response->withCookie(Cookie::make('visitor_' . $key, substr($value, 0, 255), $cookieMinutes));
+            }
+        }
+
+        $source = trim((string) $request->query('utm_source', ''));
+        if ($source === '' && $request->query('gclid')) {
+            $source = 'google';
+        }
+        if ($source === '' && $request->query('fbclid')) {
+            $referrerHost = strtolower((string) parse_url($request->headers->get('referer', ''), PHP_URL_HOST));
+            $source = Str::contains($referrerHost, 'instagram') ? 'instagram' : 'facebook';
+        }
+
+        if ($source === '' && !$request->cookie('visitor_source')) {
+            $referrerHost = strtolower((string) parse_url($request->headers->get('referer', ''), PHP_URL_HOST));
+
+            if (Str::contains($referrerHost, ['google.', 'bing.', 'yahoo.', 'duckduckgo.'])) {
+                $source = 'organic';
+            } elseif (Str::contains($referrerHost, 'instagram')) {
+                $source = 'instagram';
+            } elseif (Str::contains($referrerHost, ['facebook.', 'fb.'])) {
+                $source = 'facebook';
+            } elseif ($referrerHost !== '' && $referrerHost !== strtolower($request->getHost())) {
+                $source = $referrerHost;
+            } else {
+                $source = 'direct';
+            }
+        }
+
+        if ($source !== '' && !$request->cookie('visitor_source')) {
+            $response = $response->withCookie(Cookie::make('visitor_source', substr($source, 0, 255), $cookieMinutes));
+        }
+
+        if (!$request->cookie('visitor_landing_url')) {
+            $response = $response->withCookie(Cookie::make('visitor_landing_url', substr($request->fullUrl(), 0, 255), $cookieMinutes));
         }
 
         return $response;

@@ -8,13 +8,13 @@ use App\Models\Header;
 use App\Models\Contact;
 use App\Models\Gallery;
 use App\Models\Testimony;
+use App\Support\LeadAttribution;
 use App\Models\PhotoDelivery;
 use App\Models\Product;
 use App\Models\Profile;
 use App\Models\Promo;
 use App\Models\Service;
 use App\Models\Testdrive;
-use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -228,6 +228,7 @@ class FrontendController extends Controller
             $testdrive->product = $request->product;
             $testdrive->schedule_date    = $request->schedule_date;
             $testdrive->note    = $request->note;
+            $testdrive->fill(LeadAttribution::fromRequest($request));
 
             $testdrive->save();
 
@@ -278,6 +279,7 @@ class FrontendController extends Controller
             $contact->wa      = $request->wa;
             $contact->subject = $request->subject;
             $contact->message = $request->message;
+            $contact->fill(LeadAttribution::fromRequest($request));
 
             $contact->save();
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Consultation;
 use App\Models\Profile;
+use App\Support\LeadAttribution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jenssegers\Agent\Agent;
@@ -30,7 +31,7 @@ class ConsultationController extends Controller
             ], 422);
         }
 
-        $consultation = Consultation::create([
+        $consultation = Consultation::create(array_merge([
             'name'         => $request->name,
             'phone'        => $request->phone,
             'city'         => $request->city,
@@ -39,9 +40,8 @@ class ConsultationController extends Controller
             'payment_type' => $request->payment_type,
             'tenor'        => $request->payment_type === 'credit' ? $request->tenor : null,
             'message'      => $request->message,
-            'source'       => 'website',
             'ip_address'   => $request->ip(),
-        ]);
+        ], LeadAttribution::fromRequest($request)));
 
 
         $profile = Profile::first();
