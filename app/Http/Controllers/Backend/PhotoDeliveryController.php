@@ -18,8 +18,25 @@ class PhotoDeliveryController extends Controller
 
     public function index(Request $request)
     {
-        $deliveries = PhotoDelivery::with('media')->paginate(12);
-        return view('backend.photo-delivery.index', compact('deliveries'));
+        $filters = $request->validate([
+            'product_id' => ['nullable', 'integer', 'exists:products,id'],
+        ]);
+
+        $products = Product::query()
+            ->select(['id', 'name'])
+            ->withCount('photo_delivery')
+            ->orderBy('name')
+            ->get();
+        $selectedProductId = $filters['product_id'] ?? null;
+
+        $deliveriesQuery = PhotoDelivery::with(['media', 'product']);
+        if ($selectedProductId) {
+            $deliveriesQuery->where('product_id', $selectedProductId);
+        }
+
+        $deliveries = $deliveriesQuery->latest()->paginate(12)->appends($request->only('product_id'));
+
+        return view('backend.photo-delivery.index', compact('deliveries', 'products', 'selectedProductId'));
     }
 
     public function create(PhotoDelivery $delivery)

@@ -9,16 +9,38 @@ class GalleryController extends Controller
 {
     public function index()
     {
+        $limit = 6;
         $galleries = Gallery::with('media')->whereNotNull('published_at')
             ->orderByDesc('published_at')
-            ->get();
-        return view('frontend.gallery.index', compact('galleries'));
+            ->paginate($limit);
+
+        $pagination = [
+            'current' => $galleries->currentPage(),
+            'last'    => $galleries->lastPage(),
+            'hasPrev' => !$galleries->onFirstPage(),
+            'hasNext' => $galleries->hasMorePages(),
+            'prevUrl' => $galleries->previousPageUrl(),
+            'nextUrl' => $galleries->nextPageUrl(),
+        ];
+        $seo = $this->frontendSeo([
+            'title' => 'Galeri Foto',
+            'description' => 'Lihat koleksi foto aktivitas, serah terima kendaraan, dan momen pelanggan bersama ' . config('settings.site_name') . '.',
+            'keywords' => ['galeri foto', 'serah terima kendaraan', config('settings.site_name'), config('settings.site_brand')],
+        ]);
+        return view('frontend.gallery.index', compact('galleries', 'pagination', 'seo'));
     }
 
     public function show(Gallery $gallery)
     {
         $gallery->load('media');
-        return view('frontend.gallery.show', compact('gallery'));
+        $seo = $this->frontendSeo([
+            'title' => $gallery->title,
+            'description' => $gallery->description,
+            'keywords' => [$gallery->title, 'galeri foto', config('settings.site_name')],
+            'image' => $gallery->cover_url,
+            'type' => 'article',
+        ]);
+        return view('frontend.gallery.show', compact('gallery', 'seo'));
     }
 
     public function love(Gallery $gallery)

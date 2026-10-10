@@ -1,22 +1,19 @@
 @extends('backend.layouts.app')
 @section('title', 'Edit Product Category - '.config('settings.site_name'))
-@section('breadcrumb')
-<div class="nb">
-    <div class="nb-header">
-        <div class="nb-header-back">
+@section('content')
+<section class="section">
+    <div class="section-header">
+        <div class="section-header-back">
             <a href="{{ route('backend.product-category.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
         <h1>Edit Product Category</h1>
-        <div class="nb-header-breadcrumb">
+        <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="{{ route('backend.product-category.index') }}">Product Categories</a></div>
             <div class="breadcrumb-item">Edit Product Category</div>
         </div>
     </div>
-</div>
-@endsection
-@section('content')
-<section class="section">
+
     <div class="section-body">
         <form action="{{ route('backend.product-category.update', $product_category ) }}" method="POST">
             @method('put')

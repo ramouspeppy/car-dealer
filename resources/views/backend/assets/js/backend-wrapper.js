@@ -24,8 +24,8 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 window.Chart = Chart;
 
-import Chocolat from "chocolat";
-window.chocolat = Chocolat;
+import GLightbox from "glightbox";
+window.GLightbox = GLightbox;
 
 // selectric
 // require('../lib/selectric/jquery.selectric');

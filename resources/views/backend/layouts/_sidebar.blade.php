@@ -14,7 +14,7 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        <li class="nav-item dropdown {{ request()->routeIs('backend.header.*', 'backend.testimony.*') ? 'active' : '' }}">
+        <li class="nav-item dropdown {{ request()->routeIs('backend.landing-page.*', 'backend.landing-page-v2.*', 'backend.landing-page-v3.*', 'backend.landing-page-v4.*') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown">
                 <i class="fas fa-th-large"></i>
                 <span>Landing Page</span>
@@ -22,25 +22,25 @@
             <ul class="dropdown-menu">
                 <li class="{{ request()->routeIs('backend.landing-page.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.landing-page.index') }}">
-                        <i class="fas fa-bullhorn"></i>
-                        <span>Landing Page (Ads)</span>
+                        <i class="fas fa-bullhorn ml-0 mr-1"></i>
+                        <span>Landing Page V1</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.landing-page-v2.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.landing-page-v2.index') }}">
-                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star ml-0 mr-1"></i>
                         <span>Landing Page V2</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.landing-page-v3.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.landing-page-v3.index') }}">
-                        <i class="fas fa-smile-beam"></i>
+                        <i class="fas fa-smile-beam ml-0 mr-1"></i>
                         <span>Landing Page V3</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.landing-page-v4.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.landing-page-v4.index') }}">
-                        <i class="fas fa-microchip"></i>
+                        <i class="fas fa-microchip ml-0 mr-1"></i>
                         <span>Landing Page V4</span>
                     </a>
                 </li>
@@ -62,19 +62,19 @@
                 </li>
                 <li class="{{ request()->routeIs('backend.profile.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.profile.index') }}">
-                        <i class="far fa-dot-circle"></i>
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
                         <span>Profile</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.promo.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.promo.index') }}">
-                        <i class="far fa-dot-circle"></i>
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
                         <span>Promo</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.service.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.service.index') }}">
-                        <i class="far fa-dot-circle"></i>
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
                         <span>Layanan</span>
                     </a>
                 </li>
@@ -125,13 +125,13 @@
             <ul class="dropdown-menu">
                 <li class="{{ request()->routeIs('backend.photo-delivery.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.photo-delivery.index') }}">
-                        <i class="far fa-dot-circle"></i>
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
                         <span>Photo Delivery</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.gallery.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.gallery.index') }}">
-                        <i class="far fa-dot-circle"></i>
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
                         <span>Gallery</span>
                     </a>
                 </li>
@@ -147,20 +147,20 @@
             <ul class="dropdown-menu">
                 <li class="{{ request()->routeIs('backend.consultation.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.consultation.index') }}">
-                        <i class="far fa-dot-circle"></i>
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
                         <span>Konsultasi</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.testdrive.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.testdrive.index') }}">
-                        <i class="far fa-dot-circle"></i>
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
                         <span>Testdrive</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.contact.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('backend.contact.index') }}">
-                        <i class="far fa-dot-circle"></i>
-                        <span>Contact</span>
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
+                        <span>Contact (Inquiry)</span>
                     </a>
                 </li>
             </ul>
@@ -174,10 +174,17 @@
             </a>
             <ul class="dropdown-menu">
                 <li class="{{ request()->routeIs('backend.post-category.*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('backend.post-category.index') }}">Post Category</a>
+
+                    <a class="nav-link" href="{{ route('backend.post-category.index') }}">
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
+                        <span>Post Category</span>
+                    </a>
                 </li>
                 <li class="{{ request()->routeIs('backend.post.*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('backend.post.index') }}">Post</a>
+                    <a class="nav-link" href="{{ route('backend.post.index') }}">
+                        <i class="far fa-dot-circle ml-0 mr-1"></i>
+                        <span>Post</span>
+                    </a>
                 </li>
             </ul>
         </li>

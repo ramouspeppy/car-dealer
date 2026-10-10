@@ -23,7 +23,9 @@
 
                             <div class="hero-actions">
                                 <a href="{{ route('testdrive.show') }}" class="btn btn-primary">TestDrive ?</a>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#consultationModal" class="btn btn-outline">Konsultasi ?</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#consultationModal" class="btn btn-outline btn-consultation">
+                                    <i class="bi bi-chat-dots-fill"></i> Konsultasi Gratis
+                                </a>
                             </div>
 
                             <div class="social-links">
@@ -50,6 +52,151 @@
         </div>
     </section><!-- /Hero Section -->
     @push('css')
+        <style>
+            body.index-page {
+                --welcome-button-color: color-mix(in srgb, var(--accent-color), #12314f 26%);
+                --welcome-button-hover-color: color-mix(in srgb, var(--welcome-button-color), #000 10%);
+                --welcome-button-text-color: #fff;
+                --welcome-button-shadow-color: color-mix(in srgb, var(--welcome-button-color), transparent 78%);
+                --welcome-button-hover-shadow-color: color-mix(in srgb, var(--welcome-button-color), transparent 68%);
+            }
+
+            body.index-page[data-theme="dark"] {
+                --welcome-button-color: #ececec;
+                --welcome-button-hover-color: #d8d8d8;
+                --welcome-button-text-color: #1f1f1f;
+                --welcome-button-shadow-color: rgba(0, 0, 0, .24);
+                --welcome-button-hover-shadow-color: rgba(0, 0, 0, .36);
+            }
+
+            body.index-page #hero .hero-actions .btn.btn-primary,
+            body.index-page #about .cta-section .btn.btn-primary,
+            body.index-page #promo-list .promo-empty .btn-primary,
+            body.index-page #promoModal .promo-modal-cta,
+            body.index-page #call-to-action .btn.btn-primary,
+            body.index-page #contact .contact-form button[type="submit"] {
+                background: linear-gradient(135deg, var(--welcome-button-color), var(--welcome-button-hover-color));
+                border-color: var(--welcome-button-color);
+                border-radius: 50px;
+                color: var(--welcome-button-text-color);
+                font-weight: 700;
+                box-shadow: 0 8px 20px var(--welcome-button-shadow-color);
+                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
+            }
+
+            body.index-page #hero .hero-actions .btn.btn-primary:hover,
+            body.index-page #about .cta-section .btn.btn-primary:hover,
+            body.index-page #promo-list .promo-empty .btn-primary:hover,
+            body.index-page #promoModal .promo-modal-cta:hover,
+            body.index-page #call-to-action .btn.btn-primary:hover,
+            body.index-page #contact .contact-form button[type="submit"]:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 26px var(--welcome-button-hover-shadow-color);
+            }
+
+            body.index-page #hero .hero-actions .btn.btn-outline,
+            body.index-page #about .cta-section .btn.btn-outline,
+            body.index-page #call-to-action .btn.btn-outline-primary {
+                border: 1.5px solid color-mix(in srgb, var(--welcome-button-color), transparent 30%);
+                border-radius: 50px;
+                color: var(--welcome-button-color);
+                font-weight: 700;
+                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease, border-color .25s ease;
+            }
+
+            body.index-page #hero .hero-actions .btn.btn-outline:hover,
+            body.index-page #about .cta-section .btn.btn-outline:hover,
+            body.index-page #call-to-action .btn.btn-outline-primary:hover {
+                border-color: var(--welcome-button-color);
+                box-shadow: 0 8px 20px var(--welcome-button-shadow-color);
+                transform: translateY(-3px);
+            }
+
+            body.index-page #hero .hero-actions .btn-consultation {
+                background-color: color-mix(in srgb, var(--welcome-button-color), transparent 91%);
+                border-color: color-mix(in srgb, var(--welcome-button-color), transparent 42%);
+                color: var(--welcome-button-color);
+                gap: 8px;
+                padding-inline: 22px;
+                box-shadow: 0 6px 16px var(--welcome-button-shadow-color);
+            }
+
+            body.index-page #hero .hero-actions .btn-consultation:hover {
+                background-color: color-mix(in srgb, var(--welcome-button-color), transparent 91%);
+                border-color: var(--welcome-button-color);
+                color: var(--welcome-button-color);
+                box-shadow: 0 10px 22px var(--welcome-button-shadow-color);
+            }
+
+            body.index-page #promo-list .promo-actions .btn-purchase,
+            body.index-page #gallery .btn-gallery {
+                background: linear-gradient(135deg, var(--welcome-button-color), var(--welcome-button-hover-color));
+                color: var(--welcome-button-text-color);
+                box-shadow: 0 8px 20px var(--welcome-button-shadow-color);
+                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
+            }
+
+            body.index-page #promo-list .promo-actions .btn-purchase:hover,
+            body.index-page #gallery .btn-gallery:hover {
+                color: var(--welcome-button-text-color);
+                transform: translateY(-3px);
+                box-shadow: 0 12px 26px var(--welcome-button-hover-shadow-color);
+            }
+
+            body.index-page #promo-list .promo-actions .btn-details {
+                border-color: color-mix(in srgb, var(--welcome-button-color), transparent 65%);
+                color: var(--heading-color);
+                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease, border-color .25s ease;
+            }
+
+            body.index-page #promo-list .promo-actions .btn-details:hover {
+                border-color: var(--welcome-button-color);
+                box-shadow: 0 6px 16px var(--welcome-button-shadow-color);
+                transform: translateY(-2px);
+            }
+
+            body.index-page #services .service-btn {
+                background: linear-gradient(135deg, var(--welcome-button-color), var(--welcome-button-hover-color));
+                border-radius: 50px;
+                color: var(--welcome-button-text-color);
+                font-weight: 700;
+                box-shadow: 0 8px 20px var(--welcome-button-shadow-color);
+                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
+            }
+
+            body.index-page #services .service-btn:hover {
+                color: var(--welcome-button-text-color);
+                transform: translateY(-3px);
+                box-shadow: 0 12px 26px var(--welcome-button-hover-shadow-color);
+            }
+
+            body.index-page #hero .hero-actions .btn:focus-visible,
+            body.index-page #about .cta-section .btn:focus-visible,
+            body.index-page #promo-list .promo-actions button:focus-visible,
+            body.index-page #promo-list .promo-actions a:focus-visible,
+            body.index-page #promoModal .promo-modal-cta:focus-visible,
+            body.index-page #call-to-action .cta-buttons .btn:focus-visible,
+            body.index-page #gallery .btn-gallery:focus-visible,
+            body.index-page #services .service-btn:focus-visible,
+            body.index-page #contact .contact-form button[type="submit"]:focus-visible {
+                outline: 3px solid color-mix(in srgb, var(--welcome-button-color), transparent 35%);
+                outline-offset: 3px;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                body.index-page #hero .hero-actions .btn,
+                body.index-page #about .cta-section .btn,
+                body.index-page #promo-list .promo-actions button,
+                body.index-page #promo-list .promo-actions a,
+                body.index-page #promoModal .promo-modal-cta,
+                body.index-page #call-to-action .cta-buttons .btn,
+                body.index-page #gallery .btn-gallery,
+                body.index-page #services .service-btn,
+                body.index-page #contact .contact-form button[type="submit"] {
+                    transition: none;
+                }
+            }
+        </style>
     @endpush
 
 
@@ -191,15 +338,7 @@
                                     </div>
 
                                     <div class="promo-actions">
-                                        <button type="button"
-                                            class="btn-details"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#promoModal"
-                                            data-title="{{ $card->title }}"
-                                            data-image="{{ $card->image_url }}"
-                                            data-date="{{ $card->effective_label }}"
-                                            data-desc="{{ $card->description }}"
-                                            data-wa="{{ $card->wa_link }}">
+                                        <button type="button" class="btn-details" data-bs-toggle="modal" data-bs-target="#promoModal" data-title="{{ $card->title }}" data-image="{{ $card->image_url }}" data-date="{{ $card->effective_label }}" data-desc="{{ $card->description }}" data-wa="{{ $card->wa_link }}">
                                             Detail Promo
                                         </button>
                                         <a href="{{ $card->wa_link }}" target="_blank" rel="noopener" class="btn-purchase">
@@ -357,7 +496,7 @@
                                 Saya selalu berkomitmen memberikan layanan menyeluruh untuk memastikan Anda mendapatkan
                                 mobil {{ config('settings.site_brand') }} impian dengan pengalaman pembelian yang mudah, cepat, dan menyenangkan.
                             </p>
-                            <a href="" class="service-btn">
+                            <a href="{{ route('product.index') }}" class="service-btn">
                                 View All Products
                                 <i class="bi bi-arrow-right"></i>
                             </a>
@@ -558,7 +697,7 @@
             </div>
 
             <div class="text-center mt-5">
-                <a href="gallery.html" class="btn btn-gallery">
+                <a href="{{ route('gallery.index') }}" class="btn btn-gallery">
                     <i class="bi bi-collection me-2"></i>Discover Our Full Gallery
                 </a>
             </div>

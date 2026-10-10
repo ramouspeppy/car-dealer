@@ -143,7 +143,7 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
     Route::get('promo/checkSlug', [PromoController::class, 'checkSlug'])->name('promo.checkSlug');
     Route::resource('promo', PromoController::class)->except('show');
 
-    // Promo
+    // Service
     Route::resource('service', ServiceController::class)->except('show');
 
 
@@ -169,11 +169,11 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
 
     // Contact
     Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
-    Route::post('contact/{contact}', [ContactController::class, 'read'])->name('contact.read');
+    Route::get('contact/{contact}', [ContactController::class, 'read'])->name('contact.show');
 
     // Testdrive
     Route::get('testdrive', [BackendTestdrive::class, 'index'])->name('testdrive.index');
-    Route::post('testdrive/{testdrive}', [BackendTestdrive::class, 'read'])->name('testdrive.read');
+    Route::get('testdrive/{testdrive}', [BackendTestdrive::class, 'read'])->name('testdrive.show');
 
     // Consultation
     Route::get('consultation', [BackendConsultation::class, 'index'])->name('consultation.index');

@@ -66,7 +66,6 @@
         }
 
         .dashboard-page .dashboard-kpi {
-            min-height: 136px;
             overflow: hidden;
             border-top: 2px solid rgba(103, 119, 239, 0.16);
         }
@@ -154,6 +153,98 @@
             color: #98a6ad;
         }
 
+        .dashboard-page .popular-car-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .dashboard-page .popular-car-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid #edf0f6;
+            border-radius: 6px;
+            background: linear-gradient(110deg, #fbfcff, #fff 72%);
+            transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .dashboard-page .popular-car-item:hover {
+            transform: translateX(2px);
+            border-color: #dce2f5;
+            background: #f8f9fe;
+        }
+
+        .dashboard-page .popular-car-rank {
+            display: grid;
+            place-items: center;
+            flex: 0 0 30px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: #737d91;
+            background: #eef1f7;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .dashboard-page .popular-car-rank.is-top {
+            color: #fff;
+            background: #e5a93e;
+            box-shadow: 0 4px 10px rgba(229, 169, 62, 0.25);
+        }
+
+        .dashboard-page .popular-car-thumb {
+            flex: 0 0 84px;
+            width: 84px;
+            height: 64px;
+            overflow: hidden;
+            border-radius: 5px;
+            background: #eef1f7;
+        }
+
+        .dashboard-page .popular-car-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dashboard-page .popular-car-content {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .dashboard-page .popular-car-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .dashboard-page .popular-car-name {
+            overflow: hidden;
+            color: var(--dashboard-ink);
+            font-size: 13px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dashboard-page .popular-car-views {
+            flex: 0 0 auto;
+            color: #687386;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .dashboard-page .popular-car-content .progress {
+            height: 6px;
+            margin-top: 10px;
+        }
+
+        .dashboard-page .popular-car-content .progress-bar {
+            background: linear-gradient(90deg, #6777ef, #49b1a5);
+        }
+
         @media (max-width: 767.98px) {
             .dashboard-page .dashboard-filter-card .card-header {
                 align-items: flex-start !important;
@@ -171,6 +262,29 @@
 
             .dashboard-page .dashboard-chart-wrap {
                 height: 260px;
+            }
+
+            .dashboard-page .popular-car-item {
+                gap: 9px;
+                padding: 10px;
+            }
+
+            .dashboard-page .popular-car-rank {
+                flex-basis: 26px;
+                width: 26px;
+                height: 26px;
+            }
+
+            .dashboard-page .popular-car-thumb {
+                flex-basis: 68px;
+                width: 68px;
+                height: 56px;
+            }
+
+            .dashboard-page .popular-car-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 3px;
             }
         }
     </style>
@@ -212,13 +326,13 @@
 
             <div class="row">
                 @foreach ($stats as $stat)
-                    <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-                        <div class="card card-statistic-1 dashboard-kpi">
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="card card-statistic-1 dashboard-kpi m-0">
                             <div class="card-icon bg-{{ $stat['bg'] }}">
                                 <i class="{{ $stat['icon'] }}"></i>
                             </div>
                             <div class="card-wrap">
-                                <div class="card-header">
+                                <div class="card-header ui-sortable-handle">
                                     <h4>{{ $stat['title'] }}</h4>
                                 </div>
                                 <div class="card-body">
@@ -228,7 +342,7 @@
                         </div>
                         @if (!is_null($stat['trend']))
                             <div class="text-small mt-2 dashboard-trend">
-                                <span class="{{ $stat['trend'] >= 0 ? 'text-success' : 'text-danger' }}">
+                                <span class="{{ $stat['trend'] >= 0 ? 'text-info' : 'text-danger' }}">
                                     <i class="fas {{ $stat['trend'] >= 0 ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
                                     {{ abs($stat['trend']) }}%
                                 </span>
@@ -262,11 +376,11 @@
                                     <tbody>
                                         @forelse ($recentLeads as $lead)
                                             <tr>
-                                                <td>{{ $lead['name'] ?? '-' }}</td>
+                                                <td><a href="{{ $lead['link'] }}">{{ $lead['name'] ?? '-' }}</a></td>
                                                 <td>{{ $lead['type'] ?? '-' }}</td>
                                                 <td>{{ $lead['product'] ?? '-' }}</td>
                                                 <td>
-                                                    <span class="badge badge-{{ $lead['status'] == 'new' || $lead['status'] == 0 ? 'warning' : 'success' }}">
+                                                    <span class="badge badge-{{ $lead['status'] == 'new' || $lead['status'] == 0 ? 'success' : 'info' }}">
                                                         {{ $lead['status'] == 'new' || $lead['status'] == 0 ? 'Baru' : ucfirst($lead['status']) }}
                                                     </span>
                                                 </td>
@@ -313,7 +427,7 @@
                                     <span>{{ $testDriveCount }}</span>
                                 </div>
                                 <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar bg-success" style="width: {{ ($testDriveCount / $totalLead) * 100 }}%"></div>
+                                    <div class="progress-bar bg-info" style="width: {{ ($testDriveCount / $totalLead) * 100 }}%"></div>
                                 </div>
                             </div>
 
@@ -323,7 +437,7 @@
                                     <span>{{ $consultationCount }}</span>
                                 </div>
                                 <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar bg-warning" style="width: {{ ($consultationCount / $totalLead) * 100 }}%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ ($consultationCount / $totalLead) * 100 }}%"></div>
                                 </div>
                             </div>
                         </div>
@@ -338,30 +452,31 @@
                             <h4><i class="fas fa-car dashboard-heading-icon"></i>Mobil Terpopuler</h4>
                         </div>
                         <div class="card-body">
-                            @forelse ($popularProducts as $key => $product)
-                                @php
-                                    $maxViews = $popularProducts->max('views') ?? 0;
-                                    $progress = $maxViews > 0 ? round(($product->views / $maxViews) * 100) : 0;
-                                @endphp
-                                <div class="media mb-3">
-                                    <div class="mr-3">
-                                        <div class="avatar avatar-xl">
+                            <div class="popular-car-list">
+                                @forelse ($popularProducts as $key => $product)
+                                    @php
+                                        $maxViews = $popularProducts->max('views') ?? 0;
+                                        $progress = $maxViews > 0 ? round(($product->views / $maxViews) * 100) : 0;
+                                    @endphp
+                                    <div class="popular-car-item">
+                                        <span class="popular-car-rank {{ $key === 0 ? 'is-top' : '' }}">{{ sprintf('%02d', $key + 1) }}</span>
+                                        <div class="popular-car-thumb">
                                             <img alt="{{ $product->name }}" src="{{ $product->thumb }}">
                                         </div>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <strong>{{ $key + 1 }}. {{ $product->name }}</strong>
-                                            <span class="text-muted">{{ number_format($product->views) }} Views</span>
+                                        <div class="popular-car-content">
+                                            <div class="popular-car-heading">
+                                                <strong class="popular-car-name">{{ $product->name }}</strong>
+                                                <span class="popular-car-views"><i class="fas fa-eye mr-1"></i>{{ number_format($product->views) }} views</span>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: {{ $progress }}%"></div>
+                                            </div>
                                         </div>
-                                        <div class="progress mt-2" style="height: 8px;">
-                                            <div class="progress-bar bg-primary" style="width: {{ $progress }}%"></div>
-                                        </div>
                                     </div>
-                                </div>
-                            @empty
-                                <p class="text-muted mb-0">Belum ada data produk yang dilihat.</p>
-                            @endforelse
+                                @empty
+                                    <p class="text-muted mb-0">Belum ada data produk yang dilihat.</p>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -376,7 +491,7 @@
                                 $leadTypeValues = $leadTypeData['values'] ?? [0, 0, 0];
                                 $leadTypeTotal = array_sum($leadTypeValues);
                             @endphp
-                            @foreach (['Inquiry' => ['primary', $leadTypeValues[0] ?? 0], 'Test Drive' => ['success', $leadTypeValues[1] ?? 0], 'Konsultasi Gratis' => ['warning', $leadTypeValues[2] ?? 0]] as $label => [$color, $value])
+                            @foreach (['Inquiry' => ['primary', $leadTypeValues[0] ?? 0], 'Test Drive' => ['info', $leadTypeValues[1] ?? 0], 'Konsultasi Gratis' => ['success', $leadTypeValues[2] ?? 0]] as $label => [$color, $value])
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between">
                                         <span>{{ $label }}</span>
@@ -482,7 +597,7 @@
                             <h4><i class="fas fa-tasks dashboard-heading-icon"></i>Status Lead</h4>
                         </div>
                         <div class="card-body">
-                            @foreach (['new' => ['Baru', 'warning'], 'contacted' => ['Contacted', 'info'], 'closed' => ['Closed', 'success']] as $key => [$label, $color])
+                            @foreach (['new' => ['Baru', 'success'], 'contacted' => ['Contacted', 'secondary'], 'closed' => ['Closed', 'info']] as $key => [$label, $color])
                                 <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                                     <span>{{ $label }}</span>
                                     <span class="badge badge-{{ $color }}">{{ number_format($leadStatusData[$key] ?? 0) }}</span>
@@ -747,7 +862,7 @@
                                             <strong>{{ $item->name }}</strong><br>
                                             <small>{{ $item->phone ?? '-' }}</small>
                                         </div>
-                                        <span class="badge badge-{{ $item->status == 1 ? 'success' : 'warning' }}">
+                                        <span class="badge badge-{{ $item->status == 1 ? 'info' : 'success' }}">
                                             {{ $item->status == 1 ? 'Dibaca' : 'Baru' }}
                                         </span>
                                     </li>
@@ -772,7 +887,7 @@
                                             <strong>{{ $item->name }}</strong><br>
                                             <small>{{ optional($item->product)->name ?? 'Produk umum' }}</small>
                                         </div>
-                                        <span class="badge badge-{{ $item->status == 'read' ? 'success' : 'warning' }}">
+                                        <span class="badge badge-{{ $item->status == 'read' ? 'info' : 'success' }}">
                                             {{ $item->status == 'read' ? 'Dibaca' : 'Baru' }}
                                         </span>
                                     </li>

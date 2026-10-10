@@ -13,13 +13,16 @@ class JasniBootstrap extends Component
      */
     public $name;
     public $model;
+    public $accept;
 
     public function __construct(
         $name,
-        $model
+        $model,
+        $accept = 'image/*'
     ) {
         $this->name = $name;
         $this->model= $model;
+        $this->accept = $accept;
     }
 
     public function render()

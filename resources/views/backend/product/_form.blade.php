@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="disc">Discount</label>
+                                        <label class="form-control-label" for="disc">Potongan Harga (Rp)</label>
                                         <input type="text"
                                             class="form-control mask-price @error('disc') is-invalid @enderror"
                                             id="disc" name="disc" value="{{ old('disc', $product->disc) }}">

@@ -25,8 +25,8 @@ class TestdriveController extends Controller
             return Datatables::eloquent($testdrive)
                 ->addIndexColumn()
                 ->addColumn('action', function ($testdrive) {
-                    return view('backend.datatable._actionRead', [
-                        'read_url'    => route('backend.testdrive.read', $testdrive->id),
+                    return view('backend.datatable._actionShow', [
+                        'read_url'    => route('backend.testdrive.show', $testdrive->id),
                     ]);
                 })
                 ->editColumn('wa', function ($testdrive) {

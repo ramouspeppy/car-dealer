@@ -24,8 +24,8 @@ class ContactController extends Controller
             return Datatables::eloquent($contact)
                 ->addIndexColumn()
                 ->addColumn('action', function ($contact) {
-                    return view('backend.datatable._actionRead', [
-                        'read_url'    => route('backend.contact.read', $contact->id),
+                    return view('backend.datatable._actionShow', [
+                        'read_url'    => route('backend.contact.show', $contact->id),
                     ]);
                 })
                 ->editColumn('name', function ($contact) {

@@ -30,8 +30,9 @@ class LandingController extends Controller
         $products    = $landingPage->featuredProducts();
         $testimonies = $landingPage->selectedTestimonies();
         $promo       = $landingPage->promo;
+        $seo = $this->landingPageSeo($landingPage);
 
-        return view('frontend.landing.show', compact('landingPage', 'products', 'testimonies', 'promo'));
+        return view('frontend.landing.show', compact('landingPage', 'products', 'testimonies', 'promo', 'seo'));
     }
 
     /**
@@ -54,6 +55,10 @@ class LandingController extends Controller
 
         $featuredVehicle = $pool->first();
         $exploreProducts = $pool->slice(1)->values();
+        $allProducts = $featuredVehicle
+            ? collect([$featuredVehicle])->concat($exploreProducts)
+            : $exploreProducts;
+        $heroImage = $landingPage->hero_image_url ?: optional($featuredVehicle)->image_url;
 
         $testimonies = $landingPage->selectedTestimonies();
         $promos      = $landingPage->featuredPromos();
@@ -64,7 +69,10 @@ class LandingController extends Controller
         // tidak perlu dipilih manual dari admin.
         $deliveries = PhotoDelivery::with(['media', 'product' => function ($q) {
             $q->with('media');
-        }])->latest()->limit(6)->get();
+        }])->latest()->limit(6)->get()->map(function ($delivery) {
+            $delivery->landing_image_url = $delivery->getFirstMediaUrl('images');
+            return $delivery;
+        });
 
         // Angka nyata dari database, bukan statistik karangan.
         $avgRating = Testimony::where('rating', '>', 0)->avg('rating');
@@ -74,17 +82,21 @@ class LandingController extends Controller
             'deliveries_count'  => PhotoDelivery::count(),
             'avg_rating'        => $avgRating ? round($avgRating, 1) : null,
         ];
+        $seo = $this->landingPageSeo($landingPage);
 
         return view('frontend.landing.show-v2', compact(
             'landingPage',
             'featuredVehicle',
             'exploreProducts',
+            'allProducts',
+            'heroImage',
             'testimonies',
             'promos',
             'galleries',
             'services',
             'deliveries',
-            'stats'
+            'stats',
+            'seo'
         ));
     }
 
@@ -108,21 +120,30 @@ class LandingController extends Controller
         }
 
         $products    = $landingPage->featuredProducts();
+        $allProducts = $products;
+        $heroImage = $landingPage->hero_image_url ?: optional($products->first())->image_url;
         $testimonies = $landingPage->selectedTestimonies();
         $promos      = $landingPage->featuredPromos();
         $galleries   = $landingPage->featuredGalleries();
         $services    = Service::priority()->get();
 
-        $deliveries = PhotoDelivery::with(['media', 'product'])->latest()->limit(6)->get();
+        $deliveries = PhotoDelivery::with(['media', 'product'])->latest()->limit(6)->get()->map(function ($delivery) {
+            $delivery->landing_image_url = $delivery->getFirstMediaUrl('images');
+            return $delivery;
+        });
+        $seo = $this->landingPageSeo($landingPage);
 
         return view('frontend.landing.show-v3', compact(
             'landingPage',
             'products',
+            'allProducts',
+            'heroImage',
             'testimonies',
             'promos',
             'galleries',
             'services',
-            'deliveries'
+            'deliveries',
+            'seo'
         ));
     }
 
@@ -140,12 +161,17 @@ class LandingController extends Controller
         }
 
         $products    = $landingPage->featuredProducts();
+        $heroImage = $landingPage->hero_image_url ?: optional($products->first())->image_url;
+        $headlineHtml = $this->formatLandingHeadline($landingPage->headline);
         $testimonies = $landingPage->selectedTestimonies();
         $promos      = $landingPage->featuredPromos();
         $galleries   = $landingPage->featuredGalleries();
         $services    = Service::priority()->get();
 
-        $deliveries = PhotoDelivery::with(['media', 'product'])->latest()->limit(6)->get();
+        $deliveries = PhotoDelivery::with(['media', 'product'])->latest()->limit(6)->get()->map(function ($delivery) {
+            $delivery->landing_image_url = $delivery->getFirstMediaUrl('images');
+            return $delivery;
+        });
 
         $avgRating = Testimony::where('rating', '>', 0)->avg('rating');
         $stats = [
@@ -154,17 +180,87 @@ class LandingController extends Controller
             'testimonies_count' => Testimony::count(),
             'avg_rating'        => $avgRating ? round($avgRating, 1) : null,
         ];
+        $lineup = $products
+            ->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'category' => optional($product->product_category)->category,
+                    'img' => $product->image_url,
+                    'tagline' => $product->tagline,
+                    'price' => $product->disc > 0 ? $product->special_min_price : $product->min_price,
+                    'old' => $product->disc > 0 ? $product->min_price : null,
+                    'disc' => (int) $product->disc,
+                    'discountLabel' => $product->discount_short,
+                    'url' => route('product.detail', $product->slug),
+                    'variants' => $product->product_type
+                        ->map(function ($type) {
+                            return ['type' => $type->type, 'price' => 'Rp. ' . number_format($type->price)];
+                        })
+                        ->values()
+                        ->all(),
+                ];
+            })
+            ->values();
+        $lineupJson = json_encode(
+            $lineup,
+            JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_THROW_ON_ERROR
+        );
+        $seo = $this->landingPageSeo($landingPage);
 
         return view('frontend.landing.show-v4', compact(
             'landingPage',
             'products',
+            'heroImage',
+            'headlineHtml',
             'testimonies',
             'promos',
             'galleries',
             'services',
             'deliveries',
-            'stats'
+            'stats',
+            'lineup',
+            'lineupJson',
+            'seo'
         ));
+    }
+
+    private function landingPageSeo($landingPage): array
+    {
+        $headline = strip_tags(str_replace('*', '', (string) $landingPage->headline));
+
+        $seo = $this->frontendSeo([
+            'title' => $landingPage->meta_title ?: $headline,
+            'description' => $landingPage->meta_description ?: $landingPage->subheadline,
+            'keywords' => [$headline, config('settings.site_name'), config('settings.site_brand')],
+            'image' => $landingPage->og_image_url,
+            'robots' => 'noindex, follow',
+        ]);
+        $seo['logo'] = $landingPage->logo_url ?: $seo['site_logo'];
+        $seo['favicon'] = $landingPage->favicon_url ?: $seo['favicon'];
+
+        return $seo;
+    }
+
+    private function formatLandingHeadline(?string $headline): string
+    {
+        return collect(preg_split('/\r\n|\r|\n/', (string) $headline))
+            ->filter(function ($line) {
+                return trim($line) !== '';
+            })
+            ->map(function ($line) {
+                $line = preg_replace_callback('/\*(.+?)\*/', function ($matches) {
+                    if (strpos($matches[1], '|') !== false) {
+                        $words = explode('|', $matches[1]);
+                        return '<span class="t-hl t-rotate" data-words="' . $matches[1] . '">' . $words[0] . '</span>';
+                    }
+
+                    return '<span class="t-hl">' . $matches[1] . '</span>';
+                }, e($line));
+
+                return '<span class="t-line"><span class="t-line-inner">' . $line . '</span></span>';
+            })
+            ->implode('');
     }
 
     public function storeLead(Request $request)

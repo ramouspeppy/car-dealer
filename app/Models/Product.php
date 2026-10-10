@@ -76,6 +76,17 @@ class Product extends Model implements HasMedia, Viewable
         return "Rp. " . number_format($this->typePrice() - $this->disc);
     }
 
+    public function getDiscountShortAttribute()
+    {
+        $discount = (int) $this->disc;
+        $divisor = $discount >= 1000000 ? 1000000 : 1000;
+        $suffix = $discount >= 1000000 ? 'jt' : 'rb';
+        $amount = number_format($discount / $divisor, 2, ',', '.');
+        $amount = rtrim(rtrim($amount, '0'), ',');
+
+        return $amount . $suffix;
+    }
+
     public function registerMediaCollections(): void
     {
         $this

@@ -85,6 +85,15 @@ class PostController extends Controller
         ];
 
         $hasFilter = $search || $category || $tag || $date;
+        $seoTitle = $hasFilter ? 'Hasil Pencarian Berita' : 'Berita dan Artikel';
+        $seoDescription = $hasFilter
+            ? 'Hasil berita dan artikel yang sesuai dengan filter pencarian Anda.'
+            : 'Baca berita, artikel, dan informasi terbaru seputar kendaraan serta layanan dari ' . config('settings.site_name') . '.';
+        $seo = $this->frontendSeo([
+            'title' => $seoTitle,
+            'description' => $seoDescription,
+            'keywords' => ['berita otomotif', 'artikel kendaraan', 'informasi kendaraan', config('settings.site_name'), config('settings.site_brand')],
+        ]);
         $breadcrumbs = [
             [
                 'label' => 'Home',
@@ -158,7 +167,8 @@ class PostController extends Controller
             'tags',
             'hasFilter',
             'breadcrumbs',
-            'profile'
+            'profile',
+            'seo'
         ));
     }
     // public function index()
@@ -252,10 +262,18 @@ class PostController extends Controller
         }
 
         $searchAll = true;
+        $seo = $this->frontendSeo([
+            'title' => $post->title,
+            'description' => $post->excerpt ?: $post->body,
+            'keywords' => [$post->title, optional($post->post_category)->name, config('settings.site_name')],
+            'image' => $post->image_url,
+            'type' => 'article',
+        ]);
         return view('frontend.post.detail', compact(
             'post',
             'relatedPosts',
             'searchAll',
+            'seo',
         ));
     }
 

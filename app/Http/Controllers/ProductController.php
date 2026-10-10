@@ -7,37 +7,41 @@ use App\Models\Product;
 use App\Models\Profile;
 use App\Models\Service;
 use App\Models\Testimony;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        SEOTools::setTitle(config('settings.site_title'));
-        SEOTools::setDescription(config('settings.site_desc'));
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
-
         $header      = Header::first();
 
         $products    = Product::with(['media', 'product_type', 'product_category', 'photo_delivery'])->get();
+        $seo = $this->frontendSeo([
+            'title' => 'Daftar Kendaraan',
+            'description' => 'Jelajahi pilihan kendaraan, spesifikasi, dan informasi harga terbaru dari ' . config('settings.site_name') . '. Temukan kendaraan yang sesuai dengan kebutuhan Anda.',
+            'keywords' => ['daftar kendaraan', 'harga kendaraan', 'spesifikasi kendaraan', config('settings.site_name'), config('settings.site_brand')],
+        ]);
 
         return view('frontend.product.index', compact(
             'products',
-            'header'
+            'header',
+            'seo'
         ));
     }
     public function detail(Product $product)
     {
-        SEOTools::setTitle(config('settings.site_title'));
-        SEOTools::setDescription(config('settings.site_desc'));
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
-
         $profile      = Profile::first();
         $testimonies      = Testimony::with('media')->randomLimit(4)->get();
         $services  = Service::latest()->get();
+        $seo = $this->frontendSeo([
+            'title' => $product->name,
+            'description' => $product->desc,
+            'keywords' => [$product->name, $product->hero_name, 'harga ' . $product->name, config('settings.site_name')],
+            'image' => $product->header_image_url ?: $product->image_url,
+            'type' => 'product',
+        ]);
 
 
-        return view('frontend.product.product-detail', compact('product', 'profile', 'testimonies', 'services'));
+        return view('frontend.product.product-detail', compact('product', 'profile', 'testimonies', 'services', 'seo'));
     }
 }

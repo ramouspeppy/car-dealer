@@ -4,15 +4,15 @@
     @push('css')
         <style>
             .product-index-page {
-                --product-shell-bg: linear-gradient(180deg, rgba(246, 247, 249, 0.96) 0%, rgba(236, 239, 243, 1) 100%);
-                --product-surface: rgba(255, 255, 255, 0.82);
-                --product-surface-strong: rgba(255, 255, 255, 0.96);
-                --product-surface-soft: rgba(245, 247, 249, 0.9);
-                --product-border: rgba(17, 24, 39, 0.08);
+                /* --product-shell-bg: linear-gradient(180deg, rgba(246, 247, 249, 0.96) 0%, rgba(236, 239, 243, 1) 100%);
+                        --product-surface: rgba(255, 255, 255, 0.82);
+                        --product-surface-strong: rgba(255, 255, 255, 0.96);
+                        --product-surface-soft: rgba(245, 247, 249, 0.9);
+                        --product-border: rgba(17, 24, 39, 0.08); */
                 --product-text: #111827;
                 --product-text-soft: rgba(17, 24, 39, 0.72);
                 --product-chip-bg: rgba(255, 255, 255, 0.7);
-                --product-orb: rgba(17, 24, 39, 0.05);
+                /* --product-orb: rgba(17, 24, 39, 0.05); */
                 --product-card-shadow: 0 18px 35px rgba(17, 24, 39, 0.06);
                 --product-accent: #1f2937;
                 --product-accent-soft: rgba(31, 41, 55, 0.08);
@@ -228,8 +228,9 @@
             }
 
             .visual-image img {
-                width: 100%;
-                max-width: 420px;
+                width: 90%;
+                max-width: 390px;
+                max-height: 90%;
                 object-fit: contain;
                 filter: drop-shadow(0 26px 28px rgba(17, 43, 70, 0.12));
                 animation: carGlow 3.5s ease-in-out infinite alternate;
@@ -757,7 +758,7 @@
             }
 
             body[data-theme="dark"] .visual-frame {
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(31, 31, 31, 0.82));
+                background: #fff;
                 border-color: rgba(255, 255, 255, 0.08);
                 box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
             }
@@ -786,11 +787,11 @@
             }
 
             body[data-theme="dark"] .product-card-image {
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(20, 20, 20, 0.7));
+                background: #fff;
             }
 
             body[data-theme="dark"] .product-card-image::after {
-                background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(17, 17, 17, 0.18));
+                content: none;
             }
 
             body[data-theme="dark"] .product-meta,

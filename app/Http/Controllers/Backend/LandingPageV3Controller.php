@@ -43,6 +43,9 @@ class LandingPageV3Controller extends Controller
             'hero_badge'  => 'nullable|string|max:100',
             'subheadline' => 'nullable|string',
             'meta_title'  => 'nullable|string|max:150',
+            'logo'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'favicon'     => 'nullable|mimes:ico,jpg,jpeg,png,webp|max:512',
+            'og_image'    => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 
         if ($validator->fails()) {
@@ -77,6 +80,12 @@ class LandingPageV3Controller extends Controller
         }
         if ($request->hasFile('og_image')) {
             $landingPage->addMedia($request->og_image)->preservingOriginal()->toMediaCollection('og_image');
+        }
+        if ($request->hasFile('logo')) {
+            $landingPage->addMedia($request->logo)->preservingOriginal()->toMediaCollection('logo');
+        }
+        if ($request->hasFile('favicon')) {
+            $landingPage->addMedia($request->favicon)->preservingOriginal()->toMediaCollection('favicon');
         }
 
         $request->session()->flash('flash_notification', [

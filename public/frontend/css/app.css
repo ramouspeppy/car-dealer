@@ -5531,6 +5531,11 @@ section,
   /* Add your styles here */
 }
 
+.navmenu a,
+.navmenu a:focus {
+  padding: 12px 10px;
+}
+
 .header-title {
   font-size: 3rem !important;
 }

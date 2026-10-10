@@ -4,16 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $landingPage->meta_title ?: strip_tags(str_replace('*', '', $landingPage->headline)) }}</title>
-    <meta name="description" content="{{ $landingPage->meta_description ?: $landingPage->subheadline }}">
-    <meta name="robots" content="noindex, follow">
+    <title>{{ $seo['title'] }}</title>
+    <meta name="description" content="{{ $seo['description'] }}">
+    <meta name="keywords" content="{{ $seo['keywords'] }}">
+    <meta name="robots" content="{{ $seo['robots'] }}">
+    <link rel="canonical" href="{{ $seo['canonical_url'] }}">
 
-    <meta property="og:title" content="{{ $landingPage->meta_title ?: str_replace('*', '', $landingPage->headline) }}">
-    <meta property="og:description" content="{{ $landingPage->meta_description ?: $landingPage->subheadline }}">
-    <meta property="og:image" content="{{ $landingPage->og_image_url }}">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $seo['title'] }}">
+    <meta property="og:description" content="{{ $seo['description'] }}">
+    <meta property="og:site_name" content="{{ $seo['site_name'] }}">
+    <meta property="og:locale" content="{{ $seo['locale'] }}">
+    <meta property="og:image" content="{{ $seo['image'] }}">
+    <meta property="og:image:alt" content="{{ $seo['title'] }}">
+    <meta property="og:type" content="{{ $seo['type'] }}">
+    <meta property="og:url" content="{{ $seo['canonical_url'] }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seo['title'] }}">
+    <meta name="twitter:description" content="{{ $seo['description'] }}">
+    <meta name="twitter:image" content="{{ $seo['image'] }}">
 
-    <link href="{{ asset('frontend/img/favicon.png') }}" rel="icon">
+    <link href="{{ $seo['favicon'] }}" rel="icon">
+    <link href="{{ $seo['favicon'] }}" rel="shortcut icon">
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -116,6 +127,7 @@
         .p-topbar-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 22px; max-width: 1180px; margin: 0 auto; }
         .p-brand { font-family: var(--p-font-display); font-size: 26px; color: var(--p-ink); text-decoration: none; display: flex; align-items: center; gap: 8px; }
         .p-brand svg { width: 34px; height: 34px; }
+        .p-brand img { display: block; max-width: 180px; max-height: 48px; object-fit: contain; }
         .p-topbar .p-btn { font-size: 17px; padding: 8px 20px; box-shadow: 3px 3px 0 var(--p-ink); }
 
         /* ===== Hero ===== */
@@ -133,30 +145,22 @@
         .p-hero-desc { font-size: 20px; font-weight: 500; max-width: 500px; margin-bottom: 34px; }
         .p-hero-actions { display: flex; flex-wrap: wrap; gap: 18px; }
 
-        .p-profile { position: relative; max-width: 380px; margin: 0 auto; }
-        .p-profile-frame {
-            border: var(--p-outline); box-shadow: 8px 8px 0 var(--p-ink); background: var(--p-blue);
-            border-radius: 46% 54% 42% 58% / 50% 44% 56% 50%; overflow: hidden; aspect-ratio: 1/1.05;
-            animation: pMorph 8s ease-in-out infinite;
-        }
-        .p-profile-frame img { width: 100%; height: 100%; object-fit: cover; }
-        @keyframes pMorph {
-            0%, 100% { border-radius: 46% 54% 42% 58% / 50% 44% 56% 50%; }
-            50% { border-radius: 56% 44% 55% 45% / 44% 54% 46% 56%; }
-        }
-
-        .p-bubble {
-            position: relative; margin-top: 26px; background: #fff; border: var(--p-outline);
-            border-radius: 20px; padding: 16px 20px; box-shadow: 5px 5px 0 var(--p-ink);
-            transform: rotate(1.5deg);
-        }
-        .p-bubble::before {
-            content: ''; position: absolute; top: -16px; left: 42px; width: 22px; height: 22px;
-            background: #fff; border-left: var(--p-outline); border-top: var(--p-outline); transform: rotate(45deg);
-        }
-        .p-bubble p { margin: 0 0 8px; font-size: 15.5px; font-weight: 500; line-height: 1.5; }
-        .p-bubble strong { font-family: var(--p-font-display); font-size: 19px; display: block; }
-        .p-bubble span { font-size: 13.5px; opacity: .7; }
+        .p-hero-visual { position: relative; max-width: 560px; margin: 0 auto; padding: 16px; border: var(--p-outline); border-radius: 34px; background: #fff; box-shadow: 10px 10px 0 var(--p-ink); transform: rotate(1deg); }
+        .p-hero-visual img { display: block; width: 100%; aspect-ratio: 4/3; border-radius: 22px; background: var(--p-cream); object-fit: contain; }
+        .p-hero-visual-empty { display: flex; aspect-ratio: 4/3; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: var(--p-ink); font-family: var(--p-font-display); font-size: 21px; text-align: center; }
+        .p-hero-visual-empty i { color: var(--p-red); font-size: clamp(76px, 12vw, 130px); }
+        .p-profile-section { padding: 90px 0; background: var(--p-yellow); border-top: var(--p-outline); border-bottom: var(--p-outline); }
+        .p-profile-card { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr); align-items: center; gap: clamp(28px, 6vw, 68px); max-width: 1040px; margin: auto; padding: clamp(24px, 5vw, 54px); border: var(--p-outline); border-radius: 28px; background: #fff; box-shadow: 10px 10px 0 var(--p-ink); }
+        .p-profile-card-no-photo { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
+        .p-profile-photo { overflow: hidden; aspect-ratio: 4/5; border: var(--p-outline); border-radius: 46% 54% 42% 58% / 50% 44% 56% 50%; background: var(--p-blue); }
+        .p-profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .p-profile-kicker { display: inline-block; margin-bottom: 10px; padding: 5px 14px; border: 2px solid var(--p-ink); border-radius: 20px; background: var(--p-mint); font-family: var(--p-font-display); font-size: 17px; }
+        .p-profile-copy h2 { margin: 0 0 4px; font-family: var(--p-font-display); font-size: clamp(32px, 4vw, 48px); }
+        .p-profile-role { margin-bottom: 16px; font-weight: 700; }
+        .p-profile-bio { margin-bottom: 24px; font-size: 17px; line-height: 1.65; }
+        .p-profile-cta { display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border: var(--p-outline); border-radius: 14px; background: var(--p-red); color: #fff; font-family: var(--p-font-display); font-size: 18px; text-decoration: none; box-shadow: 4px 4px 0 var(--p-ink); transition: transform .2s ease, box-shadow .2s ease; }
+        .p-profile-cta:hover { color: #fff; transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--p-ink); }
+        @media (max-width: 767px) { .p-profile-card { grid-template-columns: 1fr; } .p-profile-photo { width: min(100%, 290px); margin: auto; } .p-hero-visual { transform: none; } }
 
         /* ===== Marquee strip ===== */
         .p-strip { background: var(--p-yellow); border-top: var(--p-outline); border-bottom: var(--p-outline); padding: 14px 0; overflow: hidden; transform: rotate(-1.2deg); margin: -34px -20px 0; position: relative; z-index: 3; }
@@ -167,8 +171,9 @@
         @keyframes pMarquee { to { transform: translateX(-50%); } }
 
         /* ===== Product carousel ===== */
-        .p-carousel { display: flex; gap: 28px; overflow-x: auto; padding: 14px 6px 34px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .p-carousel { display: flex; gap: 28px; overflow-x: auto; padding: 14px 6px 34px; scroll-snap-type: x mandatory; scrollbar-width: none; cursor: grab; }
         .p-carousel::-webkit-scrollbar { display: none; }
+        .p-carousel.is-dragging { cursor: grabbing; user-select: none; scroll-snap-type: none; }
         .p-card-product {
             flex: 0 0 auto; width: min(80vw, 300px); scroll-snap-align: center;
             background: #fff; border: var(--p-outline); border-radius: 22px; box-shadow: var(--p-shadow);
@@ -177,8 +182,12 @@
         .p-card-product:nth-child(odd) { transform: rotate(-1.5deg); }
         .p-card-product:nth-child(even) { transform: rotate(1.5deg); }
         .p-card-product:hover { transform: rotate(0) translateY(-8px); }
-        .p-card-product-img { aspect-ratio: 4/3; border-bottom: var(--p-outline); background: var(--p-cream); overflow: hidden; }
-        .p-card-product-img img { width: 100%; height: 100%; object-fit: cover; }
+        .p-card-product-img { position: relative; aspect-ratio: 4/3; border-bottom: var(--p-outline); background: #fff; overflow: hidden; padding: 28px; }
+        .p-card-product-img img { width: 100%; height: 100%; object-fit: contain; }
+        .p-card-product-badge { position: absolute; top: 12px; z-index: 1; display: inline-flex; align-items: center; gap: 5px; max-width: calc(50% - 18px); overflow: hidden; padding: 5px 9px; border: 2px solid var(--p-ink); border-radius: 999px; background: var(--p-yellow); color: var(--p-ink); font-family: var(--p-font-display); font-size: 14px; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; box-shadow: 2px 2px 0 var(--p-ink); }
+        .p-card-product-badge-left { left: 12px; transform: rotate(-3deg); }
+        .p-card-product-badge-right { right: 12px; background: var(--p-mint); transform: rotate(3deg); }
+        .p-card-product-badge-right.is-promo { background: var(--p-red); color: #fff; }
         .p-card-product-body { padding: 18px 20px 22px; }
         .p-card-product-body h3 { font-size: 26px; margin-bottom: 4px; }
         .p-price { font-weight: 700; font-size: 18px; color: var(--p-red); margin-bottom: 14px; }
@@ -311,8 +320,12 @@
     <div class="p-topbar">
         <div class="p-topbar-inner">
             <a href="#" class="p-brand">
-                <svg viewBox="0 0 48 48" fill="none" stroke="#1f1b3a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M6 30l4-11c.6-1.7 2.2-2.8 4-2.8h20c1.8 0 3.4 1.1 4 2.8l4 11" fill="#ffd23f"/><rect x="4" y="29" width="40" height="9" rx="4" fill="#ee4266"/><circle cx="14" cy="39" r="4.5" fill="#fff"/><circle cx="34" cy="39" r="4.5" fill="#fff"/></svg>
-                {{ $profile->name ?? config('settings.site_name') }}
+                @if ($seo['logo'] !== '')
+                    <img src="{{ $seo['logo'] }}" alt="{{ $profile->name ?? $seo['site_name'] }}">
+                @else
+                    <svg viewBox="0 0 48 48" fill="none" stroke="#1f1b3a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M6 30l4-11c.6-1.7 2.2-2.8 4-2.8h20c1.8 0 3.4 1.1 4 2.8l4 11" fill="#ffd23f"/><rect x="4" y="29" width="40" height="9" rx="4" fill="#ee4266"/><circle cx="14" cy="39" r="4.5" fill="#fff"/><circle cx="34" cy="39" r="4.5" fill="#fff"/></svg>
+                    {{ $profile->name ?? $seo['site_name'] }}
+                @endif
             </a>
             <a href="{{ $profile->wa_url }}" target="_blank" class="p-btn p-btn-white"><i class="bi bi-whatsapp"></i> Chat</a>
         </div>
@@ -342,16 +355,14 @@
                     </div>
                 </div>
 
-                @if($profile->image_url ?? null)
-                <div class="p-profile p-reveal">
-                    <div class="p-profile-frame"><img src="{{ $profile->image_url }}" alt="{{ $profile->name }}"></div>
-                    @if($profile->bio)
-                    <div class="p-bubble">
-                        <p>{{ Str::limit(strip_tags($profile->bio), 140) }}</p>
-                        <strong>{{ $profile->name }}</strong>
-                        @if($profile->job_title)<span>{{ $profile->job_title }}</span>@endif
-                    </div>
-                    @endif
+                @if($heroImage)
+                <div class="p-hero-visual p-reveal">
+                    <img src="{{ $heroImage }}" alt="{{ $landingPage->hero_image_url ? $landingPage->headline : ($products->first()->name ?? $landingPage->headline) }}" loading="eager">
+                </div>
+                @else
+                <div class="p-hero-visual p-hero-visual-empty p-reveal" aria-hidden="true">
+                    <i class="bi bi-car-front-fill"></i>
+                    <span>Mobil impianmu menanti!</span>
                 </div>
                 @endif
             </div>
@@ -374,6 +385,29 @@
     </div>
     @endif
 
+    @if($profile && ($profile->name || $profile->image_url || $profile->bio || $profile->job_title))
+    <section class="p-profile-section">
+        <div class="p-wrap">
+            <div class="p-profile-card {{ $profile->image_url ? '' : 'p-profile-card-no-photo' }} p-reveal">
+                @if($profile->image_url)
+                    <div class="p-profile-photo"><img src="{{ $profile->image_url }}" alt="{{ $profile->name ?: 'Profil sales' }}" loading="lazy"></div>
+                @endif
+                <div class="p-profile-copy">
+                    <span class="p-profile-kicker">Teman perjalanan Anda</span>
+                    <h2>{{ $profile->name }}</h2>
+                    @if($profile->job_title)<p class="p-profile-role">{{ $profile->job_title }}</p>@endif
+                    @if($profile->bio)
+                        <div class="p-profile-bio">{!! $profile->bio !!}</div>
+                    @else
+                        <p class="p-profile-bio">Saya siap menemani Anda menemukan mobil yang pas, dengan proses yang jelas dan nyaman.</p>
+                    @endif
+                    <a href="{{ $profile->wa_url }}" target="_blank" rel="noopener" class="p-profile-cta"><i class="bi bi-whatsapp"></i> Chat Saya</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif
+
     {{-- ============ ARMADA (carousel produk) ============ --}}
     @if($products->count())
     <section id="armada" class="p-section p-bg-cream" style="padding-top:130px;">
@@ -387,7 +421,11 @@
             <div class="p-carousel">
                 @foreach($products as $product)
                 <div class="p-card-product">
-                    <div class="p-card-product-img"><img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy"></div>
+                    <div class="p-card-product-img">
+                        <span class="p-card-product-badge p-card-product-badge-left"><i class="bi bi-car-front-fill"></i> {{ $product->product_category->category ?? 'Mobil' }}</span>
+                        <span class="p-card-product-badge p-card-product-badge-right {{ $product->disc > 0 ? 'is-promo' : '' }}"><i class="bi {{ $product->disc > 0 ? 'bi-tag-fill' : 'bi-stars' }}"></i> {{ $product->disc > 0 ? 'Hemat ' . $product->discount_short : 'Unit Pilihan' }}</span>
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy">
+                    </div>
                     <div class="p-card-product-body">
                         <h3>{{ $product->name }}</h3>
                         <div class="p-price">
@@ -402,7 +440,7 @@
                 </div>
                 @endforeach
             </div>
-            <div class="p-carousel-hint"><i class="bi bi-arrow-left-right"></i> geser buat lihat semua</div>
+            <div class="p-carousel-hint"><i class="bi bi-arrow-left-right"></i> Mouse: klik dan tahan lalu tarik &bull; trackpad atau layar sentuh: geser</div>
         </div>
     </section>
     @endif
@@ -478,7 +516,7 @@
             <div class="row g-4">
                 @foreach($galleries as $gallery)
                 <div class="col-6 col-lg-4 p-reveal">
-                    <a href="{{ route('gallery.show', $gallery->slug) }}" class="p-polaroid" style="transform: rotate({{ $loop->odd ? '-2.5' : '2.5' }}deg);">
+                    <a href="{{ $gallery->cover_url }}" class="p-polaroid glightbox" data-gallery="landing-gallery" data-title="{{ $gallery->title }}" style="transform: rotate({{ $loop->odd ? '-2.5' : '2.5' }}deg);">
                         <span class="p-polaroid-tape"></span>
                         <div class="p-polaroid-img"><img src="{{ $gallery->cover_url }}" alt="{{ $gallery->title }}" loading="lazy"></div>
                         <div class="p-polaroid-cap">{{ Str::limit($gallery->title, 34) }}</div>
@@ -501,12 +539,13 @@
             </div>
             <div class="row g-4">
                 @foreach($deliveries as $delivery)
-                @php $deliveryImg = $delivery->getFirstMediaUrl('images'); @endphp
-                @if($deliveryImg)
+                @if($delivery->landing_image_url)
                 <div class="col-6 col-lg-4 p-reveal">
                     <div class="p-polaroid" style="transform: rotate({{ $loop->odd ? '2' : '-2' }}deg);">
                         <span class="p-polaroid-tape" style="background:rgba(61,220,151,.85);"></span>
-                        <div class="p-polaroid-img"><img src="{{ $deliveryImg }}" alt="Serah terima {{ $delivery->product->name ?? '' }}" loading="lazy"></div>
+                        <a href="{{ $delivery->landing_image_url }}" class="d-block glightbox" data-gallery="landing-deliveries" data-title="Serah terima {{ $delivery->product->name ?? '' }}">
+                            <div class="p-polaroid-img"><img src="{{ $delivery->landing_image_url }}" alt="Serah terima {{ $delivery->product->name ?? '' }}" loading="lazy"></div>
+                        </a>
                         @if($delivery->product)<div class="p-polaroid-cap">{{ $delivery->product->name }}</div>@endif
                         <div class="p-polaroid-sub">{{ $delivery->created_at->translatedFormat('d F Y') }}</div>
                         <span class="p-stamp"><i class="bi bi-patch-check-fill"></i> SUDAH DISERAHKAN</span>
@@ -570,7 +609,7 @@
     @endif
 
     {{-- ============ FORM ============ --}}
-    @php $allProducts = $products; @endphp
+
     <section id="ngobrol" class="p-section p-bg-blue" style="border-top:3px solid #1f1b3a;padding-bottom:110px;">
         <svg class="p-doodle p-spin" style="top:60px;right:8%;width:60px;" viewBox="0 0 50 50"><path d="M25 3l6.5 15.5L48 20l-12.5 11 4 16.5L25 39l-14.5 8.5 4-16.5L2 20l16.5-1.5z" fill="#ffd23f" stroke="#1f1b3a" stroke-width="3" stroke-linejoin="round"/></svg>
         <svg class="p-doodle p-float" style="bottom:60px;left:5%;width:80px;" viewBox="0 0 100 60"><path d="M20 50c-10 0-16-6-16-14s7-14 15-13c2-10 12-16 22-14 8 2 12 8 13 13 9-3 20 3 20 13 0 8-6 15-15 15z" fill="#fff" stroke="#1f1b3a" stroke-width="3" stroke-linejoin="round"/></svg>
@@ -618,8 +657,8 @@
     </section>
 
     <footer class="p-footer">
-        <strong>{{ $profile->name ?? config('settings.site_name') }}</strong><br>
-        &copy; {{ date('Y') }} Semua hak dilindungi.
+        <strong>{{ $profile->name ?? $seo['site_name'] }}</strong><br>
+        &copy; {{ $seo['year'] }} Semua hak dilindungi.
         @if($profile->phone ?? null) &bull; {{ $profile->phone }} @endif
     </footer>
 
@@ -632,6 +671,55 @@
     <script src="{{ mix('frontend/js/app.js') }}"></script>
     <script>
         (function () {
+            /* ---------- Mouse drag for the product carousel ---------- */
+            const productCarousel = document.querySelector('.p-carousel');
+            if (productCarousel) {
+                let isDragging = false;
+                let wasDragged = false;
+                let startX = 0;
+                let startScrollLeft = 0;
+
+                function moveCarousel(event) {
+                    if (!isDragging) return;
+
+                    const distance = event.clientX - startX;
+                    if (Math.abs(distance) > 5) {
+                        wasDragged = true;
+                        productCarousel.classList.add('is-dragging');
+                        event.preventDefault();
+                    }
+                    if (wasDragged) productCarousel.scrollLeft = startScrollLeft - distance;
+                }
+
+                function stopDragging() {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    productCarousel.classList.remove('is-dragging');
+                    window.removeEventListener('mousemove', moveCarousel);
+                    window.removeEventListener('mouseup', stopDragging);
+                    if (wasDragged) {
+                        window.setTimeout(function () { wasDragged = false; }, 0);
+                    }
+                }
+
+                productCarousel.addEventListener('mousedown', function (event) {
+                    if (event.button !== 0) return;
+                    isDragging = true;
+                    wasDragged = false;
+                    startX = event.clientX;
+                    startScrollLeft = productCarousel.scrollLeft;
+                    window.addEventListener('mousemove', moveCarousel);
+                    window.addEventListener('mouseup', stopDragging);
+                });
+
+                productCarousel.addEventListener('click', function (event) {
+                    if (!wasDragged) return;
+                    event.preventDefault();
+                    event.stopPropagation();
+                    wasDragged = false;
+                }, true);
+            }
+
             /* ---------- GSAP pop-in (sekali per elemen, ringan) ---------- */
             if (window.gsap && window.ScrollTrigger) {
                 gsap.registerPlugin(ScrollTrigger);

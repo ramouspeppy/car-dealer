@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Promo;
 use App\Models\Profile;
-use Artesaos\SEOTools\Facades\SEOTools;
 
 class PromoController extends Controller
 {
     public function index()
     {
-        SEOTools::setTitle('Promo ' . config('settings.site_brand') . ' | ' . config('settings.site_title'));
-        SEOTools::setDescription('Daftar promo spesial ' . config('settings.site_brand') . ' — cicilan ringan, bonus menarik, dan penawaran terbatas.');
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
-
         $profile = Profile::first();
         $promos  = Promo::with('media')->active()->priority()->get();
+        $seo = $this->frontendSeo([
+            'title' => 'Promo Kendaraan Terbaru',
+            'description' => 'Temukan promo kendaraan terbaru, penawaran menarik, dan informasi masa berlaku promo dari ' . config('settings.site_name') . '.',
+            'keywords' => ['promo kendaraan', 'diskon kendaraan', 'penawaran kendaraan', config('settings.site_name'), config('settings.site_brand')],
+            'image' => optional($promos->first())->promo_image_url,
+        ]);
 
         $promoCards = $this->mapPromoCards($promos, $profile);
 
@@ -32,21 +33,21 @@ class PromoController extends Controller
             'promoCards',
             'stats',
             'featuredImage',
-            'profile'
+            'profile',
+            'seo'
         ));
     }
 
     public function detail(Promo $promo)
     {
-        SEOTools::setTitle($promo->promo . ' | Promo ' . config('settings.site_brand'));
-        SEOTools::setDescription($promo->desc_meta ?: strip_tags((string) $promo->desc));
-        if ($promo->promo_image_url) {
-            SEOTools::addImages($promo->promo_image_url);
-        } else {
-            SEOTools::addImages(asset('images/' . config('settings.og_image')));
-        }
-
         $profile = Profile::first();
+        $seo = $this->frontendSeo([
+            'title' => $promo->promo,
+            'description' => $promo->desc,
+            'keywords' => [$promo->promo, 'promo kendaraan', config('settings.site_name')],
+            'image' => $promo->promo_image_url,
+            'type' => 'article',
+        ]);
         $card    = $this->mapPromoCards(collect([$promo]), $profile)->first();
 
         $related = Promo::with('media')
@@ -62,7 +63,8 @@ class PromoController extends Controller
             'promo',
             'card',
             'relatedCards',
-            'profile'
+            'profile',
+            'seo'
         ));
     }
 

@@ -1,4 +1,5 @@
 @extends('frontend.layouts.app')
+
 @push('css')
     <style>
         .gallery-4 .masonry-grid {

@@ -108,6 +108,7 @@ class HomeController extends Controller
         $recentLeads = $recentLeads->merge(
             Contact::whereBetween('created_at', [$currentRange['start'], $currentRange['end']])->latest()->take(5)->get()->map(function ($item) {
                 return [
+                    'link' => route('backend.contact.show', $item->id),
                     'name' => $item->name,
                     'type' => 'Inquiry',
                     'product' => null,
@@ -122,6 +123,7 @@ class HomeController extends Controller
         $recentLeads = $recentLeads->merge(
             Consultation::with('product')->whereBetween('created_at', [$currentRange['start'], $currentRange['end']])->latest()->take(5)->get()->map(function ($item) {
                 return [
+                    'link' => route('backend.consultation.show', $item->id),
                     'name' => $item->name,
                     'type' => 'Konsultasi Gratis',
                     'product' => optional($item->product)->name,
@@ -136,6 +138,7 @@ class HomeController extends Controller
         $recentLeads = $recentLeads->merge(
             Testdrive::whereBetween('created_at', [$currentRange['start'], $currentRange['end']])->latest()->take(5)->get()->map(function ($item) {
                 return [
+                    'link' => route('backend.testdrive.show', $item->id),
                     'name' => $item->name,
                     'type' => 'Test Drive',
                     'product' => $item->product,
@@ -154,7 +157,7 @@ class HomeController extends Controller
         $popularProducts = $this->getPopularProducts($currentRange);
         $recentVisits = VisitorLog::whereBetween('created_at', [$currentRange['start'], $currentRange['end']])
             ->latest()
-            ->take(15)
+            ->take(10)
             ->get();
         $leadStatusData = [
             'new' => $newLeadCount,

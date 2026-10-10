@@ -17,7 +17,6 @@ use App\Models\Service;
 use App\Models\Testdrive;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Facades\Validator;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -25,11 +24,13 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        SEOTools::setTitle(config('settings.site_title'));
-        SEOTools::setDescription(config('settings.site_desc'));
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
-
         $header      = Header::first();
+        $seo = $this->frontendSeo([
+            'title' => $header ? $header->title : '',
+            'description' => $header ? $header->caption : '',
+            'keywords' => [$header ? $header->title : '', config('settings.site_name'), config('settings.site_brand')],
+            'image' => $header ? $header->image_url : '',
+        ]);
         $posts       = Post::with('media')->published()->latest()->limit(3)->get();
         $testimonies = Testimony::with('media')->randomLimit()->get();
         $promos      = Promo::with('media')->active()->priority()->get();
@@ -115,47 +116,57 @@ class FrontendController extends Controller
             'posts',
             'services',
             'galleries',
+            'seo',
         ));
     }
 
     public function testdriveShow()
     {
-        SEOTools::setTitle(config('settings.site_title'));
-        SEOTools::setDescription(config('settings.site_desc'));
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
-
         $products = Product::latest()->active()->get();
         $services  = Service::latest()->get();
         $profile      = Profile::first();
-        return view('frontend.testdrive', compact('products', 'profile', 'services'));
+        $seo = $this->frontendSeo([
+            'title' => 'Jadwalkan Test Drive',
+            'description' => 'Jadwalkan test drive kendaraan dan rasakan langsung kenyamanan serta performanya. Pilih kendaraan dan waktu yang sesuai untuk Anda.',
+            'keywords' => ['test drive', 'jadwal test drive', config('settings.site_name'), config('settings.site_brand')],
+        ]);
+        return view('frontend.testdrive', compact('products', 'profile', 'services', 'seo'));
     }
 
     public function gallery()
     {
-        SEOTools::setTitle(config('settings.site_title'));
-        SEOTools::setDescription(config('settings.site_desc'));
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
         $galleries = Gallery::with('media')->latest()->paginate(6);
+        $seo = $this->frontendSeo([
+            'title' => 'Galeri Foto',
+            'description' => 'Lihat koleksi foto aktivitas, serah terima kendaraan, dan momen pelanggan bersama ' . config('settings.site_name') . '.',
+            'keywords' => ['galeri foto', 'serah terima kendaraan', config('settings.site_name'), config('settings.site_brand')],
+        ]);
 
-        return view('frontend.gallery.index', compact('galleries'));
+        return view('frontend.gallery.index', compact('galleries', 'seo'));
     }
 
     public function galleryShow(Gallery $gallery)
     {
-        SEOTools::setTitle($gallery->name . ' - ' . config('settings.site_name'));
-        SEOTools::setDescription($gallery->desc_meta);
-        SEOTools::addImages($gallery->cover_url);
+        $seo = $this->frontendSeo([
+            'title' => $gallery->title,
+            'description' => $gallery->description,
+            'keywords' => [$gallery->title, 'galeri foto', config('settings.site_name')],
+            'image' => $gallery->cover_url,
+            'type' => 'article',
+        ]);
 
-        return view('frontend.gallery.show', compact('gallery'));
+        return view('frontend.gallery.show', compact('gallery', 'seo'));
     }
 
     public function contact()
     {
-        SEOTools::setTitle(config('settings.site_title'));
-        SEOTools::setDescription(config('settings.site_desc'));
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
+        $seo = $this->frontendSeo([
+            'title' => 'Kontak Kami',
+            'description' => 'Hubungi ' . config('settings.site_name') . ' untuk mendapatkan informasi produk, promo, dan layanan.',
+            'keywords' => ['kontak', 'hubungi kami', config('settings.site_name')],
+        ]);
 
-        return view('frontend.contact.index');
+        return view('frontend.contact.index', compact('seo'));
     }
 
     public function testdriveStore(Request $request)

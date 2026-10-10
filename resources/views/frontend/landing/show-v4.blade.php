@@ -4,16 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $landingPage->meta_title ?: str_replace('*', '', $landingPage->headline) }}</title>
-    <meta name="description" content="{{ $landingPage->meta_description ?: $landingPage->subheadline }}">
-    <meta name="robots" content="noindex, follow">
+    <title>{{ $seo['title'] }}</title>
+    <meta name="description" content="{{ $seo['description'] }}">
+    <meta name="keywords" content="{{ $seo['keywords'] }}">
+    <meta name="robots" content="{{ $seo['robots'] }}">
+    <link rel="canonical" href="{{ $seo['canonical_url'] }}">
 
-    <meta property="og:title" content="{{ $landingPage->meta_title ?: str_replace('*', '', $landingPage->headline) }}">
-    <meta property="og:description" content="{{ $landingPage->meta_description ?: $landingPage->subheadline }}">
-    <meta property="og:image" content="{{ $landingPage->og_image_url }}">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $seo['title'] }}">
+    <meta property="og:description" content="{{ $seo['description'] }}">
+    <meta property="og:site_name" content="{{ $seo['site_name'] }}">
+    <meta property="og:locale" content="{{ $seo['locale'] }}">
+    <meta property="og:image" content="{{ $seo['image'] }}">
+    <meta property="og:image:alt" content="{{ $seo['title'] }}">
+    <meta property="og:type" content="{{ $seo['type'] }}">
+    <meta property="og:url" content="{{ $seo['canonical_url'] }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seo['title'] }}">
+    <meta name="twitter:description" content="{{ $seo['description'] }}">
+    <meta name="twitter:image" content="{{ $seo['image'] }}">
 
-    <link href="{{ asset('frontend/img/favicon.png') }}" rel="icon">
+    <link href="{{ $seo['favicon'] }}" rel="icon">
+    <link href="{{ $seo['favicon'] }}" rel="shortcut icon">
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -244,6 +255,13 @@
             text-decoration: none;
         }
 
+        .t-brand img {
+            display: block;
+            max-width: 180px;
+            max-height: 42px;
+            object-fit: contain;
+        }
+
         .t-brand-mark {
             width: 28px;
             height: 28px;
@@ -331,6 +349,24 @@
                 gap: 70px;
             }
         }
+
+        .t-hero-media { position: relative; max-width: 620px; margin-inline: auto; padding: 12px; border: 1px solid rgba(200,255,61,.35); border-radius: 18px; background: linear-gradient(145deg, rgba(200,255,61,.12), rgba(56,213,255,.06)); box-shadow: 0 30px 80px rgba(0,0,0,.38); }
+        .t-hero-media::before { content: ''; position: absolute; inset: 24px -10px -10px 24px; border: 1px solid var(--t-cyan); border-radius: 14px; opacity: .45; pointer-events: none; }
+        .t-hero-media img { position: relative; z-index: 1; display: block; width: 100%; aspect-ratio: 4/3; border-radius: 10px; background: var(--t-surface); object-fit: contain; }
+        .t-hero-media-empty { display: flex; aspect-ratio: 4/3; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: var(--t-accent); font-family: var(--t-f-mono); font-size: 13px; letter-spacing: .1em; text-align: center; text-transform: uppercase; }
+        .t-hero-media-empty i { font-size: clamp(76px, 12vw, 130px); }
+        .t-profile-section { padding: 88px 0; background: var(--t-bg-2); border-top: 1px solid var(--t-line); border-bottom: 1px solid var(--t-line); }
+        .t-profile-card { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr); align-items: center; gap: clamp(28px, 6vw, 68px); max-width: 1040px; margin: auto; padding: clamp(24px, 5vw, 56px); border: 1px solid var(--t-line); border-radius: 18px; background: var(--t-surface); box-shadow: 0 24px 70px rgba(0,0,0,.22); }
+        .t-profile-card-no-photo { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
+        .t-profile-photo { overflow: hidden; aspect-ratio: 4/5; border: 1px solid rgba(200,255,61,.35); border-radius: 14px; background: var(--t-surface-2); }
+        .t-profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .t-profile-kicker { color: var(--t-accent); font-family: var(--t-f-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+        .t-profile-copy h2 { margin: 12px 0 4px; color: #fff; font-family: var(--t-f-display); font-size: clamp(30px, 4vw, 48px); }
+        .t-profile-role { margin-bottom: 18px; color: var(--t-muted); }
+        .t-profile-bio { margin-bottom: 24px; color: #c3ccd7; line-height: 1.8; }
+        .t-profile-cta { display: inline-flex; align-items: center; gap: 9px; padding: 12px 18px; border: 1px solid var(--t-accent); border-radius: 8px; background: var(--t-accent); color: #10150b; font-weight: 700; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
+        .t-profile-cta:hover { color: #10150b; transform: translateY(-3px); box-shadow: 0 12px 28px rgba(200,255,61,.16); }
+        @media (max-width: 767px) { .t-profile-card { grid-template-columns: 1fr; } .t-profile-photo { width: min(100%, 300px); margin: auto; } }
 
         .t-chip {
             display: inline-flex;
@@ -756,35 +792,73 @@
         }
 
         .t-cfg-img {
-            background: var(--t-surface-2);
+            background: #fff;
             aspect-ratio: 4/3;
             overflow: hidden;
             position: relative;
+            padding: clamp(16px, 3vw, 30px);
         }
 
         .t-cfg-img img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             transition: opacity .3s ease, transform .6s ease;
+        }
+
+        .t-cfg-tag,
+        .t-cfg-feature-tag {
+            position: absolute;
+            top: 14px;
+            z-index: 2;
+            max-width: calc(50% - 22px);
+            overflow: hidden;
+            padding: 6px 10px;
+            border: 1px solid rgba(11, 15, 20, .12);
+            border-radius: 6px;
+            background: rgba(11, 15, 20, .88);
+            color: var(--t-accent);
+            font-family: var(--t-f-mono);
+            font-size: 10px;
+            font-weight: 600;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .t-cfg-tag {
+            left: 14px;
+        }
+
+        .t-cfg-feature-tag {
+            right: 14px;
+            border-color: transparent;
+            background: var(--t-accent);
+            color: #0b0f14;
+        }
+
+        .t-cfg-feature-tag.is-promo {
+            background: #ff6b6b;
+            color: #fff;
+        }
+
+        .t-cfg-panel {
+            box-shadow: 0 18px 48px rgba(0, 0, 0, .18);
+            transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+        }
+
+        .t-cfg-panel:hover {
+            transform: translateY(-4px);
+            border-color: rgba(200, 255, 61, .45);
+            box-shadow: 0 24px 56px rgba(0, 0, 0, .28);
+        }
+
+        .t-cfg-panel:hover .t-cfg-img img {
+            transform: scale(1.035);
         }
 
         .t-cfg-img.is-swap img {
             opacity: 0;
             transform: scale(1.03);
-        }
-
-        .t-cfg-tag {
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            font-family: var(--t-f-mono);
-            font-size: 11px;
-            background: rgba(11, 15, 20, .85);
-            color: var(--t-accent);
-            border: 1px solid rgba(200, 255, 61, .3);
-            padding: 5px 10px;
-            border-radius: 6px;
         }
 
         .t-cfg-info {
@@ -1755,7 +1829,13 @@
     <div class="t-progress" id="t-progress"></div>
     <div class="t-nav">
         <div class="t-nav-inner">
-            <a href="#" class="t-brand"><span class="t-brand-mark"><i class="bi bi-speedometer2"></i></span> {{ $profile->name ?? config('settings.site_name') }}</a>
+            <a href="#" class="t-brand">
+                @if ($seo['logo'] !== '')
+                    <img src="{{ $seo['logo'] }}" alt="{{ $profile->name ?? $seo['site_name'] }}">
+                @else
+                    <span class="t-brand-mark"><i class="bi bi-speedometer2"></i></span> {{ $profile->name ?? $seo['site_name'] }}
+                @endif
+            </a>
             <div class="t-nav-links">
                 @if ($products->count())
                     <a href="#armada" data-target="armada">Armada</a>
@@ -1775,27 +1855,6 @@
     </div>
 
     {{-- ============ HERO ============ --}}
-    @php
-        $headlineHtml = collect(preg_split('/\r\n|\r|\n/', (string) $landingPage->headline))
-            ->filter(function ($line) {
-                return trim($line) !== '';
-            })
-            ->map(function ($line) {
-                $line = preg_replace_callback(
-                    '/\*(.+?)\*/',
-                    function ($m) {
-                        if (strpos($m[1], '|') !== false) {
-                            $words = explode('|', $m[1]);
-                            return '<span class="t-hl t-rotate" data-words="' . $m[1] . '">' . $words[0] . '</span>';
-                        }
-                        return '<span class="t-hl">' . $m[1] . '</span>';
-                    },
-                    e($line),
-                );
-                return '<span class="t-line"><span class="t-line-inner">' . $line . '</span></span>';
-            })
-            ->implode('');
-    @endphp
     <section class="t-hero">
         <div class="t-hero-grid-bg"></div>
         <div class="t-scan"></div>
@@ -1834,26 +1893,14 @@
                     </div>
                 </div>
 
-                @if (($profile->image_url ?? null) || ($profile->bio ?? null))
-                    <div class="t-id-stage t-reveal">
-                        <div class="t-id">
-                            <div class="t-id-shine"></div>
-                            @if ($profile->image_url)
-                                <div class="t-id-photo"><img src="{{ $profile->image_url }}" alt="{{ $profile->name }}"></div>
-                            @endif
-                            <div class="t-id-meta">
-                                <div>
-                                    <div class="t-id-name">{{ $profile->name }}</div>
-                                    @if ($profile->job_title)
-                                        <div class="t-id-job">{{ $profile->job_title }}</div>
-                                    @endif
-                                </div>
-                                <span class="t-status"><i></i> ONLINE</span>
-                            </div>
-                            @if ($profile->bio)
-                                <div class="t-id-bio">{{ Str::limit(strip_tags($profile->bio), 150) }}</div>
-                            @endif
-                        </div>
+                @if ($heroImage)
+                    <div class="t-hero-media t-reveal">
+                        <img src="{{ $heroImage }}" alt="{{ $landingPage->hero_image_url ? $landingPage->headline : ($products->first()->name ?? $landingPage->headline) }}" fetchpriority="high">
+                    </div>
+                @else
+                    <div class="t-hero-media t-hero-media-empty t-reveal" aria-hidden="true">
+                        <i class="bi bi-car-front-fill"></i>
+                        <span>Temukan unit pilihan Anda</span>
                     </div>
                 @endif
             </div>
@@ -1873,31 +1920,33 @@
         </div>
     @endif
 
+    @if ($profile && ($profile->name || $profile->image_url || $profile->bio || $profile->job_title))
+        <section class="t-profile-section">
+            <div class="t-wrap">
+                <div class="t-profile-card {{ $profile->image_url ? '' : 't-profile-card-no-photo' }} t-reveal">
+                    @if ($profile->image_url)
+                        <div class="t-profile-photo"><img src="{{ $profile->image_url }}" alt="{{ $profile->name ?: 'Profil sales' }}" loading="lazy"></div>
+                    @endif
+                    <div class="t-profile-copy">
+                        <span class="t-profile-kicker">Sales pendamping Anda</span>
+                        <h2>{{ $profile->name }}</h2>
+                        @if ($profile->job_title)
+                            <p class="t-profile-role">{{ $profile->job_title }}</p>
+                        @endif
+                        @if ($profile->bio)
+                            <div class="t-profile-bio">{!! $profile->bio !!}</div>
+                        @else
+                            <p class="t-profile-bio">Saya siap membantu Anda memilih mobil yang sesuai kebutuhan serta mendampingi proses pembelian dengan nyaman.</p>
+                        @endif
+                        <a href="{{ $profile->wa_url }}" target="_blank" rel="noopener" class="t-profile-cta"><i class="bi bi-whatsapp"></i> Hubungi Saya</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
     {{-- ============ ARMADA (konfigurator) ============ --}}
     @if ($products->count())
-        @php
-            $lineup = $products
-                ->map(function ($p) {
-                    return [
-                        'id' => $p->id,
-                        'name' => $p->name,
-                        'category' => optional($p->product_category)->category,
-                        'img' => $p->image_url,
-                        'tagline' => $p->tagline,
-                        'price' => $p->disc > 0 ? $p->special_min_price : $p->min_price,
-                        'old' => $p->disc > 0 ? $p->min_price : null,
-                        'disc' => (int) $p->disc,
-                        'url' => route('product.detail', $p->slug),
-                        'variants' => $p->product_type
-                            ->map(function ($t) {
-                                return ['type' => $t->type, 'price' => 'Rp. ' . number_format($t->price)];
-                            })
-                            ->values()
-                            ->all(),
-                    ];
-                })
-                ->values();
-        @endphp
         <section id="armada" class="t-section t-dark">
             <div class="t-wrap">
                 <div class="t-head t-reveal">
@@ -1920,6 +1969,7 @@
                         <div class="t-cfg-img" id="cfg-img-wrap">
                             <img id="cfg-img" src="" alt="">
                             <span class="t-cfg-tag" id="cfg-tag" style="display:none;"></span>
+                            <span class="t-cfg-feature-tag" id="cfg-feature-tag" style="display:none;"></span>
                         </div>
                         <div class="t-cfg-info" id="cfg-info">
                             <div class="t-cfg-cat" id="cfg-cat"></div>
@@ -1935,7 +1985,7 @@
                         <div class="t-cfg-progress"><i id="cfg-bar"></i></div>
                     </div>
                 </div>
-                <script type="application/json" id="lineup-data">@json($lineup)</script>
+                <script type="application/json" id="lineup-data">{!! $lineupJson !!}</script>
             </div>
         </section>
     @endif
@@ -2022,7 +2072,7 @@
                 </div>
                 <div class="t-gal">
                     @foreach ($galleries as $gallery)
-                        <a href="{{ route('gallery.show', $gallery->slug) }}" class="t-gal-item">
+                        <a href="{{ $gallery->cover_url }}" class="t-gal-item glightbox" data-gallery="landing-gallery" data-title="{{ $gallery->title }}">
                             <img src="{{ $gallery->cover_url }}" alt="{{ $gallery->title }}" loading="lazy">
                             <div class="t-gal-cap">
                                 <strong>{{ Str::limit($gallery->title, 40) }}</strong>
@@ -2046,11 +2096,12 @@
                 </div>
                 <div class="row g-4">
                     @foreach ($deliveries as $delivery)
-                        @php $deliveryImg = $delivery->getFirstMediaUrl('images'); @endphp
-                        @if ($deliveryImg)
+                        @if ($delivery->landing_image_url)
                             <div class="col-md-6 col-lg-4 t-reveal">
                                 <div class="t-del">
-                                    <div class="t-del-img"><img src="{{ $deliveryImg }}" alt="Serah terima {{ $delivery->product->name ?? '' }}" loading="lazy"></div>
+                                    <a href="{{ $delivery->landing_image_url }}" class="d-block text-decoration-none glightbox" data-gallery="landing-deliveries" data-title="Serah terima {{ $delivery->product->name ?? '' }}">
+                                        <div class="t-del-img"><img src="{{ $delivery->landing_image_url }}" alt="Serah terima {{ $delivery->product->name ?? '' }}" loading="lazy"></div>
+                                    </a>
                                     <div class="t-del-body">
                                         <div class="t-del-meta">DELIVERED // {{ $delivery->created_at->translatedFormat('d M Y') }}</div>
                                         @if ($delivery->product)
@@ -2209,7 +2260,7 @@
     </section>
 
     <footer class="t-footer">
-        &copy; {{ date('Y') }} {{ $profile->name ?? config('settings.site_name') }} // Semua hak dilindungi
+        &copy; {{ $seo['year'] }} {{ $profile->name ?? $seo['site_name'] }} // Semua hak dilindungi
         @if ($profile->phone ?? null)
             // {{ $profile->phone }}
         @endif
@@ -2452,13 +2503,19 @@
                     const disc = $('cfg-disc');
                     if (d.disc > 0) {
                         disc.style.display = '';
-                        disc.textContent = '-' + d.disc + '%';
+                        disc.textContent = 'HEMAT Rp ' + new Intl.NumberFormat('id-ID').format(d.disc);
                     } else {
                         disc.style.display = 'none';
                     }
                     const tag = $('cfg-tag');
                     tag.style.display = '';
-                    tag.textContent = 'UNIT ' + String(i + 1).padStart(2, '0') + ' / ' + String(lineup.length).padStart(2, '0');
+                    tag.textContent = d.category || ('UNIT ' + String(i + 1).padStart(2, '0') + ' / ' + String(lineup.length).padStart(2, '0'));
+                    const featureTag = $('cfg-feature-tag');
+                    featureTag.style.display = '';
+                    featureTag.classList.toggle('is-promo', d.disc > 0);
+                    featureTag.textContent = d.disc > 0
+                        ? 'HEMAT ' + d.discountLabel
+                        : 'UNIT PILIHAN';
 
                     const ul = $('cfg-variants');
                     ul.innerHTML = '';

@@ -1,22 +1,19 @@
 @extends('backend.layouts.app')
 @section('title', 'Create New user - '.config('settings.site_name'))
-@section('breadcrumb')
-<div class="nb">
-    <div class="nb-header">
-        <div class="nb-header-back">
+@section('content')
+<section class="section">
+    <div class="section-header">
+        <div class="section-header-back">
             <a href="{{ route('backend.user.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
         <h1>Create New user</h1>
-        <div class="nb-header-breadcrumb">
+        <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="{{ route('backend.user.index') }}">user</a></div>
             <div class="breadcrumb-item">Create New user</div>
         </div>
     </div>
-</div>
-@endsection
-@section('content')
-<section class="section">
+
     @include('backend.layouts._notif')
     <div class="section-body">
         <form action="{{ route('backend.user.store') }}" enctype="multipart/form-data" method="post" id="form-user">

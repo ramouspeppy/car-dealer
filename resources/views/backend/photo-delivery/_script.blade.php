@@ -1,16 +1,37 @@
 <script>
-    $("#chkCheckAll").click(function(){
-            $(".checkbox-delivery").prop('checked',$(this).prop('checked'));
-        });
-</script>
-<script>
-    $(function () {
-        function chocolata(){
-            chocolat(document.querySelectorAll('.chocolat-image'), {
-            loop: true
+    $(function() {
+        let photoDeliveryLightbox = null;
+
+        function initPhotoDeliveryLightbox() {
+            if (typeof window.GLightbox !== 'function') {
+                console.error('GLightbox is not loaded.');
+                return;
+            }
+
+            photoDeliveryLightbox = window.GLightbox({
+                selector: '.photo-delivery-lightbox',
+                loop: true,
+                touchNavigation: true
             });
         }
-        chocolata();
+
+        function refreshPhotoDeliveryLightbox() {
+            if (photoDeliveryLightbox) {
+                photoDeliveryLightbox.reload();
+            } else {
+                initPhotoDeliveryLightbox();
+            }
+        }
+
+        if (window.gsap && window.Flip) {
+            window.gsap.registerPlugin(window.Flip);
+        }
+
+        initPhotoDeliveryLightbox();
+
+        $('#chkCheckAll').on('change', function() {
+            $('.checkbox-delivery').prop('checked', $(this).prop('checked'));
+        });
 
         $.ajaxSetup({
             headers: {
@@ -21,119 +42,104 @@
             }
         });
 
-        $('#deleteAll').on('click', function (e) {
+        $('#deleteAll').on('click', function(e) {
             e.preventDefault();
 
-            if ($('input:checkbox[name=idDeliveries]:checked').length) {
-                swal.fire({
-                    title: 'Are you sure?',
-                    text: "Move these data to the trash !",
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'No, cancel!',
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.cardProgress('#card-photo-delivery', {
-                            dismiss: false
-                        });
-                        deleteDataAll();
-                    } else if (result.dismiss === swal.DismissReason
-                        .cancel) {
-                        swal.fire(
-                            'Cancelled',
-                            'Your data is safe :)',
-                            'info'
-                        )
-                    }
-                })
-
-            } else {
+            if (!$('input:checkbox[name=idDeliveries]:checked').length) {
                 swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'At least choose one data..!!',
+                    text: 'At least choose one data..!!'
                 });
+                return;
             }
+
+            swal.fire({
+                title: 'Are you sure?',
+                text: 'Move these data to the trash!',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $.cardProgress('#card-photo-delivery', {
+                        dismiss: false
+                    });
+                    deleteDataAll();
+                }
+            });
         });
 
         function deleteDataAll() {
             const allIds = [];
 
-            // Ambil semua ID delivery yang dicentang
-            $('input:checkbox[name=idDeliveries]:checked').each(function () {
+            $('input:checkbox[name=idDeliveries]:checked').each(function() {
                 allIds.push($(this).val());
             });
 
             $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: "{{ route('backend.photo-delivery.destroy') }}",
                 data: {
-                    _method: "DELETE",
+                    _method: 'DELETE',
                     data: allIds
                 },
-                success: function (data) {
+                success: function(data) {
                     $.cardProgressDismiss('#card-photo-delivery');
 
                     if (data.msg) {
                         swal.fire({
                             title: 'Info!',
                             html: data.msg,
-                            icon: 'info',
+                            icon: 'info'
+                        });
+                        return;
+                    }
+
+                    const state = window.Flip && window.gsap ?
+                        window.Flip.getState('.photo-delivery-container') :
+                        null;
+
+                    if (photoDeliveryLightbox) {
+                        photoDeliveryLightbox.close();
+                    }
+
+                    $('.checkbox-delivery:checked').each(function() {
+                        $(this).closest('.photo-delivery-container').remove();
+                    });
+
+                    $('#chkCheckAll').prop('checked', false);
+
+                    const gallery = document.querySelector('#photo-gallery');
+                    if (!gallery.querySelector('.photo-delivery-container')) {
+                        const emptyState = document.createElement('div');
+                        emptyState.className = 'col-12 photo-delivery-empty';
+                        emptyState.innerHTML = '<i class="fas fa-images"></i><div>Belum ada foto delivery.</div>';
+                        gallery.appendChild(emptyState);
+                    }
+
+                    if (state) {
+                        window.Flip.from(state, {
+                            duration: 0.5,
+                            ease: 'power1.inOut',
+                            stagger: 0.05,
+                            onComplete: refreshPhotoDeliveryLightbox
                         });
                     } else {
-                        // Ambil posisi awal elemen
-                        const state = Flip.getState(".photo-delivery-container");
-
-                        // Hapus elemen yang dicentang
-                        $(".checkbox-delivery:checked").each(function () {
-                            $(this).closest(".photo-delivery-container").remove();
-
-                            
-                        });
-                        
-                        // Jalankan animasi Flip
-                        Flip.from(state, {
-                            duration: 0.5,
-                            ease: "power1.inOut",
-                            stagger: 0.05,
-                            onComplete: () => {
-                                // Destroy & reinit chocolat agar tidak crash
-                                try {
-                                    // Hapus semua lightbox aktif dulu (destroy manual)
-                                    const containers = document.querySelectorAll('.chocolat-open');
-                                    containers.forEach(c => c.classList.remove('chocolat-open'));
-
-                                    // Hapus DOM tambahan dari Chocolat jika ada
-                                    const overlay = document.querySelector('.chocolat-overlay');
-                                    const lightbox = document.querySelector('.chocolat-wrapper');
-                                    if (overlay) overlay.remove();
-                                    if (lightbox) lightbox.remove();
-                                } catch (e) {
-                                    console.warn('Manual Chocolat destroy error:', e);
-                                }
-
-                                // Re-init Chocolat
-                                chocolat(document.querySelectorAll('.chocolat-image'), {
-                                    loop: true
-                                });
-                            }
-                        });
-                        
-
+                        refreshPhotoDeliveryLightbox();
                     }
                 },
-                error: function (xhr) {
+                error: function() {
+                    $.cardProgressDismiss('#card-photo-delivery');
                     swal.fire({
                         title: 'Error!',
                         html: 'Gagal menghapus data. Silakan coba lagi.',
-                        icon: 'error',
+                        icon: 'error'
                     });
                 }
             });
         }
-
     });
-
 </script>

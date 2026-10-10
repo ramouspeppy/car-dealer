@@ -1,17 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ $seo['locale'] }}">
 
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Index - SnapFolio Bootstrap Template</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <title>{{ $seo['title'] }}</title>
+    <meta name="description" content="{{ $seo['description'] }}">
+    @if ($seo['keywords'] !== '')
+        <meta name="keywords" content="{{ $seo['keywords'] }}">
+    @endif
+    <meta name="robots" content="{{ $seo['robots'] }}">
+    <link rel="canonical" href="{{ $seo['canonical_url'] }}">
+
+    <meta property="og:locale" content="{{ $seo['locale'] }}">
+    <meta property="og:type" content="{{ $seo['type'] }}">
+    <meta property="og:site_name" content="{{ $seo['site_name'] }}">
+    <meta property="og:title" content="{{ $seo['title'] }}">
+    <meta property="og:description" content="{{ $seo['description'] }}">
+    <meta property="og:url" content="{{ $seo['canonical_url'] }}">
+    @if ($seo['image'] !== '')
+        <meta property="og:image" content="{{ $seo['image'] }}">
+        <meta property="og:image:alt" content="{{ $seo['title'] }}">
+        <meta name="twitter:image" content="{{ $seo['image'] }}">
+    @endif
+    <meta name="twitter:card" content="{{ $seo['twitter_card'] }}">
+    <meta name="twitter:title" content="{{ $seo['title'] }}">
+    <meta name="twitter:description" content="{{ $seo['description'] }}">
+    @if ($seo['google_verification'] !== '')
+        <meta name="google-site-verification" content="{{ $seo['google_verification'] }}">
+    @endif
+    <meta name="theme-color" content="#12314f">
 
     <!-- Favicons -->
-    <link href="{{ asset('frontend/img/favicon.png') }}" rel="icon">
-    <link href="{{ asset('frontend/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    <link href="{{ $seo['favicon'] }}" rel="icon">
+    <link href="{{ $seo['apple_touch_icon'] }}" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -23,6 +46,46 @@
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{ mix('frontend/css/app.css') }}">
+
+    <style>
+        .product-list-cards .product-list-image {
+            align-self: stretch;
+            min-height: 220px;
+            padding: 18px;
+            border-radius: 14px;
+        }
+
+        .product-list-cards .product-list-image img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+        }
+
+        .promo-list .product-photo-card .promo-image img {
+            box-sizing: border-box;
+            padding: clamp(14px, 3vw, 28px);
+            object-fit: contain;
+        }
+
+        .promo-list .product-photo-card:hover .promo-image img {
+            transform: none;
+        }
+
+        .product-detail-carousel .product-detail-item figure {
+            box-sizing: border-box;
+            max-width: 850px;
+            padding: clamp(14px, 3vw, 32px);
+            border-radius: 14px;
+        }
+
+        .product-detail-carousel .product-detail-item figure img {
+            display: block;
+            width: 100%;
+            max-height: 68vh;
+            object-fit: contain;
+            transform: none !important;
+        }
+    </style>
 
     @stack('css')
 
@@ -41,7 +104,11 @@
 
         <div class="header-container d-flex flex-column align-items-start">
             <div class="logo-img">
-                <img src="{{ asset(config('settings.site_logo')) }}" alt="{{ config('settings.site_name') }}" class="img-fluid rounded-circle">
+                @if ($seo['site_logo'] !== '')
+                    <img src="{{ $seo['site_logo'] }}" alt="{{ $seo['site_name'] }}" class="img-fluid rounded-circle">
+                @else
+                    <span>{{ $seo['site_name'] }}</span>
+                @endif
             </div>
             <button class="theme-toggle" type="button" aria-label="Ganti tema" aria-pressed="true">
                 <i class="theme-toggle-icon bi bi-moon-stars-fill"></i>
@@ -53,32 +120,17 @@
                     <li><a href="{{ url('/') }}" class="active"><i class="bi bi-house-door-fill navicon"></i>Home</a></li>
                     <li><a href="{{ route('product.index') }}"><i class="bi bi-car-front-fill navicon"></i> Produk</a></li>
                     <li><a href="{{ route('promo.index') }}"><i class="bi bi-tags-fill navicon"></i> Promo</a></li>
-                    <li><a href="{{ route('testdrive.show') }}"><i class="bi bi-steering-wheel navicon"></i> TestDrive</a></li>
+                    <li><a href="{{ route('testdrive.show') }}"><i class="bi bi-calendar-check-fill navicon"></i> TestDrive</a></li>
                     <li><a href="{{ route('gallery.index') }}"><i class="bi bi-images navicon"></i> Gallery</a></li>
                     <li><a href="{{ route('post.index') }}"><i class="bi bi-newspaper navicon"></i> Berita</a></li>
-                    {{-- <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
-                    <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li> --}}
-                    {{-- <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
-                    <li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <li class="dropdown"><a href="#"><i class="bi bi-window-stack navicon"></i> <span>Landing Page</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li><a href="#">Dropdown 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                                        class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Dropdown 1</a></li>
-                                    <li><a href="#">Deep Dropdown 2</a></li>
-                                    <li><a href="#">Deep Dropdown 3</a></li>
-                                    <li><a href="#">Deep Dropdown 4</a></li>
-                                    <li><a href="#">Deep Dropdown 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Dropdown 2</a></li>
-                            <li><a href="#">Dropdown 3</a></li>
-                            <li><a href="#">Dropdown 4</a></li>
+                            <li><a href="{{ route('landing.show') }}">Landing Page V1</a></li>
+                            <li><a href="{{ route('landing.showV2') }}">Landing Page V2</a></li>
+                            <li><a href="{{ route('landing.showV3') }}">Landing Page V3</a></li>
+                            <li><a href="{{ route('landing.showV4') }}">Landing Page V4</a></li>
                         </ul>
                     </li>
-                    <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li> --}}
                 </ul>
             </nav>
             <div class="social-links text-center mx-auto">

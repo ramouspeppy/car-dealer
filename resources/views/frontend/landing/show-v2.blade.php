@@ -4,16 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $landingPage->meta_title ?: $landingPage->headline }}</title>
-    <meta name="description" content="{{ $landingPage->meta_description ?: $landingPage->subheadline }}">
-    <meta name="robots" content="noindex, follow">
+    <title>{{ $seo['title'] }}</title>
+    <meta name="description" content="{{ $seo['description'] }}">
+    <meta name="keywords" content="{{ $seo['keywords'] }}">
+    <meta name="robots" content="{{ $seo['robots'] }}">
+    <link rel="canonical" href="{{ $seo['canonical_url'] }}">
 
-    <meta property="og:title" content="{{ $landingPage->meta_title ?: $landingPage->headline }}">
-    <meta property="og:description" content="{{ $landingPage->meta_description ?: $landingPage->subheadline }}">
-    <meta property="og:image" content="{{ $landingPage->og_image_url }}">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $seo['title'] }}">
+    <meta property="og:description" content="{{ $seo['description'] }}">
+    <meta property="og:site_name" content="{{ $seo['site_name'] }}">
+    <meta property="og:locale" content="{{ $seo['locale'] }}">
+    <meta property="og:image" content="{{ $seo['image'] }}">
+    <meta property="og:image:alt" content="{{ $seo['title'] }}">
+    <meta property="og:type" content="{{ $seo['type'] }}">
+    <meta property="og:url" content="{{ $seo['canonical_url'] }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seo['title'] }}">
+    <meta name="twitter:description" content="{{ $seo['description'] }}">
+    <meta name="twitter:image" content="{{ $seo['image'] }}">
 
-    <link href="{{ asset('frontend/img/favicon.png') }}" rel="icon">
+    <link href="{{ $seo['favicon'] }}" rel="icon">
+    <link href="{{ $seo['favicon'] }}" rel="shortcut icon">
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -111,7 +122,8 @@
             display: flex; align-items: center; justify-content: space-between;
             padding: 24px 28px; mix-blend-mode: difference;
         }
-        .e-topbar-brand { font-family: var(--e-font-display); font-weight: 600; font-size: 16px; color: #fff; text-decoration: none; }
+        .e-topbar-brand { display: inline-flex; align-items: center; min-height: 34px; font-family: var(--e-font-display); font-weight: 600; font-size: 16px; color: #fff; text-decoration: none; }
+        .e-topbar-brand img { display: block; max-width: 180px; max-height: 44px; object-fit: contain; }
         .e-topbar-cta { font-family: var(--e-font-body); font-weight: 600; font-size: 13px; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 7px; }
 
         /* ===== Hero ===== */
@@ -132,31 +144,24 @@
         .e-hero-grid { display: grid; grid-template-columns: 1fr; gap: 50px; align-items: center; }
         @media (min-width: 992px) { .e-hero-grid { grid-template-columns: 1.15fr .85fr; gap: 70px; } }
 
-        .e-hero-profile { position: relative; max-width: 380px; margin: 0 auto; }
-        .e-hero-profile-img { border-radius: 6px; overflow: hidden; aspect-ratio: 3/4; }
-        .e-hero-profile-img img { width: 100%; height: 100%; object-fit: cover; }
-        .e-hero-profile-img::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--e-gold); border-radius: 6px; transform: translate(14px, 14px); z-index: -1; }
+        .e-hero-visual { position: relative; max-width: 600px; margin: 0 auto; padding: 14px; border: 1px solid rgba(201, 169, 110, .45); border-radius: 8px; background: linear-gradient(145deg, rgba(201, 169, 110, .12), rgba(255,255,255,.03)); box-shadow: 0 28px 70px rgba(0,0,0,.32); }
+        .e-hero-visual::before { content: ''; position: absolute; inset: 26px -12px -12px 26px; border: 1px solid var(--e-gold); border-radius: 6px; opacity: .55; pointer-events: none; }
+        .e-hero-visual img { position: relative; z-index: 1; display: block; width: 100%; aspect-ratio: 4/3; border-radius: 4px; background: var(--e-ink); object-fit: contain; }
+        .e-hero-visual-empty { display: flex; aspect-ratio: 4/3; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: var(--e-gold-light); font-family: var(--e-font-display); font-size: 20px; text-align: center; }
+        .e-hero-visual-empty i { font-size: clamp(72px, 12vw, 120px); }
 
-        .e-hero-greet {
-            position: relative;
-            margin-top: -50px;
-            margin-left: 24px;
-            margin-right: -10px;
-            background: var(--e-cream);
-            color: var(--e-ink);
-            border-radius: 4px;
-            padding: 22px 24px;
-            box-shadow: 0 24px 50px rgba(0, 0, 0, .35);
-        }
-        .e-hero-greet .e-testi-mark { font-size: 44px; margin-bottom: 2px; color: var(--e-gold); opacity: .5; }
-        .e-hero-greet p { font-size: 13.5px; line-height: 1.7; color: rgba(27,24,21,.72); margin-bottom: 12px; font-style: italic; }
-        .e-hero-greet strong { display: block; font-family: var(--e-font-display); font-size: 15px; }
-        .e-hero-greet span { font-size: 12px; color: rgba(27,24,21,.55); }
-
-        @media (max-width: 767px) {
-            .e-hero-profile { max-width: 260px; }
-            .e-hero-greet { margin-left: 10px; margin-right: 0; }
-        }
+        .e-profile-section { padding: 88px 0; background: var(--e-cream); color: var(--e-ink); }
+        .e-profile-card { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr); align-items: center; gap: clamp(28px, 6vw, 72px); max-width: 1040px; margin: 0 auto; padding: clamp(24px, 5vw, 56px); background: #fff; border: 1px solid rgba(27,24,21,.12); box-shadow: 12px 12px 0 rgba(27,24,21,.1); }
+        .e-profile-card-no-photo { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
+        .e-profile-photo { aspect-ratio: 4/5; overflow: hidden; background: var(--e-ink); }
+        .e-profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .e-profile-kicker { color: #9b753c; font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+        .e-profile-copy h2 { margin: 12px 0 4px; font-family: var(--e-font-display); font-size: clamp(30px, 4vw, 48px); }
+        .e-profile-role { margin-bottom: 18px; color: rgba(27,24,21,.62); font-weight: 600; }
+        .e-profile-bio { margin-bottom: 24px; line-height: 1.8; color: rgba(27,24,21,.78); }
+        .e-profile-cta { display: inline-flex; align-items: center; gap: 9px; padding: 12px 20px; color: var(--e-ink); background: var(--e-gold); text-decoration: none; font-weight: 700; transition: transform .25s ease, box-shadow .25s ease; }
+        .e-profile-cta:hover { color: var(--e-ink); transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.16); }
+        @media (max-width: 767px) { .e-profile-card { grid-template-columns: 1fr; } .e-profile-photo { width: min(100%, 300px); margin: auto; } }
 
         .e-scroll-cue { position: absolute; bottom: 34px; left: 24px; display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(247,243,236,.4); z-index: 2; }
         .e-scroll-cue::before { content: ''; width: 1px; height: 44px; background: linear-gradient(var(--e-gold-light), transparent); }
@@ -182,8 +187,8 @@
         /* ===== Spotlight ===== */
         .e-spotlight-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
         @media (min-width: 992px) { .e-spotlight-grid { grid-template-columns: 1fr 1fr; gap: 70px; } }
-        .e-spotlight-img { border-radius: 4px; overflow: hidden; aspect-ratio: 4/3; }
-        .e-spotlight-img img { width: 100%; height: 100%; object-fit: cover; }
+        .e-spotlight-img { border-radius: 4px; overflow: hidden; aspect-ratio: 4/3; padding: 22px; }
+        .e-spotlight-img img { width: 100%; height: 100%; object-fit: contain; }
         .e-spotlight-kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--e-gold); font-weight: 600; margin-bottom: 16px; }
         .e-spotlight-text h3 { font-size: clamp(26px, 3.2vw, 38px); margin-bottom: 16px; }
         .e-spotlight-text p.e-desc { font-size: 15.5px; line-height: 1.8; max-width: 440px; margin-bottom: 26px; }
@@ -197,13 +202,25 @@
         .e-price-badge { font-size: 11px; font-weight: 700; color: var(--e-ink); background: var(--e-gold); padding: 3px 10px; border-radius: 3px; }
 
         /* ===== Explore lineup ===== */
-        .e-product-item { position: relative; }
-        .e-product-img { position: relative; overflow: hidden; aspect-ratio: 4/3; border-radius: 3px; }
-        .e-product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.16,1,.3,1); }
-        .e-product-item:hover .e-product-img img { transform: scale(1.06); }
-        .e-product-meta { display: flex; justify-content: space-between; align-items: baseline; padding-top: 16px; }
-        .e-product-meta h4 { font-size: 16.5px; }
-        .e-product-meta span { font-size: 13.5px; }
+        .e-product-item { position: relative; height: 100%; overflow: hidden; border: 1px solid var(--e-line-l); border-radius: 8px; background: var(--e-cream); box-shadow: 0 8px 24px rgba(27,24,21,.06); transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
+        .e-product-item:hover { transform: translateY(-7px); border-color: var(--e-gold); box-shadow: 0 18px 36px rgba(27,24,21,.12); }
+        .e-product-img { position: relative; overflow: hidden; aspect-ratio: 4/3; padding: 22px; background: #fff; }
+        .e-product-img img { box-sizing: border-box; width: 100%; height: 100%; object-fit: contain; transition: transform .4s ease; }
+        .e-product-item:hover .e-product-img img { transform: scale(1.04); }
+        .e-product-badge { position: absolute; top: 14px; z-index: 1; display: inline-flex; align-items: center; gap: 6px; max-width: calc(50% - 20px); overflow: hidden; padding: 6px 10px; border: 1px solid rgba(27,24,21,.1); border-radius: 3px; background: rgba(255,255,255,.94); color: var(--e-ink); font-size: 10px; font-weight: 700; letter-spacing: .4px; text-overflow: ellipsis; white-space: nowrap; }
+        .e-product-badge-left { left: 14px; }
+        .e-product-badge-right { right: 14px; color: var(--e-ink); }
+        .e-product-badge-right.is-promo { border-color: #9c2635; background: #9c2635; color: #fff; }
+        .e-product-content { padding: 20px; }
+        .e-product-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+        .e-product-meta h4 { font-size: 17px; line-height: 1.35; }
+        .e-product-meta span { flex: 0 0 auto; font-size: 13px; font-weight: 600; color: var(--e-ink); text-align: right; }
+        .e-product-meta .e-product-price-old { display: block; color: rgba(27,24,21,.55); font-size: 11px; font-weight: 400; text-decoration: line-through; }
+        .e-product-actions { display: flex; gap: 10px; margin-top: 18px; }
+        .e-product-actions a { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; padding: 8px 12px; border: 1px solid var(--e-line-l); border-radius: 3px; color: var(--e-ink); font-size: 12px; font-weight: 600; text-decoration: none; transition: background .2s ease, border-color .2s ease, color .2s ease; }
+        .e-product-actions a:hover { border-color: var(--e-gold); background: var(--e-gold); color: var(--e-ink); }
+        .e-product-actions a:last-child { flex: 1; border-color: var(--e-ink); background: var(--e-ink); color: var(--e-cream); }
+        .e-product-actions a:last-child:hover { border-color: var(--e-gold); background: var(--e-gold); color: var(--e-ink); }
 
         /* ===== Promo (countdown) ===== */
         .e-promo-card { display: grid; grid-template-columns: 1fr; gap: 0; overflow: hidden; border-radius: 4px; margin-bottom: 28px; background: var(--e-ink-2); }
@@ -297,7 +314,13 @@
 <body>
 
     <div class="e-topbar">
-        <a href="#" class="e-topbar-brand">{{ $profile->name ?? config('settings.site_name') }}</a>
+        <a href="#" class="e-topbar-brand">
+            @if ($seo['logo'] !== '')
+                <img src="{{ $seo['logo'] }}" alt="{{ $profile->name ?? $seo['site_name'] }}">
+            @else
+                {{ $profile->name ?? $seo['site_name'] }}
+            @endif
+        </a>
         <a href="{{ $profile->wa_url }}" target="_blank" class="e-topbar-cta"><i class="bi bi-whatsapp"></i> {{ $profile->phone ?? 'Chat Kami' }}</a>
     </div>
 
@@ -320,19 +343,14 @@
                     </div>
                 </div>
 
-                @if($profile->image_url ?? null)
-                <div class="e-hero-profile e-reveal">
-                    <div class="e-hero-profile-img">
-                        <img src="{{ $profile->image_url }}" alt="{{ $profile->name }}">
-                    </div>
-                    @if($profile->bio)
-                    <div class="e-hero-greet">
-                        <div class="e-testi-mark">&rdquo;</div>
-                        <p>{{ Str::limit(strip_tags($profile->bio), 150) }}</p>
-                        <strong>{{ $profile->name }}</strong>
-                        @if($profile->job_title)<span>{{ $profile->job_title }}</span>@endif
-                    </div>
-                    @endif
+                @if($heroImage)
+                <div class="e-hero-visual e-reveal">
+                    <img src="{{ $heroImage }}" alt="{{ $landingPage->hero_image_url ? $landingPage->headline : ($featuredVehicle->name ?? $landingPage->headline) }}">
+                </div>
+                @else
+                <div class="e-hero-visual e-hero-visual-empty e-reveal" aria-hidden="true">
+                    <i class="bi bi-car-front-fill"></i>
+                    <span>Temukan mobil yang tepat untuk Anda</span>
                 </div>
                 @endif
             </div>
@@ -351,6 +369,29 @@
             @endfor
         </div>
     </div>
+    @endif
+
+    @if($profile && ($profile->name || $profile->image_url || $profile->bio || $profile->job_title))
+    <section class="e-profile-section">
+        <div class="e-wrap">
+            <div class="e-profile-card {{ $profile->image_url ? '' : 'e-profile-card-no-photo' }} e-reveal">
+                @if($profile->image_url)
+                    <div class="e-profile-photo"><img src="{{ $profile->image_url }}" alt="{{ $profile->name ?: 'Profil sales' }}" loading="lazy"></div>
+                @endif
+                <div class="e-profile-copy">
+                    <span class="e-profile-kicker">Sales pendamping Anda</span>
+                    <h2>{{ $profile->name }}</h2>
+                    @if($profile->job_title)<p class="e-profile-role">{{ $profile->job_title }}</p>@endif
+                    @if($profile->bio)
+                        <div class="e-profile-bio">{!! $profile->bio !!}</div>
+                    @else
+                        <p class="e-profile-bio">Saya siap membantu Anda menemukan mobil yang tepat dan mendampingi proses pembelian dari awal hingga selesai.</p>
+                    @endif
+                    <a href="{{ $profile->wa_url }}" target="_blank" rel="noopener" class="e-profile-cta"><i class="bi bi-whatsapp"></i> Hubungi Saya</a>
+                </div>
+            </div>
+        </div>
+    </section>
     @endif
 
     {{-- ============ SERVICES (data nyata) ============ --}}
@@ -431,11 +472,26 @@
                 <div class="col-md-6 col-lg-4 e-reveal">
                     <div class="e-product-item">
                         <div class="e-product-img">
+                            <span class="e-product-badge e-product-badge-left"><i class="bi bi-car-front-fill"></i> {{ $product->product_category->category ?? 'Mobil' }}</span>
+                            <span class="e-product-badge e-product-badge-right {{ $product->disc > 0 ? 'is-promo' : '' }}"><i class="bi {{ $product->disc > 0 ? 'bi-tag-fill' : 'bi-stars' }}"></i> {{ $product->disc > 0 ? 'Hemat ' . $product->discount_short : 'Unit Pilihan' }}</span>
                             <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy">
                         </div>
-                        <div class="e-product-meta">
-                            <h4>{{ $product->name }}</h4>
-                            <span class="e-muted">{{ $product->min_price }}</span>
+                        <div class="e-product-content">
+                            <div class="e-product-meta">
+                                <h4>{{ $product->name }}</h4>
+                                <span>
+                                    @if($product->disc > 0)
+                                        <span class="e-product-price-old">{{ $product->min_price }}</span>
+                                        {{ $product->special_min_price }}
+                                    @else
+                                        {{ $product->min_price }}
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="e-product-actions">
+                                <a href="{{ route('product.detail', $product->slug) }}"><i class="bi bi-arrow-up-right"></i> Detail</a>
+                                <a href="#konsultasi" class="lp-pilih-produk" data-product-id="{{ $product->id }}"><i class="bi bi-chat-dots"></i> Tanya harga</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -490,7 +546,7 @@
             <div class="row g-3">
                 @foreach($galleries as $gallery)
                 <div class="col-6 col-lg-4 e-reveal">
-                    <a href="{{ route('gallery.show', $gallery->slug) }}" class="e-gallery-item text-decoration-none">
+                    <a href="{{ $gallery->cover_url }}" class="e-gallery-item text-decoration-none glightbox" data-gallery="landing-gallery" data-title="{{ $gallery->title }}">
                         <img src="{{ $gallery->cover_url }}" alt="{{ $gallery->title }}" loading="lazy">
                         <div class="e-gallery-overlay">
                             <h4>{{ $gallery->title }}</h4>
@@ -515,11 +571,12 @@
             </div>
             <div class="row g-4">
                 @foreach($deliveries as $delivery)
-                @php $deliveryImg = $delivery->getFirstMediaUrl('images'); @endphp
-                @if($deliveryImg)
+                @if($delivery->landing_image_url)
                 <div class="col-6 col-lg-4 e-reveal">
                     <div class="e-delivery-item">
-                        <div class="e-delivery-img"><img src="{{ $deliveryImg }}" alt="Serah terima {{ $delivery->product->name ?? '' }}" loading="lazy"></div>
+                        <a href="{{ $delivery->landing_image_url }}" class="d-block text-decoration-none glightbox" data-gallery="landing-deliveries" data-title="Serah terima {{ $delivery->product->name ?? '' }}">
+                            <div class="e-delivery-img"><img src="{{ $delivery->landing_image_url }}" alt="Serah terima {{ $delivery->product->name ?? '' }}" loading="lazy"></div>
+                        </a>
                         <div class="e-delivery-badge"><i class="bi bi-patch-check-fill"></i> Sudah Diserahkan</div>
                         @if($delivery->product)<h4>{{ $delivery->product->name }}</h4>@endif
                         <span class="e-muted">{{ $delivery->created_at->translatedFormat('d F Y') }}</span>
@@ -615,7 +672,6 @@
     @endif
 
     {{-- ============ CTA / FORM ============ --}}
-    @php $allProducts = $featuredVehicle ? $exploreProducts->prepend($featuredVehicle) : $exploreProducts; @endphp
     <section id="konsultasi" class="e-dark e-section" style="padding-bottom:90px;">
         <div class="e-wrap">
             <div class="e-cta-grid">
@@ -656,7 +712,7 @@
     </section>
 
     <footer class="e-footer">
-        &copy; {{ date('Y') }} {{ $profile->name ?? config('settings.site_name') }}. Semua hak dilindungi.
+        &copy; {{ $seo['year'] }} {{ $profile->name ?? $seo['site_name'] }}. Semua hak dilindungi.
         @if($profile->phone ?? null) &bull; {{ $profile->phone }} @endif
     </footer>
 

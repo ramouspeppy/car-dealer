@@ -17,7 +17,6 @@ use App\Models\Testdrive;
 use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
-use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Facades\Validator;
 
 class TestdriveController extends Controller
@@ -25,13 +24,15 @@ class TestdriveController extends Controller
 
     public function testdriveShow()
     {
-        SEOTools::setTitle(config('settings.site_title'));
-        SEOTools::setDescription(config('settings.site_desc'));
-        SEOTools::addImages(asset('images/' . config('settings.og_image')));
-
         $products = Product::latest()->active()->get();
         $services  = Service::latest()->get();
-        return view('frontend.testdrive', compact('products', 'services'));
+        $profile = Profile::first();
+        $seo = $this->frontendSeo([
+            'title' => 'Jadwalkan Test Drive',
+            'description' => 'Jadwalkan test drive kendaraan dan rasakan langsung kenyamanan serta performanya. Pilih kendaraan dan waktu yang sesuai untuk Anda.',
+            'keywords' => ['test drive', 'jadwal test drive', config('settings.site_name'), config('settings.site_brand')],
+        ]);
+        return view('frontend.testdrive', compact('products', 'profile', 'services', 'seo'));
     }
 
 

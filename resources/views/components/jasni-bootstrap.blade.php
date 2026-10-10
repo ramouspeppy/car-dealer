@@ -10,7 +10,7 @@
                 Select image
             </span>
             <span class="fileinput-exists">Change</span>
-            <input type="file" name="{{ $name }}" id="{{ $name }}" accept="image/*">
+            <input type="file" name="{{ $name }}" id="{{ $name }}" accept="{{ $accept }}">
         </span>
         <a href="#" class="btn btn-primary fileinput-exists" data-dismiss="fileinput">Remove</a>
     </div>

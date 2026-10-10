@@ -27,6 +27,8 @@ class LandingPage extends Model implements HasMedia
     {
         $this->addMediaCollection('hero_image')->singleFile();
         $this->addMediaCollection('og_image')->singleFile();
+        $this->addMediaCollection('logo')->singleFile();
+        $this->addMediaCollection('favicon')->singleFile();
     }
 
     public function registerMediaConversions(Media $media = null): void
@@ -49,7 +51,21 @@ class LandingPage extends Model implements HasMedia
 
     public function getOgImageUrlAttribute()
     {
-        return $this->getFirstMediaUrl('og_image') ?: $this->hero_image_url;
+        $fallbackImage = config('settings.og_image');
+
+        return $this->getFirstMediaUrl('og_image')
+            ?: $this->hero_image_url
+            ?: ($fallbackImage ? asset($fallbackImage) : '');
+    }
+
+    public function getLogoUrlAttribute()
+    {
+        return $this->getFirstMediaUrl('logo');
+    }
+
+    public function getFaviconUrlAttribute()
+    {
+        return $this->getFirstMediaUrl('favicon');
     }
 
     public function promo()
