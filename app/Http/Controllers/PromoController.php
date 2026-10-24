@@ -9,6 +9,8 @@ class PromoController extends Controller
 {
     public function index()
     {
+        $this->ensureFrontendPageIsActive('promos');
+
         $profile = Profile::first();
         $promos  = Promo::with('media')->active()->priority()->get();
         $seo = $this->frontendSeo([
@@ -40,6 +42,8 @@ class PromoController extends Controller
 
     public function detail(Promo $promo)
     {
+        $this->ensureFrontendPageIsActive('promos');
+
         $profile = Profile::first();
         $seo = $this->frontendSeo([
             'title' => $promo->promo,

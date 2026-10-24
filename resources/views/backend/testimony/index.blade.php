@@ -14,11 +14,13 @@
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Testimony</a></div>
         </div>
+        @include('backend.websetting._frontend-toggle', ['toggles' => [
+            ['key' => 'frontend_section_testimonials', 'label' => 'Tayangkan section Testimoni di Beranda'],
+        ]])
     </div>
 
     @include('backend.layouts._notif')
     <div class="section-body">
-
         <div class="card card-primary" id="testimony-card">
             <div class="card-body m-0 p-0">
                 <nav>

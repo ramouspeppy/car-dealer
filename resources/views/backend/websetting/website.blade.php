@@ -129,6 +129,46 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="card card-primary" id="frontend-visibility-card">
+                                        <div class="card-header sticky-top bg-white">
+                                            <h4>Tayangan Frontend</h4>
+                                            <div class="card-header-action">
+                                                <button type="submit" class="btn btn-icon btn-primary" onclick="$(this).addClass('btn-progress'); $.simpleCardProgress('#frontend-visibility-card')"><i class="fas fa-save"></i> Simpan</button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="text-muted">Atur halaman yang dapat diakses dan section yang ditampilkan di frontend. Perubahan langsung disimpan ke web settings.</p>
+                                            <h6>Halaman</h6>
+                                            <div class="row">
+                                                @foreach ($frontendPages as $key => $label)
+                                                    @php($field = "frontend_page_{$key}")
+                                                    <div class="col-12 col-md-4">
+                                                        <div class="form-group form-check">
+                                                            <input type="hidden" name="{{ $field }}" value="0">
+                                                            <input type="checkbox" class="form-check-input" id="{{ $field }}" name="{{ $field }}" value="1" @if (filter_var(old($field, config("settings.{$field}", '1')), FILTER_VALIDATE_BOOLEAN)) checked @endif>
+                                                            <label class="form-check-label" for="{{ $field }}">{{ $label }}</label>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <h6 class="mt-3">Section halaman utama dan footer</h6>
+                                            <div class="row">
+                                                @foreach ($frontendSections as $key => $label)
+                                                    @php($field = "frontend_section_{$key}")
+                                                    <div class="col-12 col-md-4">
+                                                        <div class="form-group form-check">
+                                                            <input type="hidden" name="{{ $field }}" value="0">
+                                                            <input type="checkbox" class="form-check-input" id="{{ $field }}" name="{{ $field }}" value="1" @if (filter_var(old($field, config("settings.{$field}", '1')), FILTER_VALIDATE_BOOLEAN)) checked @endif>
+                                                            <label class="form-check-label" for="{{ $field }}">{{ $label }}</label>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -14,6 +14,10 @@
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Gallery</a></div>
         </div>
+        @include('backend.websetting._frontend-toggle', ['toggles' => [
+            ['key' => 'frontend_page_gallery', 'label' => 'Tayangkan halaman Galeri'],
+            ['key' => 'frontend_section_gallery', 'label' => 'Tayangkan section Galeri di Beranda'],
+        ]])
     </div>
 
     @include('backend.layouts._notif')

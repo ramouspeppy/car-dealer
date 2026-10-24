@@ -8,6 +8,12 @@
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Contact</a></div>
         </div>
+        <div class="section-header-button d-flex align-items-center">
+            @include('backend.websetting._frontend-toggle', ['toggles' => [
+                ['key' => 'frontend_page_contact', 'label' => 'Tayangkan halaman Kontak'],
+                ['key' => 'frontend_section_contact', 'label' => 'Tayangkan section Kontak di Beranda'],
+            ]])
+        </div>
     </div>
 
     @include('backend.layouts._notif')

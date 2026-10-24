@@ -14,8 +14,12 @@
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Post</a></div>
         </div>
+        @include('backend.websetting._frontend-toggle', ['toggles' => [
+            ['key' => 'frontend_page_posts', 'label' => 'Tayangkan halaman Berita'],
+        ]])
     </div>
 
+    @include('backend.layouts._notif')
     @if (session()->has('flash_notification'))
     <div class="alert alert-{{ session()->get('flash_notification.level') }} alert-has-icon" id="alert">
         <div class="alert-icon"><i class="far fa-lightbulb"></i></div>

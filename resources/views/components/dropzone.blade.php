@@ -7,7 +7,7 @@
 var uploadedMap_{{ $name }} = {};
 
 var myDropzone_{{ $name }} = new Dropzone("#dropzone-{{ $name }}", {
-    url: "{{ route("backend.images.store") }}",
+    url: @json($uploadUrl),
     maxFilesize: {{ $maxFileSize }},
     acceptedFiles: "{{ $acceptedFiles }}",
     addRemoveLinks: true,
@@ -22,7 +22,7 @@ var myDropzone_{{ $name }} = new Dropzone("#dropzone-{{ $name }}", {
         file.previewElement.remove();
         var name = uploadedMap_{{ $name }}[file.name] ?? file.file_name;
 
-        $.post('{{ route("backend.images.destroy") }}', { filename: name, _token: "{{ csrf_token() }}" });
+        $.post(@json($removeUrl), { filename: name, _token: "{{ csrf_token() }}" });
 
         $('form').find('input[name="{{ $name }}[]"][value="' + name + '"]').remove();
     },

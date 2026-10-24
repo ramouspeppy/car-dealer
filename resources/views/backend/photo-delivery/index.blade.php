@@ -1,5 +1,69 @@
 @extends('backend.layouts.app')
 @section('title', 'Photo Delivery - ' . config('settings.site_name'))
+@section('css')
+    <style>
+        .photo-delivery-page #photo-gallery {
+            row-gap: 1.25rem;
+        }
+
+        .photo-delivery-page .photo-delivery {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            border-radius: 10px;
+            background: #f3f5f8;
+            box-shadow: 0 4px 14px rgba(20, 35, 60, .1);
+        }
+
+        .photo-delivery-page .photo-delivery-image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-delivery-page .photo-delivery-lightbox {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            background: rgba(20, 35, 60, .35);
+            opacity: 0;
+            transition: opacity .2s ease;
+        }
+
+        .photo-delivery-page .photo-delivery:hover .photo-delivery-lightbox,
+        .photo-delivery-page .photo-delivery-lightbox:focus-visible {
+            opacity: 1;
+        }
+
+        .photo-delivery-page .photo-delivery-lightbox .mg-icon-dv {
+            color: inherit;
+        }
+
+        .photo-delivery-page .photo-delivery .checkbox-right {
+            position: absolute;
+            z-index: 2;
+            top: 10px;
+            right: 10px;
+            margin: 0;
+        }
+
+        .photo-delivery-page .photo-delivery .checkbox-right .cbx {
+            position: relative;
+            top: auto;
+            left: auto;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .photo-delivery-page .photo-delivery-lightbox {
+                transition: none;
+            }
+        }
+    </style>
+@endsection
 @section('content')
     <section class="section photo-delivery-page">
         <div class="section-header">
@@ -14,6 +78,9 @@
                 <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="#">Photo Delivery</a></div>
             </div>
+            @include('backend.websetting._frontend-toggle', ['toggles' => [
+                ['key' => 'frontend_section_portfolio', 'label' => 'Tayangkan section Serah Terima Kendaraan di Beranda'],
+            ]])
         </div>
     
         @include('backend.layouts._notif')
@@ -79,28 +146,30 @@
                                         Semua produk
                                     @endif
                                 </span>
-                                <span><strong>{{ number_format($deliveries->total()) }}</strong> foto</span>
+                                <span><strong>{{ number_format($photoCount) }}</strong> foto</span>
                             </div>
                             <div class="row" id="photo-gallery">
                                 @forelse ($deliveries as $delivery)
-                                    @php $imageUrl = $delivery->getFirstMediaUrl('images'); @endphp
-                                    <div class="col-6 col-sm-4 col-md-3 photo-delivery-container">
-                                        <div class="photo-delivery">
-                                            <img class="photo-delivery-image" src="{{ $imageUrl }}" alt="Photo delivery #{{ $delivery->id }}" loading="lazy">
-                                            <a class="photo-delivery-lightbox" data-gallery="photo-delivery" href="{{ $imageUrl }}" title="Photo delivery #{{ $delivery->id }}" aria-label="Open photo delivery #{{ $delivery->id }}">
-                                                <i class="fas fa-expand mg-icon-dv"></i>
-                                            </a>
-                                            <div class="checkbox-wrapper-12 checkbox-right">
-                                                <div class="cbx">
-                                                    <input type="checkbox" name="idDeliveries" class="checkbox-delivery" value="{{ $delivery->id }}" aria-label="Select photo delivery #{{ $delivery->id }}" />
-                                                    <label></label>
-                                                    <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
-                                                        <path d="M2 8.36364L6.23077 12L13 2"></path>
-                                                    </svg>
+                                    @foreach ($delivery->getMedia('images') as $image)
+                                        @php $imageUrl = $image->getUrl(); @endphp
+                                        <div class="col-6 col-sm-4 col-md-3 photo-delivery-container" data-delivery-id="{{ $delivery->id }}">
+                                            <div class="photo-delivery">
+                                                <img class="photo-delivery-image" src="{{ $imageUrl }}" alt="Photo delivery #{{ $delivery->id }}" loading="lazy">
+                                                <a class="photo-delivery-lightbox" data-gallery="photo-delivery" href="{{ $imageUrl }}" title="Photo delivery #{{ $delivery->id }}" aria-label="Open photo delivery #{{ $delivery->id }}">
+                                                    <i class="fas fa-expand mg-icon-dv"></i>
+                                                </a>
+                                                <div class="checkbox-wrapper-12 checkbox-right">
+                                                    <div class="cbx">
+                                                        <input type="checkbox" name="idDeliveries" class="checkbox-delivery" value="{{ $delivery->id }}" aria-label="Select photo delivery #{{ $delivery->id }}" />
+                                                        <label></label>
+                                                        <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
+                                                            <path d="M2 8.36364L6.23077 12L13 2"></path>
+                                                        </svg>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
                                 @empty
                                     <div class="col-12 photo-delivery-empty">
                                         <i class="fas fa-images"></i>

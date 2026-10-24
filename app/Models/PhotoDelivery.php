@@ -25,7 +25,8 @@ class PhotoDelivery extends Model implements HasMedia, Viewable
     public function registerMediaCollections(): void
     {
         $this
-            ->addMediaCollection('images');
+            ->addMediaCollection('images')
+            ->useDisk('photo_delivery');
     }
 
     public function registerMediaConversions(Media $media = null): void

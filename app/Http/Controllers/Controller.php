@@ -2,15 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WebSetting;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function __construct()
+    {
+        View::share('activeNav', $this->activeNavigationItem());
+    }
+
+    private function activeNavigationItem(): string
+    {
+        $route = request()->route();
+        if (!$route) {
+            return '';
+        }
+
+        $routeName = $route->getName();
+
+        if ($routeName === '/') {
+            return 'home';
+        }
+
+        foreach ([
+            'products' => 'product.*',
+            'promos' => 'promo.*',
+            'gallery' => 'gallery.*',
+            'posts' => 'post.*',
+        ] as $navigationItem => $routePattern) {
+            if (Str::is($routePattern, $routeName)) {
+                return $navigationItem;
+            }
+        }
+
+        if ($routeName === 'testdrive.show') {
+            return 'testdrive';
+        }
+
+        return $routeName === 'contact' ? 'contact' : '';
+    }
+
+    protected function frontendSettingIsActive(string $type, string $key): bool
+    {
+        $value = config("settings.frontend_{$type}_{$key}", '1');
+
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true;
+    }
+
+    protected function ensureFrontendPageIsActive(string $page): void
+    {
+        abort_unless($this->frontendSettingIsActive('page', $page), 404);
+    }
+
+    protected function syncFrontendPageStatus(string $page, bool $isActive): void
+    {
+        (new WebSetting())->updateValue("frontend_page_{$page}", $isActive ? '1' : '0');
+        Cache::forget('settings');
+    }
 
     protected function frontendSeo(array $page = []): array
     {

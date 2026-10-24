@@ -1,0 +1,484 @@
+/* Bagian kecil yang belum ada komponennya di template utama (trust bar, FAQ, sticky bar mobile).
+           Semua tetap pakai variabel warna & font asli tema, bukan warna baru. */
+        body.landing-v1-page {
+            padding-bottom: 84px;
+        }
+
+        html.landing-v1-page #hero.lp-hero {
+            isolation: isolate;
+            background:
+                radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--accent-color), transparent 88%), transparent 28%),
+                var(--background-color);
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-page-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 48px;
+            margin-bottom: 28px;
+            color: var(--heading-color);
+            font-family: var(--heading-font);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-page-brand-copy {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-page-brand-site {
+            margin-top: 4px;
+            color: color-mix(in srgb, var(--default-color), transparent 28%);
+            font-family: var(--default-font);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-page-brand img {
+            display: block;
+            max-width: 190px;
+            max-height: 56px;
+            object-fit: contain;
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-page-socials {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 28px auto;
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-page-socials a {
+            display: inline-flex;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid color-mix(in srgb, var(--default-color), transparent 82%);
+            border-radius: 50%;
+            color: var(--heading-color);
+            text-decoration: none;
+            transition: transform .2s ease, color .2s ease, border-color .2s ease;
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-page-socials a:hover {
+            transform: translateY(-2px);
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-page-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        html.landing-v1-page #hero.lp-hero .hero-text {
+            max-width: 590px;
+        }
+
+        html.landing-v1-page #hero.lp-hero .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4.25rem) !important;
+            line-height: 1.08;
+            letter-spacing: -.035em;
+            margin-bottom: 22px;
+        }
+
+        html.landing-v1-page #hero.lp-hero .hero-text .description {
+            max-width: 540px;
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
+            line-height: 1.75;
+        }
+
+        html.landing-v1-page #hero.lp-hero .hero-actions {
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        html.landing-v1-page #hero.lp-hero .hero-visual .profile-container {
+            width: min(100%, 540px);
+            height: auto;
+            aspect-ratio: 5 / 4;
+            margin-inline: auto;
+            padding: clamp(12px, 2vw, 22px);
+            border: 1px solid color-mix(in srgb, var(--accent-color), transparent 78%);
+            border-radius: 32px;
+            background: linear-gradient(145deg, var(--surface-color), color-mix(in srgb, var(--accent-color), var(--surface-color) 94%));
+            box-shadow: 0 28px 70px color-mix(in srgb, var(--heading-color), transparent 86%);
+        }
+
+        html.landing-v1-page #hero.lp-hero .hero-visual .profile-background {
+            border-radius: 24px;
+        }
+
+        html.landing-v1-page #hero.lp-hero .hero-visual .profile-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            object-fit: contain;
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-hero-placeholder {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            min-height: 260px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            border-radius: 24px;
+            background: color-mix(in srgb, var(--accent-color), var(--surface-color) 94%);
+            color: var(--accent-color);
+            font-family: var(--nav-font);
+            font-weight: 700;
+        }
+
+        html.landing-v1-page #hero.lp-hero .lp-hero-placeholder i {
+            font-size: clamp(4rem, 10vw, 7rem);
+        }
+
+        html.landing-v1-page .lp-profile-section {
+            padding: 72px 0;
+            background: color-mix(in srgb, var(--accent-color), var(--background-color) 95%);
+        }
+
+        html.landing-v1-page .lp-profile-card {
+            display: grid;
+            grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+            align-items: center;
+            gap: clamp(28px, 6vw, 72px);
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: clamp(24px, 5vw, 56px);
+            border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+            border-radius: 28px;
+            background: var(--surface-color);
+            box-shadow: 0 24px 64px color-mix(in srgb, var(--heading-color), transparent 92%);
+        }
+
+        html.landing-v1-page .lp-profile-card-no-photo {
+            grid-template-columns: minmax(0, 1fr);
+            max-width: 760px;
+        }
+
+        html.landing-v1-page .lp-profile-photo {
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            border-radius: 22px;
+            background: color-mix(in srgb, var(--accent-color), var(--surface-color) 88%);
+        }
+
+        html.landing-v1-page .lp-profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        html.landing-v1-page .lp-profile-copy .lp-profile-kicker {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+            font-family: var(--nav-font);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        html.landing-v1-page .lp-profile-copy h2 {
+            margin-bottom: 6px;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+        }
+
+        html.landing-v1-page .lp-profile-copy .lp-profile-role {
+            margin-bottom: 18px;
+            color: color-mix(in srgb, var(--default-color), transparent 30%);
+            font-weight: 600;
+        }
+
+        html.landing-v1-page .lp-profile-copy .lp-profile-bio {
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        html.landing-v1-page .lp-profile-copy .lp-profile-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 12px 22px;
+            border-radius: 50px;
+            background: #25d366;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        html.landing-v1-page .lp-profile-copy .lp-profile-cta:hover {
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(37, 211, 102, .24);
+        }
+
+        @media (max-width: 767px) {
+            html.landing-v1-page .lp-profile-card {
+                grid-template-columns: 1fr;
+            }
+
+            html.landing-v1-page .lp-profile-photo {
+                max-width: 300px;
+                width: 100%;
+                margin-inline: auto;
+            }
+        }
+
+        html.landing-v1-page .hero .profile-container .profile-image.product-photo-fallback {
+            box-sizing: border-box;
+            padding: 28px;
+            border-radius: 30px;
+            object-fit: contain;
+        }
+
+        html.landing-v1-page .promo-list .product-photo-card .promo-image img {
+            box-sizing: border-box;
+            padding: clamp(14px, 3vw, 28px);
+            object-fit: contain;
+            transition: transform .45s ease;
+        }
+
+        html.landing-v1-page .promo-list .product-photo-card:hover .promo-image img {
+            transform: scale(1.035);
+        }
+
+        html.landing-v1-page #promo-list .product-photo-card {
+            border: 1px solid color-mix(in srgb, var(--accent-color), transparent 84%);
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+        }
+
+        html.landing-v1-page #promo-list .product-photo-card:hover {
+            transform: translateY(-8px);
+            border-color: color-mix(in srgb, var(--accent-color), transparent 48%);
+            box-shadow: 0 24px 48px color-mix(in srgb, var(--heading-color), transparent 86%);
+        }
+
+        html.landing-v1-page #promo-list .product-photo-card .promo-image {
+            background: #fff;
+        }
+
+        html.landing-v1-page #promo-list .product-photo-card .promo-category {
+            position: static;
+            flex: 0 1 auto;
+            max-width: calc(50% - 6px);
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        html.landing-v1-page #promo-list .product-photo-badges {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            min-height: 52px;
+            padding: 10px 14px;
+            background: var(--surface-color);
+        }
+
+        html.landing-v1-page #promo-list .product-photo-card .promo-image-badge {
+            position: static;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex: 0 1 auto;
+            max-width: calc(50% - 6px);
+            min-width: 0;
+            padding: 6px 10px;
+            overflow: hidden;
+            border: 1px solid color-mix(in srgb, var(--accent-color), transparent 72%);
+            border-radius: 50px;
+            background: var(--surface-color);
+            color: var(--heading-color);
+            font-size: 11px;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            box-shadow: 0 6px 16px rgba(17, 43, 70, .1);
+        }
+
+        html.landing-v1-page #promo-list .product-photo-card .promo-image-badge.is-promo {
+            border-color: transparent;
+            background: #e63946;
+            color: #fff;
+        }
+
+        html.landing-v1-page .lp-trust-bar {
+            background-color: var(--surface-color);
+            border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+            padding: 18px 0;
+        }
+
+        html.landing-v1-page .lp-trust-bar .lp-trust-item {
+            font-family: var(--nav-font);
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--heading-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        html.landing-v1-page .lp-trust-bar .lp-trust-item i {
+            color: var(--accent-color);
+            font-size: 16px;
+        }
+
+        html.landing-v1-page .lp-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: color-mix(in srgb, var(--accent-color), transparent 88%);
+            color: var(--accent-color);
+            font-family: var(--nav-font);
+            font-weight: 700;
+            font-size: 13px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            margin-bottom: 18px;
+        }
+
+        html.landing-v1-page .lp-faq .accordion-item {
+            border: none;
+            margin-bottom: 14px;
+            border-radius: 12px !important;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        html.landing-v1-page .lp-faq .accordion-button {
+            font-family: var(--heading-font);
+            font-weight: 600;
+            color: var(--heading-color);
+            background-color: var(--surface-color);
+            padding: 20px 24px;
+        }
+
+        html.landing-v1-page .lp-faq .accordion-button:not(.collapsed) {
+            color: var(--accent-color);
+            background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
+            box-shadow: none;
+        }
+
+        html.landing-v1-page .lp-faq .accordion-button:focus {
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        html.landing-v1-page .lp-faq .accordion-button::after {
+            filter: none;
+        }
+
+        html.landing-v1-page .lp-faq .accordion-body {
+            padding: 4px 24px 22px;
+            color: color-mix(in srgb, var(--default-color), transparent 15%);
+        }
+
+        html.landing-v1-page .lp-footer {
+            background-color: var(--heading-color);
+            color: color-mix(in srgb, white, transparent 30%);
+            padding: 28px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        html.landing-v1-page .lp-footer strong {
+            color: #fff;
+        }
+
+        html.landing-v1-page .lp-sticky-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1040;
+            background-color: var(--surface-color);
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
+            padding: 10px 16px;
+            display: flex;
+            gap: 10px;
+        }
+
+        html.landing-v1-page .lp-sticky-bar a {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 50px;
+            font-family: var(--nav-font);
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        html.landing-v1-page .lp-sticky-bar .lp-btn-call {
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        html.landing-v1-page .lp-sticky-bar .lp-btn-wa {
+            background-color: #25d366;
+            color: #fff;
+        }
+
+        html.landing-v1-page[data-theme="light"] {
+            --lp-button-color: color-mix(in srgb, var(--accent-color), #12314f 26%);
+            --lp-button-hover-color: color-mix(in srgb, var(--lp-button-color), #000 10%);
+        }
+
+        html.landing-v1-page[data-theme="light"] .hero .hero-actions .btn.btn-primary,
+        html.landing-v1-page[data-theme="light"] .call-to-action .btn-primary,
+        html.landing-v1-page[data-theme="light"] #lp-submit-btn {
+            background-color: var(--lp-button-color);
+            border-color: var(--lp-button-color);
+            color: #fff;
+        }
+
+        html.landing-v1-page[data-theme="light"] .hero .hero-actions .btn.btn-primary:hover,
+        html.landing-v1-page[data-theme="light"] .call-to-action .btn-primary:hover,
+        html.landing-v1-page[data-theme="light"] #lp-submit-btn:hover {
+            background-color: var(--lp-button-hover-color);
+            border-color: var(--lp-button-hover-color);
+            color: #fff;
+        }
+
+        html.landing-v1-page[data-theme="light"] .hero .hero-actions .btn.btn-outline:hover {
+            background-color: var(--lp-button-color);
+            border-color: var(--lp-button-color);
+            color: #fff;
+        }
+
+        html.landing-v1-page[data-theme="light"] #promo-list .product-photo-card .promo-actions .btn-purchase {
+            background: linear-gradient(135deg, var(--lp-button-color), var(--lp-button-hover-color));
+            color: #fff;
+        }
+
+        html.landing-v1-page[data-theme="light"] #promo-list .product-photo-card .promo-actions .btn-purchase:hover {
+            color: #fff;
+        }
+
+        @media (min-width: 992px) {
+            html.landing-v1-page .lp-sticky-bar {
+                display: none;
+            }
+
+            body.landing-v1-page {
+                padding-bottom: 0;
+            }
+        }

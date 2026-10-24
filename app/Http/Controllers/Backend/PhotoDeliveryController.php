@@ -7,13 +7,17 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PhotoDeliveryController extends Controller
 {
     private function uploadPath()
     {
-        return public_path('uploads/tmp/' . auth()->user()->id); // Direct path - no symlink needed
+        return public_path('upload/photo-delivery/tmp/' . auth()->id());
     }
 
     public function index(Request $request)
@@ -29,14 +33,23 @@ class PhotoDeliveryController extends Controller
             ->get();
         $selectedProductId = $filters['product_id'] ?? null;
 
-        $deliveriesQuery = PhotoDelivery::with(['media', 'product']);
+        $deliveriesQuery = PhotoDelivery::with(['media', 'product'])
+            ->whereHas('media', function ($query) {
+                $query->where('collection_name', 'images');
+            });
         if ($selectedProductId) {
             $deliveriesQuery->where('product_id', $selectedProductId);
         }
 
+        $photoCount = Media::query()
+            ->where('model_type', (new PhotoDelivery())->getMorphClass())
+            ->where('collection_name', 'images')
+            ->whereIn('model_id', (clone $deliveriesQuery)->select('id'))
+            ->count();
+
         $deliveries = $deliveriesQuery->latest()->paginate(12)->appends($request->only('product_id'));
 
-        return view('backend.photo-delivery.index', compact('deliveries', 'products', 'selectedProductId'));
+        return view('backend.photo-delivery.index', compact('deliveries', 'products', 'selectedProductId', 'photoCount'));
     }
 
     public function create(PhotoDelivery $delivery)
@@ -46,52 +59,66 @@ class PhotoDeliveryController extends Controller
         return view('backend.photo-delivery.create', compact('delivery', 'products'));
     }
 
-    // public function storeMedia(Request $request)
-    // {
-    //     $path = $this->uploadPath();
+    public function storeMedia(Request $request)
+    {
+        $this->authorize('isAdmin', PhotoDelivery::class);
 
-    //     if (!file_exists($path)) {
-    //         mkdir($path, 0777, true);
-    //     }
+        $request->validate([
+            'file' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
 
-    //     $file = $request->file('file');
+        $file = $request->file('file');
+        $basename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = strtolower($file->getClientOriginalExtension());
+        $name = Str::uuid() . '_' . Str::slug($basename) . '.' . $extension;
 
-    //     $name = trim($file->getClientOriginalName());
+        $file->storeAs('tmp/' . auth()->id(), $name, 'photo_delivery');
 
-    //     $file->move($path, $name);
+        return response()->json([
+            'name' => $name,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
+    }
 
-    //     return response()->json([
-    //         'name'          => $name,
-    //         'original_name' => $file->getClientOriginalName(),
-    //     ]);
-    // }
+    public function deleteMedia(Request $request)
+    {
+        $this->authorize('isAdmin', PhotoDelivery::class);
 
-    // public function deleteMedia(Request $request)
-    // {
-    //     $path = $this->uploadPath();
+        $validated = $request->validate([
+            'filename' => ['required', 'string', 'regex:/\A[a-zA-Z0-9_-]+\.(?:jpg|jpeg|png|webp)\z/i'],
+        ]);
 
-    //     $filePath = $path . '/' . $request->filename;
+        Storage::disk('photo_delivery')->delete('tmp/' . auth()->id() . '/' . $validated['filename']);
 
-    //     if (file_exists($filePath)) unlink($filePath);
-    // }
+        return response()->noContent();
+    }
 
     public function store(Request $request)
     {
         $this->authorize('isAdmin', PhotoDelivery::class);
 
-        $delivery = PhotoDelivery::create($request->all());
+        $validated = $request->validate([
+            'product_id' => ['required', 'integer', 'exists:products,id'],
+            'images' => ['required', 'array', 'min:1'],
+            'images.*' => ['required', 'string', 'regex:/\A[a-zA-Z0-9_-]+\.(?:jpg|jpeg|png|webp)\z/i'],
+        ]);
 
-        foreach ($request->input('images', []) as $file) {
-            $delivery->addMedia($this->uploadPath() . '/' . $file)
-                ->withResponsiveImages()
-                ->toMediaCollection('images');
-        }
-        if ($request->input('images', [])) {
-            $request->session()->flash('flash_notification', [
-                "level" => "info",
-                "message" => "Data has been created successfully"
-            ]);
-        }
+        DB::transaction(function () use ($validated) {
+            foreach ($validated['images'] as $file) {
+                $delivery = PhotoDelivery::create([
+                    'product_id' => $validated['product_id'],
+                ]);
+
+                $delivery->addMedia($this->uploadPath() . DIRECTORY_SEPARATOR . $file)
+                    ->withResponsiveImages()
+                    ->toMediaCollection('images');
+            }
+        });
+
+        $request->session()->flash('flash_notification', [
+            "level" => "info",
+            "message" => count($validated['images']) . " photo delivery image(s) has been created successfully"
+        ]);
 
         return redirect()->route('backend.photo-delivery.index');
     }

@@ -7,7 +7,7 @@
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
-                                name="title" autofocus value="{{ old('title', $post->title) }}">
+                                name="title" data-slug-target="#slug" autofocus value="{{ old('title', $post->title) }}">
                             @error('title')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -17,7 +17,7 @@
                         <div class="form-group">
                             <label for="slug">Slug</label>
                             <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
-                                name="slug" value="{{ old('slug', $post->slug) }}">
+                                name="slug" data-auto-slug="#title" value="{{ old('slug', $post->slug) }}">
                             @error('slug')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -142,15 +142,6 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    $('#title').change(function (e) {
-        $.get("{{ route('backend.post.checkSlug') }}", {
-                'slug': $(this).val()
-            },
-            function (data) {
-                $('#slug').val(data.slug);
-            }
-        );
-    });
     $('#save-btn').click(function (e) {
         e.preventDefault();
         $('#save-btn').addClass('btn-progress');

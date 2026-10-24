@@ -24,10 +24,10 @@ class TestimoniesStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'star'    => 'required|max:5',
+            'rating'  => 'required|integer|min:0|max:5',
             'image'   => 'required|image|file|max:2048',
             'name'    => 'required|max:255|min:5',
-            'job'     => 'required|max:255',
+            'job'     => 'nullable|string|max:100',
             'message' => 'required',
         ];
     }

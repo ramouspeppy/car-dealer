@@ -198,6 +198,7 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
     // Setting
     Route::get('setting/website', [WebSettingController::class, 'website'])->name('setting.web');
     Route::post('setting/update', [WebSettingController::class, 'update'])->name('setting.update');
+    Route::post('setting/toggle', [WebSettingController::class, 'toggleVisibility'])->name('setting.toggle');
 
     // User
     Route::get('user/checkSlug', [UserController::class, 'checkSlug'])->name('user.checkSlug');

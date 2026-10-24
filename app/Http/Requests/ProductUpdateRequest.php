@@ -25,6 +25,8 @@ class ProductUpdateRequest extends ProductStoreRequest
     {
         $rules = parent::rules();
         $rules['slug'] = 'required|unique:products,slug,' . $this->route('product');
+        $rules['image'] = 'nullable|mimes:jpeg,png,jpg,gif|max:2048';
+        $rules['header_image'] = 'nullable|mimes:jpeg,png,jpg,gif|max:2048';
         return $rules;
     }
 }

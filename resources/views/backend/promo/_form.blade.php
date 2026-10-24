@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label for="promo">Promo</label>
                         <input type="text" class="form-control @error('promo') is-invalid @enderror" id="promo"
-                            name="promo" autofocus value="{{ old('promo',$promo->promo) }}">
+                            name="promo" data-slug-target="#slug" autofocus value="{{ old('promo',$promo->promo) }}">
                         @error('promo')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <label for="slug">Slug</label>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
-                            name="slug" autofocus value="{{ old('slug',$promo->slug) }}">
+                            name="slug" data-auto-slug="#promo" autofocus value="{{ old('slug',$promo->slug) }}">
                         @error('slug')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -129,18 +129,6 @@
 <script type="module">
     $(function () {
         $.myTinyMce('#desc', 200);
-    });
-</script>
-
-<script>
-    $('#promo').change(function(e) {
-        $.get("{{ route('backend.promo.checkSlug') }}", {
-                'slug': $(this).val()
-            },
-            function(data) {
-                $('#slug').val(data.slug);
-            }
-        );
     });
 </script>
 

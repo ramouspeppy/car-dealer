@@ -14,6 +14,10 @@
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Product</a></div>
         </div>
+        @include('backend.websetting._frontend-toggle', ['toggles' => [
+            ['key' => 'frontend_page_products', 'label' => 'Tayangkan halaman Produk'],
+            ['key' => 'frontend_section_product_cards', 'label' => 'Tayangkan section Produk di Beranda'],
+        ]])
     </div>
 
     @include('backend.layouts._notif')

@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\WebSetting;
+use App\Models\LandingPage;
+use App\Models\LandingPageV2;
+use App\Models\LandingPageV3;
+use App\Models\LandingPageV4;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\Rule;
 
 class WebSettingController extends Controller
 {
@@ -22,13 +27,49 @@ class WebSettingController extends Controller
     public function website()
     {
         $website    = $this->getSettings();
-        return view("backend.websetting.website", compact('website'));
+        $frontendPages = [
+            'home' => 'Beranda',
+            'products' => 'Produk',
+            'promos' => 'Promo',
+            'testdrive' => 'Test Drive',
+            'gallery' => 'Galeri',
+            'posts' => 'Berita',
+            'contact' => 'Kontak',
+            'landing_v1' => 'Landing Page V1',
+            'landing_v2' => 'Landing Page V2',
+            'landing_v3' => 'Landing Page V3',
+            'landing_v4' => 'Landing Page V4',
+        ];
+        $frontendSections = [
+            'hero' => 'Hero',
+            'about' => 'Tentang Kami',
+            'promo_list' => 'Daftar Promo',
+            'product_cards' => 'Daftar Produk',
+            'call_to_action' => 'Ajakan Test Drive',
+            'services' => 'Layanan',
+            'testimonials' => 'Testimoni',
+            'portfolio' => 'Serah Terima Kendaraan',
+            'gallery' => 'Galeri',
+            'contact' => 'Kontak',
+            'footer' => 'Footer',
+        ];
+
+        return view("backend.websetting.website", compact('website', 'frontendPages', 'frontendSections'));
     }
 
     public function update(Request $request)
     {
         // return $request->all();
         $webSetting = $this->getSettings();
+        $visibilityRules = [];
+
+        foreach (['page' => $this->frontendPageKeys(), 'section' => $this->frontendSectionKeys()] as $type => $keys) {
+            foreach ($keys as $key) {
+                $visibilityRules["frontend_{$type}_{$key}"] = 'sometimes|boolean';
+            }
+        }
+
+        $request->validate($visibilityRules);
 
         if ($request->input('website') == true) {
             $this->websiteValidation($request);
@@ -55,10 +96,12 @@ class WebSettingController extends Controller
         // }
 
         $data = $this->handleRequest($request);
+        $settingKeys = $this->settingKeys();
 
         foreach ($data as $name => $value) {
-            if (!empty($name)) {
+            if (in_array($name, $settingKeys, true)) {
                 $webSetting->updateValue($name, $value);
+                $this->syncLandingPageStatus($name, $value);
             }
         }
 
@@ -70,6 +113,118 @@ class WebSettingController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function toggleVisibility(Request $request)
+    {
+        $validated = $request->validate([
+            'key' => ['required', 'string', Rule::in($this->visibilitySettingKeys())],
+            'active' => 'required|boolean',
+        ]);
+
+        $active = filter_var($validated['active'], FILTER_VALIDATE_BOOLEAN);
+        $this->getSettings()->updateValue($validated['key'], $active ? '1' : '0');
+        $this->syncLandingPageStatus($validated['key'], $active);
+        Cache::forget('settings');
+
+        return response()->json([
+            'success' => true,
+            'active' => $active,
+            'message' => $active ? 'Tayangan berhasil diaktifkan.' : 'Tayangan berhasil dinonaktifkan.',
+        ]);
+    }
+
+    private function frontendPageKeys(): array
+    {
+        return [
+            'home',
+            'products',
+            'promos',
+            'testdrive',
+            'gallery',
+            'posts',
+            'contact',
+            'landing_v1',
+            'landing_v2',
+            'landing_v3',
+            'landing_v4',
+        ];
+    }
+
+    private function frontendSectionKeys(): array
+    {
+        return [
+            'hero',
+            'about',
+            'promo_list',
+            'product_cards',
+            'call_to_action',
+            'services',
+            'testimonials',
+            'portfolio',
+            'gallery',
+            'contact',
+            'footer',
+        ];
+    }
+
+    private function settingKeys(): array
+    {
+        return array_merge(
+            [
+                'site_name',
+                'site_brand',
+                'site_title',
+                'site_desc',
+                'g_verif',
+                'g_tag',
+                'script',
+                'site_logo',
+                'favicon',
+                'og_image',
+                'bg_footer',
+                'bg_header_other',
+                'bg_testimony',
+            ],
+            array_map(function ($key) {
+                return "frontend_page_{$key}";
+            }, $this->frontendPageKeys()),
+            array_map(function ($key) {
+                return "frontend_section_{$key}";
+            }, $this->frontendSectionKeys())
+        );
+    }
+
+    private function visibilitySettingKeys(): array
+    {
+        return array_merge(
+            array_map(function ($key) {
+                return "frontend_page_{$key}";
+            }, $this->frontendPageKeys()),
+            array_map(function ($key) {
+                return "frontend_section_{$key}";
+            }, $this->frontendSectionKeys())
+        );
+    }
+
+    private function syncLandingPageStatus(string $setting, $value): void
+    {
+        $pages = [
+            'frontend_page_landing_v1' => LandingPage::class,
+            'frontend_page_landing_v2' => LandingPageV2::class,
+            'frontend_page_landing_v3' => LandingPageV3::class,
+            'frontend_page_landing_v4' => LandingPageV4::class,
+        ];
+
+        if (!isset($pages[$setting])) {
+            return;
+        }
+
+        $landingPage = $pages[$setting]::first();
+        if ($landingPage) {
+            $landingPage->is_active = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            $landingPage->save();
+        }
     }
 
     private function websiteValidation($request)

@@ -24,26 +24,55 @@ class FrontendController extends Controller
 {
     public function index()
     {
+        $this->ensureFrontendPageIsActive('home');
+
         $header      = Header::first();
-        $seo = $this->frontendSeo([
-            'title' => $header ? $header->title : '',
-            'description' => $header ? $header->caption : '',
-            'keywords' => [$header ? $header->title : '', config('settings.site_name'), config('settings.site_brand')],
-            'image' => $header ? $header->image_url : '',
-        ]);
+        $seo = $this->frontendSeo();
         $posts       = Post::with('media')->published()->latest()->limit(3)->get();
         $testimonies = Testimony::with('media')->randomLimit()->get();
         $promos      = Promo::with('media')->active()->priority()->get();
         $profile     = Profile::first();
-        $products    = Product::with(['media', 'product_type', 'product_category', 'photo_delivery'])->get();
+        $products    = Product::with(['media', 'product_type', 'product_category', 'photo_delivery'])->active()->latest()->get();
         $services    = Service::latest()->get();
 
-        $deliveriesByProduct = Product::whereHas('photo_delivery')
-            ->select('id', 'name', 'slug')
-            ->get();
+        $deliveries = PhotoDelivery::with(['media', 'product'])
+            ->whereHas('media', function ($query) {
+                $query->where('collection_name', 'images');
+            })
+            ->latest()
+            ->get()
+            ->flatMap(function ($delivery) {
+                if (!$delivery->product) {
+                    return [];
+                }
 
-        // Ambil semua photo delivery beserta relasi product
-        $deliveries = PhotoDelivery::with(['media', 'product'])->get();
+                return $delivery->getMedia('images')->map(function ($image) use ($delivery) {
+                    return (object) [
+                        'product' => $delivery->product,
+                        'image_url' => $image->getUrl(),
+                        'image_thumb_url' => $image->hasGeneratedConversion('thumb')
+                            ? $image->getUrl('thumb')
+                            : $image->getUrl(),
+                    ];
+                });
+            })
+            ->values();
+
+        $deliveriesByProduct = $deliveries
+            ->groupBy(function ($delivery) {
+                return $delivery->product->id;
+            })
+            ->map(function ($productDeliveries) {
+                $product = $productDeliveries->first()->product;
+
+                return (object) [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'slug' => $product->slug,
+                    'photo_count' => $productDeliveries->count(),
+                ];
+            })
+            ->values();
         $galleries = Media::where('model_type', Gallery::class)
             ->inRandomOrder()
             ->limit(7)
@@ -160,6 +189,8 @@ class FrontendController extends Controller
 
     public function contact()
     {
+        $this->ensureFrontendPageIsActive('contact');
+
         $seo = $this->frontendSeo([
             'title' => 'Kontak Kami',
             'description' => 'Hubungi ' . config('settings.site_name') . ' untuk mendapatkan informasi produk, promo, dan layanan.',
@@ -251,6 +282,13 @@ class FrontendController extends Controller
 
     public function contactStore(Request $request)
     {
+        abort_unless(
+            $this->frontendSettingIsActive('page', 'contact')
+                || ($this->frontendSettingIsActive('page', 'home')
+                    && $this->frontendSettingIsActive('section', 'contact')),
+            404
+        );
+
         $messages = [
             'name.required'    => 'Nama wajib diisi.',
             'wa.required'      => 'Nomor WhatsApp wajib diisi.',

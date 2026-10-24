@@ -14,6 +14,8 @@ class PostController extends Controller
 
     public function index()
     {
+        $this->ensureFrontendPageIsActive('posts');
+
         $limit = 10;
 
         $search   = request('search');
@@ -236,6 +238,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        $this->ensureFrontendPageIsActive('posts');
+
         // record views
         views($post)->record();
 
@@ -279,6 +283,8 @@ class PostController extends Controller
 
     public function category(PostCategory $category)
     {
+        $this->ensureFrontendPageIsActive('posts');
+
         $categoryName = $category->title;
 
         $posts = $category->posts()
@@ -292,6 +298,8 @@ class PostController extends Controller
 
     public function author(User $author)
     {
+        $this->ensureFrontendPageIsActive('posts');
+
         $authorName = $author->name;
 
         $posts = $author->posts()
@@ -305,6 +313,8 @@ class PostController extends Controller
 
     public function tag(Tag $tag)
     {
+        $this->ensureFrontendPageIsActive('posts');
+
         $tagName = $tag->name;
 
         $posts = $tag->posts()

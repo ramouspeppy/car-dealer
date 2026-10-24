@@ -10,17 +10,23 @@ class Dropzone extends Component
     public $acceptedFiles;
     public $maxFileSize;
     public $existingFiles;
+    public $uploadUrl;
+    public $removeUrl;
 
     public function __construct(
         $name,
         $acceptedFiles = '.jpeg,.jpg,.png,.webp',
         $maxFileSize = 2,
-        $existingFiles = []
+        $existingFiles = [],
+        $uploadUrl = null,
+        $removeUrl = null
     ) {
         $this->name = $name;
         $this->acceptedFiles = $acceptedFiles;
         $this->maxFileSize = $maxFileSize;
         $this->existingFiles = $existingFiles;
+        $this->uploadUrl = $uploadUrl ?: route('backend.images.store');
+        $this->removeUrl = $removeUrl ?: route('backend.images.destroy');
     }
 
     public function render()

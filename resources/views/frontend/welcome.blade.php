@@ -1,426 +1,309 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <!-- Hero Section -->
-    <section id="hero" class="hero section">
+    @if (filter_var(config('settings.frontend_section_hero', '1'), FILTER_VALIDATE_BOOLEAN))
+        <!-- Hero Section -->
+        <section id="hero" class="hero section">
 
-        <div class="background-elements">
-            <div class="bg-circle circle-1"></div>
-            <div class="bg-circle circle-2"></div>
-        </div>
-        <div class="hero-content">
-            <div class="container">
-                <div class="row align-items-center">
-
-                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-                        <div class="hero-text">
-                            <h1 class="header-title">{{ $header->title }}<span class="accent-text"></span></h1>
-                            <p class="lead">
-                                <span class="typed" data-typed-items="{{ $header->sub_title }}"></span>
-                            </p>
-
-                            <p class="description">{!! $header->caption !!}</p>
-
-                            <div class="hero-actions">
-                                <a href="{{ route('testdrive.show') }}" class="btn btn-primary">TestDrive ?</a>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#consultationModal" class="btn btn-outline btn-consultation">
-                                    <i class="bi bi-chat-dots-fill"></i> Konsultasi Gratis
-                                </a>
-                            </div>
-
-                            <div class="social-links">
-                                <a target="_blank" href="{{ $profile->wa_url }}"><i class="bi bi-whatsapp"></i></a>
-                                <a target="_blank" href="{{ $profile->ig_url }}"><i class="bi bi-instagram"></i></a>
-                                <a target="_blank" href="{{ $profile->fb_url }}"><i class="bi bi-facebook"></i></a>
-                                <a target="_blank" href="{{ $profile->yt_url }}"><i class="bi bi-youtube"></i></a>
-                                <a target="_blank" href="{{ $profile->x_url }}"><i class="bi bi-twitter-x"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-                        <div class="hero-visual">
-                            <div class="profile-container">
-                                <div class="profile-background"></div>
-                                <img src="{{ $header->image_url }}" alt="Alexander Chen" class="profile-image">
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+            <div class="background-elements">
+                <div class="bg-circle circle-1"></div>
+                <div class="bg-circle circle-2"></div>
             </div>
-        </div>
-    </section><!-- /Hero Section -->
-    @push('css')
-        <style>
-            body.index-page {
-                --welcome-button-color: color-mix(in srgb, var(--accent-color), #12314f 26%);
-                --welcome-button-hover-color: color-mix(in srgb, var(--welcome-button-color), #000 10%);
-                --welcome-button-text-color: #fff;
-                --welcome-button-shadow-color: color-mix(in srgb, var(--welcome-button-color), transparent 78%);
-                --welcome-button-hover-shadow-color: color-mix(in srgb, var(--welcome-button-color), transparent 68%);
-            }
+            <div class="hero-content">
+                <div class="container">
+                    <div class="row align-items-center">
 
-            body.index-page[data-theme="dark"] {
-                --welcome-button-color: #ececec;
-                --welcome-button-hover-color: #d8d8d8;
-                --welcome-button-text-color: #1f1f1f;
-                --welcome-button-shadow-color: rgba(0, 0, 0, .24);
-                --welcome-button-hover-shadow-color: rgba(0, 0, 0, .36);
-            }
+                        <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                            <div class="hero-text">
+                                <h1 class="header-title">{{ $header->title }}<span class="accent-text"></span></h1>
+                                <p class="lead">
+                                    <span class="typed" data-typed-items="{{ $header->sub_title }}"></span>
+                                </p>
 
-            body.index-page #hero .hero-actions .btn.btn-primary,
-            body.index-page #about .cta-section .btn.btn-primary,
-            body.index-page #promo-list .promo-empty .btn-primary,
-            body.index-page #promoModal .promo-modal-cta,
-            body.index-page #call-to-action .btn.btn-primary,
-            body.index-page #contact .contact-form button[type="submit"] {
-                background: linear-gradient(135deg, var(--welcome-button-color), var(--welcome-button-hover-color));
-                border-color: var(--welcome-button-color);
-                border-radius: 50px;
-                color: var(--welcome-button-text-color);
-                font-weight: 700;
-                box-shadow: 0 8px 20px var(--welcome-button-shadow-color);
-                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
-            }
+                                <p class="description">{!! $header->caption !!}</p>
 
-            body.index-page #hero .hero-actions .btn.btn-primary:hover,
-            body.index-page #about .cta-section .btn.btn-primary:hover,
-            body.index-page #promo-list .promo-empty .btn-primary:hover,
-            body.index-page #promoModal .promo-modal-cta:hover,
-            body.index-page #call-to-action .btn.btn-primary:hover,
-            body.index-page #contact .contact-form button[type="submit"]:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 12px 26px var(--welcome-button-hover-shadow-color);
-            }
-
-            body.index-page #hero .hero-actions .btn.btn-outline,
-            body.index-page #about .cta-section .btn.btn-outline,
-            body.index-page #call-to-action .btn.btn-outline-primary {
-                border: 1.5px solid color-mix(in srgb, var(--welcome-button-color), transparent 30%);
-                border-radius: 50px;
-                color: var(--welcome-button-color);
-                font-weight: 700;
-                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease, border-color .25s ease;
-            }
-
-            body.index-page #hero .hero-actions .btn.btn-outline:hover,
-            body.index-page #about .cta-section .btn.btn-outline:hover,
-            body.index-page #call-to-action .btn.btn-outline-primary:hover {
-                border-color: var(--welcome-button-color);
-                box-shadow: 0 8px 20px var(--welcome-button-shadow-color);
-                transform: translateY(-3px);
-            }
-
-            body.index-page #hero .hero-actions .btn-consultation {
-                background-color: color-mix(in srgb, var(--welcome-button-color), transparent 91%);
-                border-color: color-mix(in srgb, var(--welcome-button-color), transparent 42%);
-                color: var(--welcome-button-color);
-                gap: 8px;
-                padding-inline: 22px;
-                box-shadow: 0 6px 16px var(--welcome-button-shadow-color);
-            }
-
-            body.index-page #hero .hero-actions .btn-consultation:hover {
-                background-color: color-mix(in srgb, var(--welcome-button-color), transparent 91%);
-                border-color: var(--welcome-button-color);
-                color: var(--welcome-button-color);
-                box-shadow: 0 10px 22px var(--welcome-button-shadow-color);
-            }
-
-            body.index-page #promo-list .promo-actions .btn-purchase,
-            body.index-page #gallery .btn-gallery {
-                background: linear-gradient(135deg, var(--welcome-button-color), var(--welcome-button-hover-color));
-                color: var(--welcome-button-text-color);
-                box-shadow: 0 8px 20px var(--welcome-button-shadow-color);
-                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
-            }
-
-            body.index-page #promo-list .promo-actions .btn-purchase:hover,
-            body.index-page #gallery .btn-gallery:hover {
-                color: var(--welcome-button-text-color);
-                transform: translateY(-3px);
-                box-shadow: 0 12px 26px var(--welcome-button-hover-shadow-color);
-            }
-
-            body.index-page #promo-list .promo-actions .btn-details {
-                border-color: color-mix(in srgb, var(--welcome-button-color), transparent 65%);
-                color: var(--heading-color);
-                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease, border-color .25s ease;
-            }
-
-            body.index-page #promo-list .promo-actions .btn-details:hover {
-                border-color: var(--welcome-button-color);
-                box-shadow: 0 6px 16px var(--welcome-button-shadow-color);
-                transform: translateY(-2px);
-            }
-
-            body.index-page #services .service-btn {
-                background: linear-gradient(135deg, var(--welcome-button-color), var(--welcome-button-hover-color));
-                border-radius: 50px;
-                color: var(--welcome-button-text-color);
-                font-weight: 700;
-                box-shadow: 0 8px 20px var(--welcome-button-shadow-color);
-                transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
-            }
-
-            body.index-page #services .service-btn:hover {
-                color: var(--welcome-button-text-color);
-                transform: translateY(-3px);
-                box-shadow: 0 12px 26px var(--welcome-button-hover-shadow-color);
-            }
-
-            body.index-page #hero .hero-actions .btn:focus-visible,
-            body.index-page #about .cta-section .btn:focus-visible,
-            body.index-page #promo-list .promo-actions button:focus-visible,
-            body.index-page #promo-list .promo-actions a:focus-visible,
-            body.index-page #promoModal .promo-modal-cta:focus-visible,
-            body.index-page #call-to-action .cta-buttons .btn:focus-visible,
-            body.index-page #gallery .btn-gallery:focus-visible,
-            body.index-page #services .service-btn:focus-visible,
-            body.index-page #contact .contact-form button[type="submit"]:focus-visible {
-                outline: 3px solid color-mix(in srgb, var(--welcome-button-color), transparent 35%);
-                outline-offset: 3px;
-            }
-
-            @media (prefers-reduced-motion: reduce) {
-                body.index-page #hero .hero-actions .btn,
-                body.index-page #about .cta-section .btn,
-                body.index-page #promo-list .promo-actions button,
-                body.index-page #promo-list .promo-actions a,
-                body.index-page #promoModal .promo-modal-cta,
-                body.index-page #call-to-action .cta-buttons .btn,
-                body.index-page #gallery .btn-gallery,
-                body.index-page #services .service-btn,
-                body.index-page #contact .contact-form button[type="submit"] {
-                    transition: none;
-                }
-            }
-        </style>
-    @endpush
-
-
-    <section id="about" class="about section">
-
-        <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-
-            <div class="row">
-                <div class="col-lg-5 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-image">
-                                <img src="{{ $profile->image_url }}" alt="{{ $profile->name }}" class="img-fluid">
-                            </div>
-                            <div class="profile-badge">
-                                <i class="bi bi-check-circle-fill"></i>
-                            </div>
-                        </div>
-
-                        <div class="profile-content">
-                            <h3>{{ $profile->name }}</h3>
-                            <p class="profession">{{ $profile->job_title }}</p>
-
-                            <div class="contact-links">
-                                <a href="{{ $profile->phone_url }}" class="contact-item">
-                                    <i class="bi bi-telephone"></i>
-                                    {{ $profile->phone }}
-                                </a>
-                                <a href="{{ $profile->wa_url }}" class="contact-item">
-                                    <i class="bi bi-whatsapp"></i>
-                                    {{ $profile->wa }}
-                                </a>
-                                <a href="mailto:{{ $profile->email }}" class="contact-item">
-                                    <i class="bi bi-envelope"></i>
-                                    {{ $profile->email }}
-                                </a>
-                                <a href="{{ $profile->address_url }}" class="contact-item">
-                                    <i class="bi bi-geo-alt"></i>
-                                    {{ $profile->address }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-7 aos-init aos-animate" data-aos="fade-left" data-aos-delay="300">
-                    <div class="about-content">
-                        <div class="section-header">
-                            <span class="badge-text">Get to Know Me</span>
-                            <h2>{{ $profile->title }}</h2>
-                        </div>
-
-                        <div class="description">
-                            {!! $profile->bio !!}
-                        </div>
-
-                        <div class="stats-grid">
-
-                            <div class="stat-item">
-                                <span class="stat-number">
-                                    <span class="purecounter" data-purecounter-start="0" data-purecounter-end="{{ $profile->project_number }}" data-purecounter-duration="1">
-                                    </span>+</span>
-                                <div class="stat-label">Delivery Order</div>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">
-                                    <span class="purecounter" data-purecounter-start="0" data-purecounter-end="{{ $profile->client_number }}" data-purecounter-duration="1"></span>%</span>
-                                <div class="stat-label">Kepuasan Pelanggan</div>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">
-                                    <span class="purecounter" data-purecounter-start="0" data-purecounter-end="{{ $profile->experience_number }}" data-purecounter-duration="1"></span>+</span>
-                                <div class="stat-label">Tahun Pengalaman</div>
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="cta-section">
-                            <a href="{{ route('testdrive.show') }}" class="btn btn-primary">
-                                <i class="bi bi-car-front"></i>
-                                TestDrive ?
-                            </a>
-                            <a href="{{ $profile->wa_url }}" target="_blank" class="btn btn-outline">
-                                <i class="bi bi-whatsapp"></i>
-                                Yuk Ngobrol ?
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-    <section id="promo-list" class="promo-list section">
-        <div class="container section-title" data-aos="fade-up" data-builder="section-title">
-            <h2>Promo Spesial {{ config('settings.site_brand') }} Bulan Ini</h2>
-            <p>Dapatkan penawaran terbaik, cicilan ringan, dan bonus menarik khusus untuk Anda</p>
-        </div>
-
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-            @if ($promoCards->isNotEmpty())
-                <div class="row g-4">
-                    @foreach ($promoCards as $card)
-                        <div class="{{ $card->col_class }}" data-aos="fade-up" data-aos-delay="{{ $card->aos_delay }}">
-                            <article class="{{ $card->card_class }}">
-                                <div class="promo-image">
-                                    <img src="{{ $card->image_url }}" alt="{{ $card->title }}" class="img-fluid" loading="lazy">
-                                    <div class="promo-image-overlay"></div>
-
-                                    <div class="promo-category {{ $card->badge_class }}">
-                                        <i class="bi {{ $card->badge_icon }}"></i>
-                                        {{ $card->badge_label }}
-                                    </div>
-
-                                    @if ($card->is_featured)
-                                        <span class="promo-featured-tag"><i class="bi bi-stars"></i> Promo Utama</span>
+                                <div class="hero-actions">
+                                    @if (filter_var(config('settings.frontend_page_testdrive', '1'), FILTER_VALIDATE_BOOLEAN))
+                                        <a href="{{ route('testdrive.show') }}" class="btn btn-primary">TestDrive ?</a>
                                     @endif
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#consultationModal" class="btn btn-outline btn-consultation">
+                                        <i class="bi bi-chat-dots-fill"></i> Konsultasi Gratis
+                                    </a>
                                 </div>
 
-                                <div class="promo-info">
-                                    <div class="promo-info-top">
-                                        <h3>{{ $card->title }}</h3>
-                                        <div class="promo-meta">
-                                            <span><i class="bi bi-calendar3"></i> Berlaku sampai {{ $card->effective_label }}</span>
-                                        </div>
-                                        <p>{{ $card->excerpt }}</p>
+                                @if (filled($profile->wa) || filled($profile->ig_url) || filled($profile->fb_url) || filled($profile->yt_url) || filled($profile->x_url))
+                                    <div class="social-links">
+                                        @if (filled($profile->wa))
+                                            <a target="_blank" href="{{ $profile->wa_url }}"><i class="bi bi-whatsapp"></i></a>
+                                        @endif
+                                        @if (filled($profile->ig_url))
+                                            <a target="_blank" href="{{ $profile->ig_url }}"><i class="bi bi-instagram"></i></a>
+                                        @endif
+                                        @if (filled($profile->fb_url))
+                                            <a target="_blank" href="{{ $profile->fb_url }}"><i class="bi bi-facebook"></i></a>
+                                        @endif
+                                        @if (filled($profile->yt_url))
+                                            <a target="_blank" href="{{ $profile->yt_url }}"><i class="bi bi-youtube"></i></a>
+                                        @endif
+                                        @if (filled($profile->x_url))
+                                            <a target="_blank" href="{{ $profile->x_url }}"><i class="bi bi-twitter-x"></i></a>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
 
-                                        @if ($card->show_progress)
-                                            <div class="promo-deadline" aria-hidden="true">
-                                                <div class="promo-deadline-bar">
-                                                    <span style="width: {{ $card->progress }}%"></span>
-                                                </div>
-                                                <small>{{ $card->deadline_text }}</small>
-                                            </div>
+                        <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                            <div class="hero-visual">
+                                <div class="profile-container">
+                                    <div class="profile-background"></div>
+                                    <img src="{{ $header->image_url }}" alt="Alexander Chen" class="profile-image">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section><!-- /Hero Section -->
+    @endif
+
+
+
+    @if (filter_var(config('settings.frontend_section_about', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="about" class="about section">
+
+            <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="row">
+                    <div class="col-lg-5 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <div class="profile-image">
+                                    <img src="{{ $profile->image_url }}" alt="{{ $profile->name }}" class="img-fluid">
+                                </div>
+                                <div class="profile-badge">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </div>
+                            </div>
+
+                            <div class="profile-content">
+                                <h3>{{ $profile->name }}</h3>
+                                <p class="profession">{{ $profile->job_title }}</p>
+
+                                <div class="contact-links">
+                                    <a href="{{ $profile->phone_url }}" class="contact-item">
+                                        <i class="bi bi-telephone"></i>
+                                        {{ $profile->phone }}
+                                    </a>
+                                    <a href="{{ $profile->wa_url }}" class="contact-item">
+                                        <i class="bi bi-whatsapp"></i>
+                                        {{ $profile->wa }}
+                                    </a>
+                                    <a href="mailto:{{ $profile->email }}" class="contact-item">
+                                        <i class="bi bi-envelope"></i>
+                                        {{ $profile->email }}
+                                    </a>
+                                    <a href="{{ $profile->address_url }}" class="contact-item">
+                                        <i class="bi bi-geo-alt"></i>
+                                        {{ $profile->address }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 aos-init aos-animate" data-aos="fade-left" data-aos-delay="300">
+                        <div class="about-content">
+                            <div class="section-header">
+                                <span class="badge-text">Get to Know Me</span>
+                                <h2>{{ $profile->title }}</h2>
+                            </div>
+
+                            <div class="description">
+                                {!! $profile->bio !!}
+                            </div>
+
+                            <div class="stats-grid">
+
+                                <div class="stat-item">
+                                    <span class="stat-number">
+                                        <span class="purecounter" data-purecounter-start="0" data-purecounter-end="{{ $profile->project_number }}" data-purecounter-duration="1">
+                                        </span>+</span>
+                                    <div class="stat-label">Delivery Order</div>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">
+                                        <span class="purecounter" data-purecounter-start="0" data-purecounter-end="{{ $profile->client_number }}" data-purecounter-duration="1"></span>%</span>
+                                    <div class="stat-label">Kepuasan Pelanggan</div>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">
+                                        <span class="purecounter" data-purecounter-start="0" data-purecounter-end="{{ $profile->experience_number }}" data-purecounter-duration="1"></span>+</span>
+                                    <div class="stat-label">Tahun Pengalaman</div>
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="cta-section">
+                                @if (filter_var(config('settings.frontend_page_testdrive', '1'), FILTER_VALIDATE_BOOLEAN))
+                                    <a href="{{ route('testdrive.show') }}" class="btn btn-primary">
+                                        <i class="bi bi-car-front"></i>
+                                        TestDrive ?
+                                    </a>
+                                @endif
+                                <a href="{{ $profile->wa_url }}" target="_blank" class="btn btn-outline">
+                                    <i class="bi bi-whatsapp"></i>
+                                    Yuk Ngobrol ?
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    @endif
+    @if (filter_var(config('settings.frontend_section_promo_list', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="promo-list" class="promo-list section">
+            <div class="container section-title" data-aos="fade-up" data-builder="section-title">
+                <h2>Promo Spesial {{ config('settings.site_brand') }} Bulan Ini</h2>
+                <p>Dapatkan penawaran terbaik, cicilan ringan, dan bonus menarik khusus untuk Anda</p>
+            </div>
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                @if ($promoCards->isNotEmpty())
+                    <div class="row g-4">
+                        @foreach ($promoCards as $card)
+                            <div class="{{ $card->col_class }}" data-aos="fade-up" data-aos-delay="{{ $card->aos_delay }}">
+                                <article class="{{ $card->card_class }}">
+                                    <div class="promo-image">
+                                        <img src="{{ $card->image_url }}" alt="{{ $card->title }}" class="img-fluid" loading="lazy">
+                                        <div class="promo-image-overlay"></div>
+
+                                        <div class="promo-category {{ $card->badge_class }}">
+                                            <i class="bi {{ $card->badge_icon }}"></i>
+                                            {{ $card->badge_label }}
+                                        </div>
+
+                                        @if ($card->is_featured)
+                                            <span class="promo-featured-tag"><i class="bi bi-stars"></i> Promo Utama</span>
                                         @endif
                                     </div>
 
-                                    <div class="promo-actions">
-                                        <button type="button" class="btn-details" data-bs-toggle="modal" data-bs-target="#promoModal" data-title="{{ $card->title }}" data-image="{{ $card->image_url }}" data-date="{{ $card->effective_label }}" data-desc="{{ $card->description }}" data-wa="{{ $card->wa_link }}">
-                                            Detail Promo
-                                        </button>
-                                        <a href="{{ $card->wa_link }}" target="_blank" rel="noopener" class="btn-purchase">
-                                            <i class="bi bi-whatsapp"></i> Ambil Promo
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="promo-empty" data-aos="fade-up">
-                    <div class="promo-empty-icon"><i class="bi bi-tags"></i></div>
-                    <h3>Belum ada promo aktif</h3>
-                    <p>Pantau terus halaman ini — penawaran terbaik {{ config('settings.site_brand') }} akan segera hadir.</p>
-                    <a href="{{ route('testdrive.show') }}" class="btn btn-primary">Jadwalkan Test Drive</a>
-                </div>
-            @endif
-        </div>
-    </section>
+                                    <div class="promo-info">
+                                        <div class="promo-info-top">
+                                            <h3>{{ $card->title }}</h3>
+                                            <div class="promo-meta">
+                                                <span><i class="bi bi-calendar3"></i> Berlaku sampai {{ $card->effective_label }}</span>
+                                            </div>
+                                            <p>{{ $card->excerpt }}</p>
 
-    {{-- Modal Detail Promo (satu modal untuk semua kartu, diisi lewat JS) --}}
-    <div class="modal fade" id="promoModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content promo-modal-content">
-                <button type="button" class="btn-close promo-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="row g-0">
-                    <div class="col-md-5">
-                        <div class="promo-modal-image">
-                            <img id="promoModalImage" src="" alt="">
-                        </div>
+                                            @if ($card->show_progress)
+                                                <div class="promo-deadline" aria-hidden="true">
+                                                    <div class="promo-deadline-bar">
+                                                        <span style="width: {{ $card->progress }}%"></span>
+                                                    </div>
+                                                    <small>{{ $card->deadline_text }}</small>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="promo-actions">
+                                            <button type="button" class="btn-details" data-bs-toggle="modal" data-bs-target="#promoModal" data-title="{{ $card->title }}" data-image="{{ $card->image_url }}" data-date="{{ $card->effective_label }}" data-desc="{{ $card->description }}" data-wa="{{ $card->wa_link }}">
+                                                Detail Promo
+                                            </button>
+                                            <a href="{{ $card->wa_link }}" target="_blank" rel="noopener" class="btn-purchase">
+                                                <i class="bi bi-whatsapp"></i> Ambil Promo
+                                            </a>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="col-md-7">
-                        <div class="promo-modal-body">
-                            <span class="promo-modal-eyebrow"><i class="bi bi-calendar3"></i> Berlaku sampai <span id="promoModalDate"></span></span>
-                            <h5 class="modal-title" id="promoModalTitle">Detail Promo</h5>
-                            <div id="promoModalDesc" class="promo-modal-desc"></div>
-                            <a href="#" id="promoModalWa" target="_blank" rel="noopener" class="btn btn-primary promo-modal-cta">
-                                <i class="bi bi-whatsapp"></i> Ambil Promo Ini
-                            </a>
+                @else
+                    <div class="promo-empty" data-aos="fade-up">
+                        <div class="promo-empty-icon"><i class="bi bi-tags"></i></div>
+                        <h3>Belum ada promo aktif</h3>
+                        <p>Pantau terus halaman ini — penawaran terbaik {{ config('settings.site_brand') }} akan segera hadir.</p>
+                        @if (filter_var(config('settings.frontend_page_testdrive', '1'), FILTER_VALIDATE_BOOLEAN))
+                            <a href="{{ route('testdrive.show') }}" class="btn btn-primary">Jadwalkan Test Drive</a>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        {{-- Modal Detail Promo (satu modal untuk semua kartu, diisi lewat JS) --}}
+        <div class="modal fade" id="promoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content promo-modal-content">
+                    <button type="button" class="btn-close promo-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="row g-0">
+                        <div class="col-md-5">
+                            <div class="promo-modal-image">
+                                <img id="promoModalImage" src="" alt="">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="promo-modal-body">
+                                <span class="promo-modal-eyebrow"><i class="bi bi-calendar3"></i> Berlaku sampai <span id="promoModalDate"></span></span>
+                                <h5 class="modal-title" id="promoModalTitle">Detail Promo</h5>
+                                <div id="promoModalDesc" class="promo-modal-desc"></div>
+                                <a href="#" id="promoModalWa" target="_blank" rel="noopener" class="btn btn-primary promo-modal-cta">
+                                    <i class="bi bi-whatsapp"></i> Ambil Promo Ini
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        (function() {
-            var promoModal = document.getElementById('promoModal');
-            if (!promoModal) return;
-            promoModal.addEventListener('show.bs.modal', function(event) {
-                var btn = event.relatedTarget;
-                if (!btn) return;
-                document.getElementById('promoModalTitle').textContent = btn.getAttribute('data-title') || '';
-                document.getElementById('promoModalImage').src = btn.getAttribute('data-image') || '';
-                document.getElementById('promoModalImage').alt = btn.getAttribute('data-title') || '';
-                document.getElementById('promoModalDate').textContent = btn.getAttribute('data-date') || '-';
-                document.getElementById('promoModalDesc').innerHTML = btn.getAttribute('data-desc') || '';
-                document.getElementById('promoModalWa').href = btn.getAttribute('data-wa') || '#';
-            });
-        })();
-    </script>
+        <script>
+            (function() {
+                var promoModal = document.getElementById('promoModal');
+                if (!promoModal) return;
+                promoModal.addEventListener('show.bs.modal', function(event) {
+                    var btn = event.relatedTarget;
+                    if (!btn) return;
+                    document.getElementById('promoModalTitle').textContent = btn.getAttribute('data-title') || '';
+                    document.getElementById('promoModalImage').src = btn.getAttribute('data-image') || '';
+                    document.getElementById('promoModalImage').alt = btn.getAttribute('data-title') || '';
+                    document.getElementById('promoModalDate').textContent = btn.getAttribute('data-date') || '-';
+                    document.getElementById('promoModalDesc').innerHTML = btn.getAttribute('data-desc') || '';
+                    document.getElementById('promoModalWa').href = btn.getAttribute('data-wa') || '#';
+                });
+            })();
+        </script>
+    @endif
 
-    <section id="product-cards" class="product-list-cards section">
-        <div class="container section-title" data-aos="fade-up" data-builder="section-title">
-            <h2>Drive Your Future with {{ config('settings.site_brand') }}</h2>
-            <p>Rasakan kenyamanan, performa, dan kebanggaan memiliki mobil {{ config('settings.site_brand') }} terbaru</p>
-        </div>
-        <slot type="section-title"></slot>
+    @if (filter_var(config('settings.frontend_section_product_cards', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="product-cards" class="product-list-cards section">
+            <div class="container section-title" data-aos="fade-up" data-builder="section-title">
+                <h2>Drive Your Future with {{ config('settings.site_brand') }}</h2>
+                <p>Rasakan kenyamanan, performa, dan kebanggaan memiliki mobil {{ config('settings.site_brand') }} terbaru</p>
+            </div>
+            <slot type="section-title"></slot>
 
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-            <div class="row g-4">
-                @foreach ($products as $product)
-                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="product-list-card bg-white rounded shadow-sm h-100">
-                            <div class="product-list-content">
-                                <a href="{{ route('product.detail', $product->slug) }}" class="text-decoration-none">
+                <div class="row g-4">
+                    @foreach ($products as $product)
+                        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                            <div class="product-list-card bg-white rounded shadow-sm h-100">
+                                <div class="product-list-content">
+                                    @if (filter_var(config('settings.frontend_page_products', '1'), FILTER_VALIDATE_BOOLEAN))
+                                        <a href="{{ route('product.detail', $product->slug) }}" class="text-decoration-none">
+                                        @else
+                                            <div class="text-decoration-none">
+                                    @endif
                                     <h2 class="product-list-title">{{ $product->name }}</h2>
                                     @if ($product->tagline)
-                                        <p class="product-list-subtitle">{{ Str::limit($product->tagline, 60) }}</p>
+                                        <div class="product-list-subtitle">{!! $product->tagline !!}</div>
                                     @endif
                                     <h1 class="product-list-hero text-uppercase">{{ $product->hero_name }}</h1>
                                     <div class="product-list-image">
@@ -435,142 +318,154 @@
                                             <span class="price fw-bold">{{ $product->min_price }}</span>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <section id="call-to-action" class="call-to-action section">
-
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-            <div class="row justify-content-center position-relative">
-                <div class="col-lg-10 text-center">
-                    <!-- Scribble decorations -->
-                    <div class="scribble scribble-1" data-aos="fade-down" data-aos-delay="200"></div>
-                    <div class="scribble scribble-2" data-aos="fade-up" data-aos-delay="300"></div>
-                    <div class="scribble scribble-3" data-aos="fade-right" data-aos-delay="400"></div>
-
-                    <h2 class="display-4 mb-4 builder-editable-editing">Siap Bantu Anda Wujudkan Mobil Impian</h2>
-                    <p class="lead mb-5">Hubungi saya untuk konsultasi gratis seputar mobil {{ config('settings.site_brand') }} terbaru. Dapatkan
-                        informasi promo, cicilan ringan, dan proses cepat tanpa ribet..</p>
-
-                    <div class="cta-buttons" data-aos="zoom-in" data-aos-delay="500">
-                        <a href="#" class="btn btn-primary btn-lg me-3">Hubungi Sakarang !!</a>
-                        <a href="#" class="btn btn-outline-primary btn-lg">Cek Promo Lainnya</a>
-                    </div>
+                                    @if (filter_var(config('settings.frontend_page_products', '1'), FILTER_VALIDATE_BOOLEAN))
+                                        </a>
+                                    @else
+                                </div>
+                    @endif
                 </div>
             </div>
-
-        </div>
-
+            </div>
+    @endforeach
+    </div>
+    </div>
     </section>
+    @endif
+    @if (filter_var(config('settings.frontend_section_call_to_action', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="call-to-action" class="call-to-action section">
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="row justify-content-center position-relative">
+                    <div class="col-lg-10 text-center">
+                        <!-- Scribble decorations -->
+                        <div class="scribble scribble-1" data-aos="fade-down" data-aos-delay="200"></div>
+                        <div class="scribble scribble-2" data-aos="fade-up" data-aos-delay="300"></div>
+                        <div class="scribble scribble-3" data-aos="fade-right" data-aos-delay="400"></div>
+
+                        <h2 class="display-4 mb-4 builder-editable-editing">Siap Bantu Anda Wujudkan Mobil Impian</h2>
+                        <p class="lead mb-5">Hubungi saya untuk konsultasi gratis seputar mobil {{ config('settings.site_brand') }} terbaru. Dapatkan
+                            informasi promo, cicilan ringan, dan proses cepat tanpa ribet..</p>
+
+                        <div class="cta-buttons" data-aos="zoom-in" data-aos-delay="500">
+                            <a href="#" class="btn btn-primary btn-lg me-3">Hubungi Sakarang !!</a>
+                            <a href="#" class="btn btn-outline-primary btn-lg">Cek Promo Lainnya</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    @endif
 
     <!-- Services Section -->
-    <section id="services" class="services section">
+    @if (filter_var(config('settings.frontend_section_services', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="services" class="services section">
 
-        <!-- Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Kenapa Harus Memilih Saya Sebagai Sales {{ config('settings.site_brand') }} Anda?</h2>
-            <p>Saya percaya membeli mobil bukan hanya soal transaksi, tapi tentang kepercayaan, kenyamanan, dan pengalaman
-                terbaik untuk Anda.</p>
-        </div><!-- End Section Title -->
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Kenapa Harus Memilih Saya Sebagai Sales {{ config('settings.site_brand') }} Anda?</h2>
+                <p>Saya percaya membeli mobil bukan hanya soal transaksi, tapi tentang kepercayaan, kenyamanan, dan pengalaman
+                    terbaik untuk Anda.</p>
+            </div><!-- End Section Title -->
 
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-            <div class="service-header">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="service-intro">
-                            <h2 class="service-heading">
-                                <div>Solusi Lengkap untuk Beli Mobil {{ config('settings.site_brand') }}</div>
-                            </h2>
+                <div class="service-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="service-intro">
+                                <h2 class="service-heading">
+                                    <div>Solusi Lengkap untuk Beli Mobil {{ config('settings.site_brand') }}</div>
+                                </h2>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                        <div class="service-summary">
-                            <p>
-                                Saya selalu berkomitmen memberikan layanan menyeluruh untuk memastikan Anda mendapatkan
-                                mobil {{ config('settings.site_brand') }} impian dengan pengalaman pembelian yang mudah, cepat, dan menyenangkan.
-                            </p>
-                            <a href="{{ route('product.index') }}" class="service-btn">
-                                View All Products
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="service-summary">
+                                <p>
+                                    Saya selalu berkomitmen memberikan layanan menyeluruh untuk memastikan Anda mendapatkan
+                                    mobil {{ config('settings.site_brand') }} impian dengan pengalaman pembelian yang mudah, cepat, dan menyenangkan.
+                                </p>
+                                @if (filter_var(config('settings.frontend_page_products', '1'), FILTER_VALIDATE_BOOLEAN))
+                                    <a href="{{ route('product.index') }}" class="service-btn">
+                                        View All Products
+                                        <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row justify-content-center">
-                @foreach ($services as $service)
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-card position-relative z-1">
-                            <div class="service-icon">
-                                <i class="bi {{ $service->icon }}"></i>
-                            </div>
-                            <span class="card-action d-flex align-items-center justify-content-center rounded-circle">
-                                <i class="bi bi-check-lg"></i>
-                            </span>
-                            <h3>
-                                <span>
-                                    {{ $service->title }}
-                                </span>
-                            </h3>
-                            <p>{{ $service->desc }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section><!-- /Services Section -->
-
-    <section id="testimonials-2" class="testimonials-2 section">
-
-        <div class="container section-title" data-aos="fade-up" data-builder="section-title">
-            <h2>Cerita dari Hati Pelanggan</h2>
-            <p>“Setiap mobil baru bukan hanya kendaraan, tapi awal perjalanan
-                penuh cerita bersama keluarga tercinta.”</p>
-        </div>
-        <slot type="section-title"></slot>
-
-        <div class="container" data-aos="fade-up" data-aos-delay="100" data-no-editable="true">
-            <div class="swiper init-swiper">
-                <div class="swiper-wrapper">
-                    @foreach ($testimonies as $testimony)
-                        <div class="swiper-slide">
-                            <div class="testimonial-item">
-                                <div class="row gy-4 justify-content-center">
-                                    <div class="col-lg-6">
-                                        <div class="testimonial-content">
-                                            <p>
-                                                <i class="bi bi-quote quote-icon-left"></i>
-                                                <span>{{ $testimony->message }}</span>
-                                                <i class="bi bi-quote quote-icon-right"></i>
-                                            </p>
-                                            <h3>{{ $testimony->name }}</h3>
-                                            <h4>{{ $testimony->job }}</h4>
-                                            <div class="stars" data-value="{{ $testimony->rating }}"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 text-center">
-                                        <img src="{{ $testimony->image_url }}" class="img-fluid w-50 w-md-50 w-lg-100 testimonial-img" alt="{{ $testimony->name }}">
-                                    </div>
+                <div class="row justify-content-center">
+                    @foreach ($services as $service)
+                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="service-card position-relative z-1">
+                                <div class="service-icon">
+                                    <i class="bi {{ $service->icon }}"></i>
                                 </div>
+                                <span class="card-action d-flex align-items-center justify-content-center rounded-circle">
+                                    <i class="bi bi-check-lg"></i>
+                                </span>
+                                <h3>
+                                    <span>
+                                        {{ $service->title }}
+                                    </span>
+                                </h3>
+                                <p>{{ $service->desc }}</p>
                             </div>
                         </div>
                     @endforeach
-
                 </div>
+            </div>
+        </section><!-- /Services Section -->
+    @endif
 
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
+    @if (filter_var(config('settings.frontend_section_testimonials', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="testimonials-2" class="testimonials-2 section">
 
-                <!-- Config -->
-                <script type="application/json" class="swiper-config">
+            <div class="container section-title" data-aos="fade-up" data-builder="section-title">
+                <h2>Cerita dari Hati Pelanggan</h2>
+                <p>“Setiap mobil baru bukan hanya kendaraan, tapi awal perjalanan
+                    penuh cerita bersama keluarga tercinta.”</p>
+            </div>
+            <slot type="section-title"></slot>
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100" data-no-editable="true">
+                <div class="swiper init-swiper">
+                    <div class="swiper-wrapper">
+                        @foreach ($testimonies as $testimony)
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="row gy-4 justify-content-center">
+                                        <div class="col-lg-6">
+                                            <div class="testimonial-content">
+                                                <p>
+                                                    <i class="bi bi-quote quote-icon-left"></i>
+                                                    <span>{{ $testimony->message }}</span>
+                                                    <i class="bi bi-quote quote-icon-right"></i>
+                                                </p>
+                                                <h3>{{ $testimony->name }}</h3>
+                                                <h4>{{ $testimony->job }}</h4>
+                                                <div class="stars" data-value="{{ $testimony->rating }}"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 text-center">
+                                            <img src="{{ $testimony->image_url }}" class="img-fluid w-50 w-md-50 w-lg-100 testimonial-img" alt="{{ $testimony->name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
+
+                    <!-- Config -->
+                    <script type="application/json" class="swiper-config">
                 {
                 "loop": true,
                 "speed": 600,
@@ -584,73 +479,79 @@
                   "type": "bullets",
                   "clickable": true
                 }
-                
+
               }
             </script>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section id="portfolio" class="portfolio section">
-        <!-- Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Awal Perjalanan Baru</h2>
-            <p>“Mobil baru bukan sekadar kendaraan, tapi langkah pertama menuju cerita hidup yang lebih seru.”</p>
-        </div><!-- End Section Title -->
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-                <div class="row">
-                    <div class="col-lg-3 filter-sidebar">
-                        <div class="filters-wrapper" data-aos="fade-right" data-aos-delay="150">
-                            <ul class="portfolio-filters isotope-filters">
-                                <li data-filter="*" class="filter-active">All Photo Delivery</li>
-                                @foreach ($deliveriesByProduct as $product)
-                                    <li data-filter=".delivery-{{ $product->slug }}"> {{ $product->name }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="row gy-4 portfolio-container isotope-container">
-                            @foreach ($deliveries as $delivery)
-                                <div class="col-6 col-lg-4 col-md-4 portfolio-item isotope-item delivery-{{ $delivery->product->slug }}">
-                                    <div class="portfolio-wrap">
-                                        <img src="{{ $delivery->image_thumb_url }}" class="img-fluid" alt="">
-                                        <div class="portfolio-info">
-                                            <div class="content">
-                                                <span class="category">{{ $delivery->product->name }}</span>
-                                                {{-- <h4>Capturing Moments</h4> --}}
-                                                <div class="portfolio-links">
-                                                    <a href="{{ $delivery->image_url }}" class="glightbox"><i class="bi bi-arrows-fullscreen"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- End Portfolio Item -->
-                            @endforeach
-                        </div><!-- End Portfolio Container -->
-                    </div>
                 </div>
 
             </div>
 
-        </div>
+        </section>
+    @endif
 
-    </section><!-- /Portfolio Section -->
-    <section id="gallery" class="gallery section">
+    @if (filter_var(config('settings.frontend_section_portfolio', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="portfolio" class="portfolio section">
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Awal Perjalanan Baru</h2>
+                <p>“Mobil baru bukan sekadar kendaraan, tapi langkah pertama menuju cerita hidup yang lebih seru.”</p>
+            </div><!-- End Section Title -->
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+                    <div class="row">
+                        <div class="col-lg-3 filter-sidebar">
+                            <div class="filters-wrapper" data-aos="fade-right" data-aos-delay="150">
+                                <ul class="portfolio-filters isotope-filters">
+                                    <li data-filter="*" class="filter-active">All Photo Delivery</li>
+                                    @foreach ($deliveriesByProduct as $product)
+                                        <li data-filter=".delivery-{{ $product->slug }}">
+                                            {{ $product->name }} <span class="photo-delivery-count">({{ $product->photo_count }} foto)</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="row gy-4 portfolio-container isotope-container">
+                                @foreach ($deliveries as $delivery)
+                                    <div class="col-6 col-lg-4 col-md-4 portfolio-item isotope-item delivery-{{ $delivery->product->slug }}">
+                                        <div class="portfolio-wrap">
+                                            <img src="{{ $delivery->image_thumb_url }}" class="img-fluid" alt="">
+                                            <div class="portfolio-info">
+                                                <div class="content">
+                                                    <span class="category">{{ $delivery->product->name }}</span>
+                                                    {{-- <h4>Capturing Moments</h4> --}}
+                                                    <div class="portfolio-links">
+                                                        <a href="{{ $delivery->image_url }}" class="glightbox"><i class="bi bi-arrows-fullscreen"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- End Portfolio Item -->
+                                @endforeach
+                            </div><!-- End Portfolio Container -->
+                        </div>
+                    </div>
 
-        <div class="container section-title">
-            <h2>Kisah di Balik Roda</h2>
-            <p>Potret pengalaman nyata bersama mobil impian pelanggan</p>
-        </div>
-        <slot type="section-title"></slot>
+                </div>
 
-        <div class="container">
+            </div>
 
-            <div class="gallery-carousel swiper init-swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
-                <script type="application/json" class="swiper-config">
+        </section><!-- /Portfolio Section -->
+    @endif
+    @if (filter_var(config('settings.frontend_section_gallery', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="gallery" class="gallery section">
+
+            <div class="container section-title">
+                <h2>Kisah di Balik Roda</h2>
+                <p>Potret pengalaman nyata bersama mobil impian pelanggan</p>
+            </div>
+            <slot type="section-title"></slot>
+
+            <div class="container">
+
+                <div class="gallery-carousel swiper init-swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
+                    <script type="application/json" class="swiper-config">
                 {
             "loop": true,
             "speed": 600,
@@ -680,188 +581,193 @@
             }
           }
             </script>
-                <div class="swiper-wrapper">
-                    @foreach ($galleries as $gallery)
-                        <div class="swiper-slide">
-                            <div class="gallery-item">
-                                <img src="{{ $gallery->getUrl() }}" alt="Grand Ballroom Setup" class="img-fluid" loading="lazy">
-                                <a href="{{ $gallery->getUrl() }}" class="gallery-overlay glightbox">
-                                    <i class="bi bi-arrows-fullscreen"></i>
-                                </a>
+                    <div class="swiper-wrapper">
+                        @foreach ($galleries as $gallery)
+                            <div class="swiper-slide">
+                                <div class="gallery-item">
+                                    <img src="{{ $gallery->getUrl() }}" alt="Grand Ballroom Setup" class="img-fluid" loading="lazy">
+                                    <a href="{{ $gallery->getUrl() }}" class="gallery-overlay glightbox">
+                                        <i class="bi bi-arrows-fullscreen"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
 
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-5">
+                    @if (filter_var(config('settings.frontend_page_gallery', '1'), FILTER_VALIDATE_BOOLEAN))
+                        <a href="{{ route('gallery.index') }}" class="btn btn-gallery">
+                            <i class="bi bi-collection me-2"></i>Discover Our Full Gallery
+                        </a>
+                    @endif
                 </div>
 
             </div>
 
-            <div class="text-center mt-5">
-                <a href="{{ route('gallery.index') }}" class="btn btn-gallery">
-                    <i class="bi bi-collection me-2"></i>Discover Our Full Gallery
-                </a>
-            </div>
-
-        </div>
-
-    </section>
+        </section>
+    @endif
     <!-- Contact Section -->
-    <section id="contact" class="contact section">
+    @if (filter_var(config('settings.frontend_section_contact', '1'), FILTER_VALIDATE_BOOLEAN))
+        <section id="contact" class="contact section">
 
-        <!-- Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Saatnya Punya Mobil Baru!</h2>
-            <p>"Jangan tunggu besok. Hubungi saya hari ini dan dapatkan penawaran terbaik {{ config('settings.site_brand') }} khusus untuk Anda."</p>
-        </div><!-- End Section Title -->
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Saatnya Punya Mobil Baru!</h2>
+                <p>"Jangan tunggu besok. Hubungi saya hari ini dan dapatkan penawaran terbaik {{ config('settings.site_brand') }} khusus untuk Anda."</p>
+            </div><!-- End Section Title -->
 
-        <div class="container">
+            <div class="container">
 
-            <div class="row g-4 g-lg-5">
-                <div class="col-lg-5">
-                    <div class="info-box">
-                        <h3>Contact Info</h3>
-                        <p>“Yuk, hubungi saya untuk info promo, konsultasi, atau test drive. Siap bantu cari mobil {{ config('settings.site_brand') }}
-                            yang cocok buat Anda!”</p>
+                <div class="row g-4 g-lg-5">
+                    <div class="col-lg-5">
+                        <div class="info-box">
+                            <h3>Contact Info</h3>
+                            <p>“Yuk, hubungi saya untuk info promo, konsultasi, atau test drive. Siap bantu cari mobil {{ config('settings.site_brand') }}
+                                yang cocok buat Anda!”</p>
 
-                        <div class="info-item">
-                            <div class="icon-box">
-                                <i class="bi bi-geo-alt"></i>
+                            <div class="info-item">
+                                <div class="icon-box">
+                                    <i class="bi bi-geo-alt"></i>
+                                </div>
+                                <div class="content">
+                                    <h4>Alamat Dealer Kami</h4>
+                                    <p>{{ $profile->address }}</p>
+                                </div>
                             </div>
-                            <div class="content">
-                                <h4>Alamat Dealer Kami</h4>
-                                <p>{{ $profile->address }}</p>
-                            </div>
-                        </div>
 
-                        <div class="info-item">
-                            <div class="icon-box">
-                                <i class="bi bi-whatsapp"></i>
+                            <div class="info-item">
+                                <div class="icon-box">
+                                    <i class="bi bi-whatsapp"></i>
+                                </div>
+                                <div class="content">
+                                    <h4>Whatsapp</h4>
+                                    <p>{{ $profile->wa }}</p>
+                                </div>
                             </div>
-                            <div class="content">
-                                <h4>Whatsapp</h4>
-                                <p>{{ $profile->wa }}</p>
-                            </div>
-                        </div>
 
-                        <div class="info-item">
-                            <div class="icon-box">
-                                <i class="bi bi-phone"></i>
+                            <div class="info-item">
+                                <div class="icon-box">
+                                    <i class="bi bi-phone"></i>
+                                </div>
+                                <div class="content">
+                                    <h4></h4>
+                                    <p>{{ $profile->phone }}</p>
+                                </div>
                             </div>
-                            <div class="content">
-                                <h4></h4>
-                                <p>{{ $profile->phone }}</p>
-                            </div>
-                        </div>
 
-                        <div class="info-item">
-                            <div class="icon-box">
-                                <i class="bi bi-envelope"></i>
-                            </div>
-                            <div class="content">
-                                <h4>Email Address</h4>
-                                <p>{{ $profile->email }}</p>
+                            <div class="info-item">
+                                <div class="icon-box">
+                                    <i class="bi bi-envelope"></i>
+                                </div>
+                                <div class="content">
+                                    <h4>Email Address</h4>
+                                    <p>{{ $profile->email }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-lg-7">
-                    <div class="contact-form">
-                        <h3>Hubungi Sekarang !!</h3>
-                        <p>Siap bantu Anda menemukan mobil {{ config('settings.site_brand') }} impian. Konsultasi gratis, cepat, dan tanpa ribet.</p>
-                        <div id="card-contact">
-                            <form action="{{ route('contact.store') }}" id="form-contact" method="post">
-                                @csrf
-                                <div class="row gy-4">
+                    <div class="col-lg-7">
+                        <div class="contact-form">
+                            <h3>Hubungi Sekarang !!</h3>
+                            <p>Siap bantu Anda menemukan mobil {{ config('settings.site_brand') }} impian. Konsultasi gratis, cepat, dan tanpa ribet.</p>
+                            <div id="card-contact">
+                                <form action="{{ route('contact.store') }}" id="form-contact" method="post">
+                                    @csrf
+                                    <div class="row gy-4">
 
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
-                                        <div class="invalid-feedback" id="error-name"></div>
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
+                                            <div class="invalid-feedback" id="error-name"></div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="wa" name="wa" placeholder="Nomor Whatsapp">
+                                            <div class="invalid-feedback" id="error-wa"></div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                            <div class="invalid-feedback" id="error-email"></div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
+                                            <div class="invalid-feedback" id="error-subject"></div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <textarea class="form-control" id="message" name="message" rows="6" placeholder="Message"></textarea>
+                                            <div class="invalid-feedback" id="error-message"></div>
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <button type="submit" class="btn btn-primary">Send Message</button>
+                                        </div>
                                     </div>
+                                </form>
+                            </div>
+                            @push('script')
+                                <script>
+                                    $(function() {
+                                        $("#form-contact").on('submit', function(e) {
+                                            e.preventDefault();
 
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="wa" name="wa" placeholder="Nomor Whatsapp">
-                                        <div class="invalid-feedback" id="error-wa"></div>
-                                    </div>
+                                            let form = $(this);
+                                            let formData = new FormData(this);
 
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                                        <div class="invalid-feedback" id="error-email"></div>
-                                    </div>
+                                            // clear error dulu
+                                            form.find('.form-control').removeClass('is-invalid');
+                                            form.find('.invalid-feedback').text('');
+                                            cardProgress('#card-contact');
 
-                                    <div class="col-12">
-                                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
-                                        <div class="invalid-feedback" id="error-subject"></div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <textarea class="form-control" id="message" name="message" rows="6" placeholder="Message"></textarea>
-                                        <div class="invalid-feedback" id="error-message"></div>
-                                    </div>
-
-                                    <div class="col-12 text-center">
-                                        <button type="submit" class="btn btn-primary">Send Message</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        @push('script')
-                            <script>
-                                $(function() {
-                                    $("#form-contact").on('submit', function(e) {
-                                        e.preventDefault();
-
-                                        let form = $(this);
-                                        let formData = new FormData(this);
-
-                                        // clear error dulu
-                                        form.find('.form-control').removeClass('is-invalid');
-                                        form.find('.invalid-feedback').text('');
-                                        cardProgress('#card-contact');
-
-                                        $.ajax({
-                                            url: form.attr('action'),
-                                            method: form.attr('method'),
-                                            data: formData,
-                                            processData: false,
-                                            contentType: false,
-                                            dataType: 'json',
-                                            success: function(data) {
-                                                if (data.status == 0) {
-                                                    $.each(data.errors, function(key, val) {
-                                                        $("#" + key).addClass('is-invalid'); // tambahkan bootstrap class
-                                                        $("#error-" + key).text(val[0]); // tampilkan pesan error
-                                                    });
-                                                    cardProgressDismiss('#card-contact');
-                                                } else {
-                                                    form[0].reset();
-                                                    cardProgressDismiss('#card-contact');
-                                                    swalGlass({
-                                                        title: 'Berhasil!',
-                                                        html: 'Terimakasih telah mengisi form kontak kami, <i class="d-block mt-2 white">Ingin melanjutkan konfirmasi melalui WhatsApp agar proses lebih cepat?</i>',
-                                                        icon: 'success',
-                                                        cancelButtonText: 'Nanti saja',
-                                                        confirmButtonText: 'Ya, Kirim ke WhatsApp',
-                                                        showCancelButton: true
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            window.open(data.url, '_blank');
-                                                        }
-                                                    });
+                                            $.ajax({
+                                                url: form.attr('action'),
+                                                method: form.attr('method'),
+                                                data: formData,
+                                                processData: false,
+                                                contentType: false,
+                                                dataType: 'json',
+                                                success: function(data) {
+                                                    if (data.status == 0) {
+                                                        $.each(data.errors, function(key, val) {
+                                                            $("#" + key).addClass('is-invalid'); // tambahkan bootstrap class
+                                                            $("#error-" + key).text(val[0]); // tampilkan pesan error
+                                                        });
+                                                        cardProgressDismiss('#card-contact');
+                                                    } else {
+                                                        form[0].reset();
+                                                        cardProgressDismiss('#card-contact');
+                                                        swalGlass({
+                                                            title: 'Berhasil!',
+                                                            html: 'Terimakasih telah mengisi form kontak kami, <i class="d-block mt-2 white">Ingin melanjutkan konfirmasi melalui WhatsApp agar proses lebih cepat?</i>',
+                                                            icon: 'success',
+                                                            cancelButtonText: 'Nanti saja',
+                                                            confirmButtonText: 'Ya, Kirim ke WhatsApp',
+                                                            showCancelButton: true
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                window.open(data.url, '_blank');
+                                                            }
+                                                        });
+                                                    }
                                                 }
-                                            }
+                                            });
                                         });
                                     });
-                                });
-                            </script>
-                        @endpush
+                                </script>
+                            @endpush
 
+                        </div>
                     </div>
+
                 </div>
 
             </div>
 
-        </div>
-
-    </section><!-- /Contact Section -->
+        </section><!-- /Contact Section -->
+    @endif
 @endsection

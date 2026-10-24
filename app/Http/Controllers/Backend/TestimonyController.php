@@ -60,7 +60,9 @@ class TestimonyController extends Controller
     {
         $this->authorize('isAdmin', Testimony::class);
 
-        $testimony = Testimony::create($request->all());
+        $data = $request->validated();
+        unset($data['image']);
+        $testimony = Testimony::create($data);
 
         $testimony
             ->addMedia($request->image)
@@ -86,7 +88,9 @@ class TestimonyController extends Controller
 
         $testimony = Testimony::findOrFail($id);
 
-        $testimony->update($request->all());
+        $data = $request->validated();
+        unset($data['image']);
+        $testimony->update($data);
 
         if ($request->hasFile('image')) {
             $testimony
@@ -96,7 +100,7 @@ class TestimonyController extends Controller
 
         $request->session()->flash('flash_notification', [
             "level" => "info",
-            "message" => "Data $testimony->title has been updated successfully"
+            "message" => "Data $testimony->name has been updated successfully"
         ]);
         return redirect()->route('backend.testimony.index');
     }
@@ -110,7 +114,7 @@ class TestimonyController extends Controller
 
         $request->session()->flash('flash_notification', [
             "level" => "info",
-            "message" => "Data $testimony->title has been deleted successfully"
+            "message" => "Data $testimony->name has been deleted successfully"
         ]);
 
         $testimony->destroy($id);

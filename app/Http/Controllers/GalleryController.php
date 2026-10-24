@@ -9,6 +9,8 @@ class GalleryController extends Controller
 {
     public function index()
     {
+        $this->ensureFrontendPageIsActive('gallery');
+
         $limit = 6;
         $galleries = Gallery::with('media')->whereNotNull('published_at')
             ->orderByDesc('published_at')
@@ -32,6 +34,8 @@ class GalleryController extends Controller
 
     public function show(Gallery $gallery)
     {
+        $this->ensureFrontendPageIsActive('gallery');
+
         $gallery->load('media');
         $seo = $this->frontendSeo([
             'title' => $gallery->title,
@@ -45,6 +49,8 @@ class GalleryController extends Controller
 
     public function love(Gallery $gallery)
     {
+        $this->ensureFrontendPageIsActive('gallery');
+
         $cookieKey = 'loved_gallery_' . $gallery->id;
 
         // Cek apakah sudah pernah love

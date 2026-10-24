@@ -74,6 +74,7 @@ class LandingPageV3Controller extends Controller
             'tracking_conversion_script' => $request->tracking_conversion_script,
         ]);
         $landingPage->save();
+        $this->syncFrontendPageStatus('landing_v3', $landingPage->is_active);
 
         if ($request->hasFile('hero_image')) {
             $landingPage->addMedia($request->hero_image)->preservingOriginal()->toMediaCollection('hero_image');

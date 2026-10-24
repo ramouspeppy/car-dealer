@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label class="form-control-label" for="title">Title</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
-                            name="title" value="{{ old('title', $gallery->title) }}">
+                            name="title" data-slug-target="#slug" value="{{ old('title', $gallery->title) }}">
                         @error('title')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <label class="form-control-label" for="slug">Slug</label>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
-                            name="slug" value="{{ old('slug', $gallery->slug) }}">
+                            name="slug" data-auto-slug="#title" value="{{ old('slug', $gallery->slug) }}">
                         @error('slug')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -119,15 +119,4 @@
         }
     });
 </script> --}}
-<script>
-    $('#title').change(function(e) {
-        $.get("{{ route('backend.gallery.checkSlug') }}", {
-                'slug': $(this).val()
-            },
-            function(data) {
-                $('#slug').val(data.slug);
-            }
-        );
-    });
-</script>
 @endsection

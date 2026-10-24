@@ -1,5 +1,5 @@
 <script>
-    $(function () {
+    $(function() {
         var table = $('#myTable').DataTable({
             processing: true,
             serverSide: true,
@@ -44,10 +44,10 @@
                 }
             ],
             'order': [
-                [6, 'desc']
+                [5, 'desc']
             ],
         });
-        $(document.body).on('click', '.delete-btn', function (e) {
+        $(document.body).on('click', '.delete-btn', function(e) {
             e.preventDefault();
             var $form = $(this).closest('form');
             swal.fire({
@@ -76,5 +76,4 @@
 
         });
     });
-
 </script>

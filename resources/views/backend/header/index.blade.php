@@ -11,6 +11,13 @@
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item">Header</div>
         </div>
+        <div class="section-header-button d-flex align-items-center">
+            @include('backend.websetting._frontend-toggle', ['toggles' => [
+                ['key' => 'frontend_page_home', 'label' => 'Tayangkan halaman Beranda'],
+                ['key' => 'frontend_section_hero', 'label' => 'Tayangkan section Hero'],
+                ['key' => 'frontend_section_call_to_action', 'label' => 'Tayangkan section Ajakan Test Drive'],
+            ]])
+        </div>
     </div>
 
     @include('backend.layouts._notif')

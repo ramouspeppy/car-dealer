@@ -15,7 +15,7 @@ class ImagesUploadController extends Controller
             'file' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
 
-        $path = public_path('uploads/tmp/' . auth()->id());
+        $path = public_path('upload/tmp/' . auth()->id());
 
         // pastikan folder ada
         if (!file_exists($path)) {
@@ -33,13 +33,13 @@ class ImagesUploadController extends Controller
 
         return response()->json([
             'name' => $name,
-            'url'  => asset("uploads/tmp/" . auth()->id() . "/" . $name),
+            'url'  => asset("upload/tmp/" . auth()->id() . "/" . $name),
         ]);
     }
 
     public function destroy(Request $request)
     {
-        $path = public_path('uploads/tmp/' . auth()->id() . '/' . $request->filename);
+        $path = public_path('upload/tmp/' . auth()->id() . '/' . $request->filename);
 
         if (file_exists($path)) {
             unlink($path);
@@ -51,6 +51,6 @@ class ImagesUploadController extends Controller
     private function uploadRelativePath()
     {
         // ✅ FIX: jangan pakai public_path()
-        return 'uploads/tmp/' . auth()->id();
+        return 'upload/tmp/' . auth()->id();
     }
 }

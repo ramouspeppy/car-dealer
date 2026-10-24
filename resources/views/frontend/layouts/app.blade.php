@@ -47,58 +47,23 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{ mix('frontend/css/app.css') }}">
 
-    <style>
-        .product-list-cards .product-list-image {
-            align-self: stretch;
-            min-height: 220px;
-            padding: 18px;
-            border-radius: 14px;
-        }
 
-        .product-list-cards .product-list-image img {
-            max-width: 100%;
-            max-height: 200px;
-            object-fit: contain;
-        }
-
-        .promo-list .product-photo-card .promo-image img {
-            box-sizing: border-box;
-            padding: clamp(14px, 3vw, 28px);
-            object-fit: contain;
-        }
-
-        .promo-list .product-photo-card:hover .promo-image img {
-            transform: none;
-        }
-
-        .product-detail-carousel .product-detail-item figure {
-            box-sizing: border-box;
-            max-width: 850px;
-            padding: clamp(14px, 3vw, 32px);
-            border-radius: 14px;
-        }
-
-        .product-detail-carousel .product-detail-item figure img {
-            display: block;
-            width: 100%;
-            max-height: 68vh;
-            object-fit: contain;
-            transform: none !important;
-        }
-    </style>
 
     @stack('css')
 
+    @include('frontend.layouts._tracking')
 </head>
 
 <body class="index-page">
-    {{-- Floating WhatsApp Button --}}
-    <a href="{{ $profile->wa_url }}" target="_blank" class="floating-wa" aria-label="Chat WhatsApp">
-        <div class="floating-wa-icon">
-            <i class="bi bi-whatsapp"></i>
-        </div>
-        <div class="floating-wa-text">Chat Kami</div>
-    </a>
+    @if (filled($profile->wa))
+        {{-- Floating WhatsApp Button --}}
+        <a href="{{ $profile->wa_url }}" target="_blank" class="floating-wa" aria-label="Chat WhatsApp">
+            <div class="floating-wa-icon">
+                <i class="bi bi-whatsapp"></i>
+            </div>
+            <div class="floating-wa-text">Chat Kami</div>
+        </a>
+    @endif
     <header id="header" class="header dark-background d-flex flex-column justify-content-center">
         <i class="header-toggle d-xl-none bi bi-list"></i>
 
@@ -117,28 +82,67 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="{{ url('/') }}" class="active"><i class="bi bi-house-door-fill navicon"></i>Home</a></li>
-                    <li><a href="{{ route('product.index') }}"><i class="bi bi-car-front-fill navicon"></i> Produk</a></li>
-                    <li><a href="{{ route('promo.index') }}"><i class="bi bi-tags-fill navicon"></i> Promo</a></li>
-                    <li><a href="{{ route('testdrive.show') }}"><i class="bi bi-calendar-check-fill navicon"></i> TestDrive</a></li>
-                    <li><a href="{{ route('gallery.index') }}"><i class="bi bi-images navicon"></i> Gallery</a></li>
-                    <li><a href="{{ route('post.index') }}"><i class="bi bi-newspaper navicon"></i> Berita</a></li>
-                    <li class="dropdown"><a href="#"><i class="bi bi-window-stack navicon"></i> <span>Landing Page</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="{{ route('landing.show') }}">Landing Page V1</a></li>
-                            <li><a href="{{ route('landing.showV2') }}">Landing Page V2</a></li>
-                            <li><a href="{{ route('landing.showV3') }}">Landing Page V3</a></li>
-                            <li><a href="{{ route('landing.showV4') }}">Landing Page V4</a></li>
-                        </ul>
-                    </li>
+                    @if (filter_var(config('settings.frontend_page_home', '1'), FILTER_VALIDATE_BOOLEAN))
+                        <li><a href="{{ url('/') }}" class="{{ $activeNav === 'home' ? 'active' : '' }}"><i class="bi bi-house-door-fill navicon"></i>Home</a></li>
+                    @endif
+                    @if (filter_var(config('settings.frontend_page_products', '1'), FILTER_VALIDATE_BOOLEAN))
+                        <li><a href="{{ route('product.index') }}" class="{{ $activeNav === 'products' ? 'active' : '' }}"><i class="bi bi-car-front-fill navicon"></i> Produk</a></li>
+                    @endif
+                    @if (filter_var(config('settings.frontend_page_promos', '1'), FILTER_VALIDATE_BOOLEAN))
+                        <li><a href="{{ route('promo.index') }}" class="{{ $activeNav === 'promos' ? 'active' : '' }}"><i class="bi bi-tags-fill navicon"></i> Promo</a></li>
+                    @endif
+                    @if (filter_var(config('settings.frontend_page_testdrive', '1'), FILTER_VALIDATE_BOOLEAN))
+                        <li><a href="{{ route('testdrive.show') }}" class="{{ $activeNav === 'testdrive' ? 'active' : '' }}"><i class="bi bi-calendar-check-fill navicon"></i> TestDrive</a></li>
+                    @endif
+                    @if (filter_var(config('settings.frontend_page_gallery', '1'), FILTER_VALIDATE_BOOLEAN))
+                        <li><a href="{{ route('gallery.index') }}" class="{{ $activeNav === 'gallery' ? 'active' : '' }}"><i class="bi bi-images navicon"></i> Gallery</a></li>
+                    @endif
+                    @if (filter_var(config('settings.frontend_page_posts', '1'), FILTER_VALIDATE_BOOLEAN))
+                        <li><a href="{{ route('post.index') }}" class="{{ $activeNav === 'posts' ? 'active' : '' }}"><i class="bi bi-newspaper navicon"></i> Berita</a></li>
+                    @endif
+
+                    @if (filter_var(config('settings.frontend_page_landing_v1', '1'), FILTER_VALIDATE_BOOLEAN) || filter_var(config('settings.frontend_page_landing_v2', '1'), FILTER_VALIDATE_BOOLEAN) || filter_var(config('settings.frontend_page_landing_v3', '1'), FILTER_VALIDATE_BOOLEAN) || filter_var(config('settings.frontend_page_landing_v4', '1'), FILTER_VALIDATE_BOOLEAN))
+                        <li class="dropdown"><a href="#"><i class="bi bi-window-stack navicon"></i> <span>Landing Page</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                @if (filter_var(config('settings.frontend_page_landing_v1', '1'), FILTER_VALIDATE_BOOLEAN))
+                                    <li><a href="{{ route('landing.show') }}" target="_blank">Landing Page V1</a></li>
+                                @endif
+                                @if (filter_var(config('settings.frontend_page_landing_v2', '1'), FILTER_VALIDATE_BOOLEAN))
+                                    <li><a href="{{ route('landing.showV2') }}" target="_blank">Landing Page V2</a></li>
+                                @endif
+                                @if (filter_var(config('settings.frontend_page_landing_v3', '1'), FILTER_VALIDATE_BOOLEAN))
+                                    <li><a href="{{ route('landing.showV3') }}" target="_blank">Landing Page V3</a></li>
+                                @endif
+                                @if (filter_var(config('settings.frontend_page_landing_v4', '1'), FILTER_VALIDATE_BOOLEAN))
+                                    <li><a href="{{ route('landing.showV4') }}" target="_blank">Landing Page V4</a></li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </nav>
-            <div class="social-links text-center mx-auto">
-                <a target="_blank" href="{{ $profile->wa_url }}"><i class="bi bi-whatsapp"></i></a>
-                <a target="_blank" href="{{ $profile->ig_url }}"><i class="bi bi-instagram"></i></a>
-                <a target="_blank" href="{{ $profile->fb_url }}"><i class="bi bi-facebook"></i></a>
-                <a target="_blank" href="{{ $profile->phone_url }}"><i class="bi bi-phone"></i></a>
-            </div>
+            @if (filled($profile->wa) || filled($profile->ig_url) || filled($profile->fb_url) || filled($profile->yt_url) || filled($profile->x_url) || filled($profile->phone))
+                <div class="social-links text-center mx-auto">
+                    @if (filled($profile->wa))
+                        <a target="_blank" href="{{ $profile->wa_url }}"><i class="bi bi-whatsapp"></i></a>
+                    @endif
+                    @if (filled($profile->ig_url))
+                        <a target="_blank" href="{{ $profile->ig_url }}"><i class="bi bi-instagram"></i></a>
+                    @endif
+                    @if (filled($profile->fb_url))
+                        <a target="_blank" href="{{ $profile->fb_url }}"><i class="bi bi-facebook"></i></a>
+                    @endif
+                    @if (filled($profile->yt_url))
+                        <a target="_blank" href="{{ $profile->yt_url }}"><i class="bi bi-youtube"></i></a>
+                    @endif
+                    @if (filled($profile->x_url))
+                        <a target="_blank" href="{{ $profile->x_url }}"><i class="bi bi-twitter-x"></i></a>
+                    @endif
+                    @if (filled($profile->phone))
+                        <a target="_blank" href="{{ $profile->phone_url }}"><i class="bi bi-phone"></i></a>
+                    @endif
+                </div>
+            @endif
             {{-- Tombol Konsultasi --}}
             <div class="mt-3 w-100 px-2">
                 <button data-bs-toggle="modal" data-bs-target="#consultationModal" class="btn-konsultasi w-100">
@@ -155,11 +159,11 @@
 
     </main>
 
-    <footer id="footer" class="footer position-relative">
-
-        @include('frontend.layouts.footer')
-
-    </footer>
+    @if (filter_var(config('settings.frontend_section_footer', '1'), FILTER_VALIDATE_BOOLEAN))
+        <footer id="footer" class="footer position-relative">
+            @include('frontend.layouts.footer')
+        </footer>
+    @endif
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

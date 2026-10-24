@@ -3,61 +3,64 @@
 @section('content')
     @push('css')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     @endpush
-    <div class="page-title dark-background" data-builder="page-title">
-        <div class="container d-lg-flex justify-content-between align-items-center">
-            <h1 class="mb-2 mb-lg-0">Portfolio Details</h1>
-            <nav class="breadcrumbs">
-                <ol>
-                    <li><a href="index.html">Home</a></li>
-                    <li class="current">Portfolio Details</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-
-    <section class="product-detail-carousel">
-        <div class="product-detail-list init-swiper">
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    @foreach ($product->product_colors as $media)
-                        <div class="swiper-slide">
-                            <div class="product-detail-item">
-                                <figure>
-                                    <img src="{{ $media->original_url }}">
-                                </figure>
-                                <div class="product-hero-name">
-                                    <h2>{{ $product->hero_name }}</h2>
-                                </div>
-                                <div class="product-detail-content">
-                                    <div class="product-detail-description">
-                                        {!! $product->tagline !!}
-                                    </div>
-                                    <div class="product-detail-more">
-                                        <a href="{{ route('testdrive.show') }}" class="btn btn-primary">TestDrive ?</a>
-                                        <a href="#card-contact" class="btn btn-primary">
-                                            <i class="fa-solid fa-play"></i> Tanya Angsuran ?
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- custom nav & pagination -->
-                <!-- custom navigation -->
-                <div class="product-swiper-button product-swiper-button-prev">
-                    <i class="bi bi-arrow-left"></i>
-                </div>
-                <div class="product-swiper-button product-swiper-button-next">
-                    <i class="bi bi-arrow-right"></i>
-                </div>
-
-                <!-- custom pagination -->
-                <div class="swiper-pagination product-swiper-pagination"></div>
+    <div class="product-detail-page">
+        <div class="page-title dark-background" data-builder="page-title">
+            <div class="container d-lg-flex justify-content-between align-items-center">
+                <h1 class="mb-2 mb-lg-0">Portfolio Details</h1>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a href="index.html">Home</a></li>
+                        <li class="current">Portfolio Details</li>
+                    </ol>
+                </nav>
             </div>
-            <script type="application/json" class="swiper-config">
+        </div>
+
+        @if ($product->product_colors->isNotEmpty())
+            <section class="product-detail-carousel">
+                <div class="product-detail-list init-swiper">
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            @foreach ($product->product_colors as $media)
+                                <div class="swiper-slide">
+                                    <div class="product-detail-item">
+                                        <figure>
+                                            <img src="{{ $media->original_url }}">
+                                        </figure>
+                                        <div class="product-hero-name">
+                                            <h2>{{ $product->hero_name }}</h2>
+                                        </div>
+                                        <div class="product-detail-content">
+                                            <div class="product-detail-description">
+                                                {!! $product->tagline !!}
+                                            </div>
+                                            <div class="product-detail-more">
+                                                <a href="{{ route('testdrive.show') }}" class="btn btn-primary">TestDrive ?</a>
+                                                <a href="#card-contact" class="btn btn-primary">
+                                                    <i class="fa-solid fa-play"></i> Tanya Angsuran ?
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- custom nav & pagination -->
+                        <!-- custom navigation -->
+                        <div class="product-swiper-button product-swiper-button-prev">
+                            <i class="bi bi-arrow-left"></i>
+                        </div>
+                        <div class="product-swiper-button product-swiper-button-next">
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+
+                        <!-- custom pagination -->
+                        <div class="swiper-pagination product-swiper-pagination"></div>
+                    </div>
+                    <script type="application/json" class="swiper-config">
             {
                 "loop": true,
                 "speed": 600,
@@ -77,160 +80,174 @@
                   "clickable": true
                 }
               }
-              
+
         </script>
-        </div>
-    </section>
-    <section id="service-details-2" class="service-details-2 section">
-        <slot type="section-title"></slot>
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-            <div class="row">
-                <div class="col-xl-8 col-lg-8">
-                    <div class="service-content">
-                        <div class="content-header mb-4" data-aos="fade-up" data-aos-delay="100">
-                            <div class="service-meta d-flex align-items-center gap-3 mb-3">
-                                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">{{ $product->product_category->category }}</span>
-                            </div>
-                            <h1 class="service-title mb-3">{{ $product->name }}</h1>
-                            {!! $product->desc !!}
-                        </div>
-                        <div class="service-card mb-4 d-block d-lg-none"" id=" PriceLIST">
-                            <div class="card-header">
-                                <h4 class="card-title">Price List {{ $product->name }}</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="overview-list">
-                                    @foreach ($product->product_type as $type)
-                                        <div class="overview-item">
-                                            <div class="item-label">
-                                                <i class="bi bi-check2-square"></i>
-                                                <span>{{ $type->type }}</span>
-                                            </div>
-                                            <span class="item-value">{{ $type->price_formatted }}</span>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content-header mb-4" data-aos="fade-up" data-aos-delay="100">
-                            <h3 class="section-heading mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                                Detail {{ $product->name }}</h3>
-                            {!! $product->detail !!}
-                        </div>
-
-                    </div>
                 </div>
-                <div class="col-xl-4 col-lg-5">
-                    <div class="sidebar" data-aos="fade-left" data-aos-delay="200">
-                        <div class="service-card mb-4 d-none d-lg-block" id="PriceLIST">
-                            <div class="card-header">
-                                <h4 class="card-title">Price List {{ $product->name }}</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="overview-list">
-                                    @foreach ($product->product_type as $type)
-                                        <div class="overview-item">
-                                            <div class="item-label">
-                                                <i class="bi bi-check2-square"></i>
-                                                <span>{{ $type->type }}</span>
-                                            </div>
-                                            <span class="item-value">{{ $type->price_formatted }}</span>
-                                        </div>
-                                    @endforeach
+            </section>
+        @endif
+
+        <section id="service-details-2" class="service-details-2 section">
+            <slot type="section-title"></slot>
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-8">
+                        <div class="service-content">
+                            <div class="content-header mb-4" data-aos="fade-up" data-aos-delay="100">
+                                <div class="service-meta d-flex align-items-center gap-3 mb-3">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">{{ $product->product_category->category }}</span>
                                 </div>
+                                <h1 class="service-title mb-3">{{ $product->name }}</h1>
+                                {!! $product->desc !!}
                             </div>
-                        </div>
-                        <div class="contact-card">
-                            <div class="card-header">
-                                <h4 class="card-title">Penasaran dengan Mobil Ini?</h4>
-                                <p class="card-subtitle">isi form di bawah untuk informasi harga, promo, atau simulasi kredit.</p>
-                            </div>
-                            <div class="card-body" id="card-contact">
-                                <form action="{{ route('contact.store') }}" id="form-contact" method="post" class=" contact-form">
-                                    @csrf
-                                    <div class="form-group mb-3">
-                                        <div class="input-wrapper">
-                                            <i class="bi bi-people input-icon"></i>
-                                            <input type="text" id="name" class="form-control" name="name" placeholder="Your Name">
-                                            <div class="invalid-feedback" id="error-name"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <div class="input-wrapper">
-                                            <i class="bi bi-envelope input-icon"></i>
-                                            <input type="email" id="email" class="form-control" name="email" placeholder="Your Email">
-                                            <div class="invalid-feedback" id="error-email"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <div class="input-wrapper">
-                                            <i class="bi bi-telephone input-icon"></i>
-                                            <input type="text" id="wa" class="form-control" name="wa" placeholder="Your Whatsapp Number">
-                                            <div class="invalid-feedback" id="error-wa"></div>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="subject" value="{{ $product->name }}">
-                                    <div class="form-group mb-4">
-                                        <textarea id="message" name="message" class="form-control" rows="6"></textarea>
-                                        <div class="invalid-feedback" id="error-message"></div>
-                                    </div>
-                                    <button type="submit" class="submit-btn w-100">
-                                        <span>Submit Request</span>
-                                        <i class="bi bi-arrow-right"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="service-content">
-                        <div class="features-showcase mb-5">
-                            <h3 class="section-heading mb-4" data-aos="fade-up" data-aos-delay="100">Pelayanan</h3>
-                            <div class="features-tabs" data-aos="fade-up" data-aos-delay="200">
-                                <div class="row g-4">
-                                    @foreach ($services as $service)
-                                        <div class="col-md-6">
-                                            <div class="feature-card">
-                                                <div class="feature-icon">
-                                                    <i class="bi {{ $service->icon }}"></i>
-                                                </div>
-                                                <h5>{{ $service->title }}</h5>
-                                                <p>{{ $service->desc }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
+                            <div class="service-card mb-4 d-block d-lg-none"" id=" PriceLIST">
+                                <div class="card-header">
+                                    <h4 class="card-title">Price List {{ $product->name }}</h4>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="client-success mb-5" data-aos="fade-up" data-aos-delay="100">
-                            <div class="success-card">
-                                <div class="init-swiper swiper">
-                                    <div class="swiper-wrapper">
-                                        @foreach ($testimonies as $testimony)
-                                            <div class="swiper-slide p-3">
-                                                <div class="success-header d-flex align-items-center mb-4">
-                                                    <img src="{{ $testimony->image_thumb_url }}" alt="Client" class="client-avatar">
-                                                    <div class="client-info ms-3">
-                                                        <h5 class="client-name mb-1">{{ $testimony->name }}</h5>
-                                                        <span class="client-role">{{ $testimony->job }}</span>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <div class="stars" data-value="{{ $testimony->rating }}"></div>
-                                                    </div>
+                                <div class="card-body">
+                                    <div class="overview-list">
+                                        @foreach ($product->product_type as $type)
+                                            <div class="overview-item">
+                                                <div class="item-label">
+                                                    <i class="bi bi-check2-square"></i>
+                                                    <span>{{ $type->type }}</span>
                                                 </div>
-                                                <blockquote class="success-quote mb-4">
-                                                    {{ $testimony->message }}
-                                                </blockquote>
+                                                <span class="item-value">{{ $type->price_formatted }}</span>
                                             </div>
                                         @endforeach
                                     </div>
-                                    <script type="application/json" class="swiper-config">
+                                </div>
+                            </div>
+                            <div class="content-header mb-4" data-aos="fade-up" data-aos-delay="100">
+                                <h3 class="section-heading mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                                    Detail {{ $product->name }}</h3>
+                                {!! $product->detail !!}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="sidebar" data-aos="fade-left" data-aos-delay="200">
+                            <div class="service-card mb-4 product-main-image-card">
+                                <div class="card-header">
+                                    <h4 class="card-title">{{ $product->name }}</h4>
+                                </div>
+                                <div class="card-body">
+                                    @if (filled($product->image_url))
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-main-image" loading="lazy">
+                                    @else
+                                        <p class="product-main-image-empty mb-0">Gambar utama belum tersedia.</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="service-card mb-4 d-none d-lg-block" id="PriceLIST">
+                                <div class="card-header">
+                                    <h4 class="card-title">Price List {{ $product->name }}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="overview-list">
+                                        @foreach ($product->product_type as $type)
+                                            <div class="overview-item">
+                                                <div class="item-label">
+                                                    <i class="bi bi-check2-square"></i>
+                                                    <span>{{ $type->type }}</span>
+                                                </div>
+                                                <span class="item-value">{{ $type->price_formatted }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Penasaran dengan Mobil Ini?</h4>
+                                    <p class="card-subtitle">isi form di bawah untuk informasi harga, promo, atau simulasi kredit.</p>
+                                </div>
+                                <div class="card-body" id="card-contact">
+                                    <form action="{{ route('contact.store') }}" id="form-contact" method="post" class=" contact-form">
+                                        @csrf
+                                        <div class="form-group mb-3">
+                                            <div class="input-wrapper">
+                                                <i class="bi bi-people input-icon"></i>
+                                                <input type="text" id="name" class="form-control" name="name" placeholder="Your Name">
+                                                <div class="invalid-feedback" id="error-name"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <div class="input-wrapper">
+                                                <i class="bi bi-envelope input-icon"></i>
+                                                <input type="email" id="email" class="form-control" name="email" placeholder="Your Email">
+                                                <div class="invalid-feedback" id="error-email"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <div class="input-wrapper">
+                                                <i class="bi bi-telephone input-icon"></i>
+                                                <input type="text" id="wa" class="form-control" name="wa" placeholder="Your Whatsapp Number">
+                                                <div class="invalid-feedback" id="error-wa"></div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="subject" value="{{ $product->name }}">
+                                        <div class="form-group mb-4">
+                                            <textarea id="message" name="message" class="form-control" rows="6"></textarea>
+                                            <div class="invalid-feedback" id="error-message"></div>
+                                        </div>
+                                        <button type="submit" class="submit-btn w-100">
+                                            <span>Submit Request</span>
+                                            <i class="bi bi-arrow-right"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="service-content">
+                            <div class="features-showcase mb-5">
+                                <h3 class="section-heading mb-4" data-aos="fade-up" data-aos-delay="100">Pelayanan</h3>
+                                <div class="features-tabs" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="row g-4">
+                                        @foreach ($services as $service)
+                                            <div class="col-md-6">
+                                                <div class="feature-card">
+                                                    <div class="feature-icon">
+                                                        <i class="bi {{ $service->icon }}"></i>
+                                                    </div>
+                                                    <h5>{{ $service->title }}</h5>
+                                                    <p>{{ $service->desc }}</p>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="client-success mb-5" data-aos="fade-up" data-aos-delay="100">
+                                <div class="success-card">
+                                    <div class="init-swiper swiper">
+                                        <div class="swiper-wrapper">
+                                            @foreach ($testimonies as $testimony)
+                                                <div class="swiper-slide p-3">
+                                                    <div class="success-header d-flex align-items-center mb-4">
+                                                        <img src="{{ $testimony->image_thumb_url }}" alt="Client" class="client-avatar">
+                                                        <div class="client-info ms-3">
+                                                            <h5 class="client-name mb-1">{{ $testimony->name }}</h5>
+                                                            <span class="client-role">{{ $testimony->job }}</span>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <div class="stars" data-value="{{ $testimony->rating }}"></div>
+                                                        </div>
+                                                    </div>
+                                                    <blockquote class="success-quote mb-4">
+                                                        {{ $testimony->message }}
+                                                    </blockquote>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <script type="application/json" class="swiper-config">
                                     {
                                         "slidesPerView": 1,
                                         "spaceBetween": 24,
@@ -243,71 +260,71 @@
                                         }
                                       }
                                 </script>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="action-section text-center mt-5 pt-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="action-buttons d-flex flex-wrap gap-3 justify-content-center">
-                    <a href="#card-contact" class="action-btn secondary">
-                        <i class="bi bi-calendar3"></i>
-                        <span>Schedule Meeting</span>
-                    </a>
-                    <a href="{{ route('product.index') }}" class="action-btn primary">
-                        <i class="bi bi-folder2-open"></i>
-                        <span>Lihat Semua Produk</span>
-                    </a>
-                    @if ($product->brochure_url)
-                        <a href="{{ $product->brochure_url }}" class="action-btn secondary">
-                            <i class="bi bi-download"></i>
-                            <span>Download Brochure</span>
+                <div class="action-section text-center mt-5 pt-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="action-buttons d-flex flex-wrap gap-3 justify-content-center">
+                        <a href="{{ route('testdrive.show') }}" class="action-btn secondary">
+                            <i class="bi bi-calendar3"></i>
+                            <span>Testdrive ?</span>
                         </a>
-                    @endif
+                        <a href="{{ route('product.index') }}" class="action-btn primary">
+                            <i class="bi bi-folder2-open"></i>
+                            <span>Lihat Semua Produk</span>
+                        </a>
+                        @if ($product->brochure_url)
+                            <a href="{{ $product->brochure_url }}" class="action-btn secondary">
+                                <i class="bi bi-download"></i>
+                                <span>Download Brochure</span>
+                            </a>
+                        @endif
 
+                    </div>
                 </div>
+
             </div>
 
-        </div>
+        </section>
+        <section id="gallery-product-detail" class="gallery-product-detail section" data-builder="section">
 
-    </section>
-    <section id="gallery-product-detail" class="gallery-product-detail section" data-builder="section">
+            <div class="container section-title" data-aos="fade-up" data-builder="section-title">
+                <h2>Full Showcase</h2>
+                <p>Dari tampilan luar, interior, hingga aksesoris — semua bisa Anda
+                    lihat langsung di sini.</p>
+            </div>
+            <slot type="section-title"></slot>
 
-        <div class="container section-title" data-aos="fade-up" data-builder="section-title">
-            <h2>Full Showcase</h2>
-            <p>Dari tampilan luar, interior, hingga aksesoris — semua bisa Anda
-                lihat langsung di sini.</p>
-        </div>
-        <slot type="section-title"></slot>
-
-        <div class="container" data-aos="fade-up" data-aos-delay="100" data-no-editable="true">
-            <div class="row">
-                <div class="col-12">
-                    <div class="gallery-product-detail-container init-swiper">
-                        <div class=" custom-swiper swiper">
-                            <div class="swiper-wrapper">
-                                @foreach ($product->product_gallery as $gallery)
-                                    <div class="swiper-slide">
-                                        <div class="gallery-product-detail-item">
-                                            <div class="gallery-product-detail-img">
-                                                <a class="glightbox" data-gallery="images-gallery" href="{{ $gallery->original_url }}">
-                                                    <img src="{{ $gallery->original_url }}" class="img-fluid" alt="{{ $gallery->original_name }}">
-                                                    <div class="gallery-product-detail-overlay">
-                                                        <i class="bi bi-plus-circle"></i>
-                                                    </div>
-                                                </a>
+            <div class="container" data-aos="fade-up" data-aos-delay="100" data-no-editable="true">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="gallery-product-detail-container init-swiper">
+                            <div class=" custom-swiper swiper">
+                                <div class="swiper-wrapper">
+                                    @foreach ($product->product_gallery as $gallery)
+                                        <div class="swiper-slide">
+                                            <div class="gallery-product-detail-item">
+                                                <div class="gallery-product-detail-img">
+                                                    <a class="glightbox" data-gallery="images-gallery" href="{{ $gallery->original_url }}">
+                                                        <img src="{{ $gallery->original_url }}" class="img-fluid" alt="{{ $gallery->original_name }}">
+                                                        <div class="gallery-product-detail-overlay">
+                                                            <i class="bi bi-plus-circle"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
+                                <!-- Pagination & Navigation -->
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
                             </div>
-                            <!-- Pagination & Navigation -->
-                            <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                        </div>
-                        <script type="application/json" class="swiper-config">
+                            <script type="application/json" class="swiper-config">
                         {
                             "centeredSlides": true,
                             "slidesPerView": 1.2,
@@ -341,12 +358,13 @@
                             }
                           }
                     </script>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </section>
+        </section>
+    </div>
 
     @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

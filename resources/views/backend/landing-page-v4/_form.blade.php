@@ -5,16 +5,16 @@
 
 <div class="col-12">
     <div class="card" id="landing-page-v4-card">
-        <div class="card-header sticky-top bg-white">
+        <div class="card-header sticky-top bg-white frontend-visibility-row">
             <h4>
                 Landing Page V2 Form
-                <span class="badge {{ $landingPage->is_active ? 'badge-success' : 'badge-secondary' }} ml-2" id="active-badge">
+                <span class="badge {{ $landingPage->is_active ? 'badge-success' : 'badge-secondary' }} ml-2 frontend-visibility-status" id="active-badge">
                     {{ $landingPage->is_active ? 'Aktif' : 'Nonaktif' }}
                 </span>
             </h4>
             <div class="card-header-action d-flex align-items-center">
                 <label class="custom-switch mr-3 mb-0">
-                    <input type="checkbox" class="custom-switch-input" id="is_active" name="is_active" value="1" {{ old('is_active', $landingPage->is_active) ? 'checked' : '' }}>
+                    <input type="checkbox" class="custom-switch-input frontend-visibility-toggle" id="is_active" name="is_active" value="1" data-setting-key="frontend_page_landing_v4" data-url="{{ route('backend.setting.toggle') }}" {{ old('is_active', $landingPage->is_active) ? 'checked' : '' }}>
                     <span class="custom-switch-indicator"></span>
                     <span class="custom-switch-description ml-1">Tayangkan Halaman</span>
                 </label>

@@ -14,6 +14,10 @@
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Promo</a></div>
         </div>
+        @include('backend.websetting._frontend-toggle', ['toggles' => [
+            ['key' => 'frontend_page_promos', 'label' => 'Tayangkan halaman Promo'],
+            ['key' => 'frontend_section_promo_list', 'label' => 'Tayangkan section Promo di Beranda'],
+        ]])
     </div>
 
     @include('backend.layouts._notif')

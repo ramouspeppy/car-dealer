@@ -21,6 +21,8 @@ class LandingController extends Controller
 {
     public function show(Request $request)
     {
+        $this->ensureFrontendPageIsActive('landing_v1');
+
         $landingPage = LandingPage::with('media')->first();
 
         if (!$landingPage || !$landingPage->is_active) {
@@ -31,8 +33,10 @@ class LandingController extends Controller
         $testimonies = $landingPage->selectedTestimonies();
         $promo       = $landingPage->promo;
         $seo = $this->landingPageSeo($landingPage);
+        $profile = Profile::first();
+        $navData = $this->landingNavData($profile, $seo);
 
-        return view('frontend.landing.show', compact('landingPage', 'products', 'testimonies', 'promo', 'seo'));
+        return view('frontend.landing.show', compact('landingPage', 'products', 'testimonies', 'promo', 'seo', 'profile', 'navData'));
     }
 
     /**
@@ -43,6 +47,8 @@ class LandingController extends Controller
      */
     public function showV2(Request $request)
     {
+        $this->ensureFrontendPageIsActive('landing_v2');
+
         $landingPage = LandingPageV2::with('media')->first();
 
         if (!$landingPage || !$landingPage->is_active) {
@@ -83,6 +89,8 @@ class LandingController extends Controller
             'avg_rating'        => $avgRating ? round($avgRating, 1) : null,
         ];
         $seo = $this->landingPageSeo($landingPage);
+        $profile = Profile::first();
+        $navData = $this->landingNavData($profile, $seo);
 
         return view('frontend.landing.show-v2', compact(
             'landingPage',
@@ -96,7 +104,9 @@ class LandingController extends Controller
             'services',
             'deliveries',
             'stats',
-            'seo'
+            'seo',
+            'profile',
+            'navData'
         ));
     }
 
@@ -113,6 +123,8 @@ class LandingController extends Controller
      */
     public function showV3(Request $request)
     {
+        $this->ensureFrontendPageIsActive('landing_v3');
+
         $landingPage = LandingPageV3::with('media')->first();
 
         if (!$landingPage || !$landingPage->is_active) {
@@ -132,6 +144,8 @@ class LandingController extends Controller
             return $delivery;
         });
         $seo = $this->landingPageSeo($landingPage);
+        $profile = Profile::first();
+        $navData = $this->landingNavData($profile, $seo);
 
         return view('frontend.landing.show-v3', compact(
             'landingPage',
@@ -143,7 +157,9 @@ class LandingController extends Controller
             'galleries',
             'services',
             'deliveries',
-            'seo'
+            'seo',
+            'profile',
+            'navData'
         ));
     }
 
@@ -154,6 +170,8 @@ class LandingController extends Controller
      */
     public function showV4(Request $request)
     {
+        $this->ensureFrontendPageIsActive('landing_v4');
+
         $landingPage = LandingPageV4::with('media')->first();
 
         if (!$landingPage || !$landingPage->is_active) {
@@ -207,6 +225,8 @@ class LandingController extends Controller
             JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_THROW_ON_ERROR
         );
         $seo = $this->landingPageSeo($landingPage);
+        $profile = Profile::first();
+        $navData = $this->landingNavData($profile, $seo);
 
         return view('frontend.landing.show-v4', compact(
             'landingPage',
@@ -221,8 +241,29 @@ class LandingController extends Controller
             'stats',
             'lineup',
             'lineupJson',
-            'seo'
+            'seo',
+            'profile',
+            'navData'
         ));
+    }
+
+    private function landingNavData(?Profile $profile, array $seo): array
+    {
+        $socialProfiles = [
+            ['name' => 'WhatsApp', 'icon' => 'bi-whatsapp', 'url' => $profile && filled($profile->wa) ? $profile->wa_url : null],
+            ['name' => 'Facebook', 'icon' => 'bi-facebook', 'url' => $profile ? $profile->fb_url : null],
+            ['name' => 'Instagram', 'icon' => 'bi-instagram', 'url' => $profile ? $profile->ig_url : null],
+            ['name' => 'YouTube', 'icon' => 'bi-youtube', 'url' => $profile ? $profile->yt_url : null],
+            ['name' => 'X', 'icon' => 'bi-twitter-x', 'url' => $profile ? $profile->x_url : null],
+        ];
+
+        return [
+            'name' => $profile && $profile->name ? $profile->name : $seo['site_name'],
+            'site_name' => $seo['site_name'],
+            'social_links' => array_values(array_filter($socialProfiles, function ($social) {
+                return filled($social['url']);
+            })),
+        ];
     }
 
     private function landingPageSeo($landingPage): array
@@ -265,6 +306,15 @@ class LandingController extends Controller
 
     public function storeLead(Request $request)
     {
+        $pageVersion = $request->input('page_version', 'v1');
+        $pageVersion = is_string($pageVersion) ? $pageVersion : 'v1';
+        $pageKey = [
+            'v2' => 'landing_v2',
+            'v3' => 'landing_v3',
+            'v4' => 'landing_v4',
+        ][$pageVersion] ?? 'landing_v1';
+        $this->ensureFrontendPageIsActive($pageKey);
+
         $validator = Validator::make($request->all(), [
             'name'       => 'required|string|max:100',
             'phone'      => ['required', 'regex:/^(08|628)[0-9]{8,11}$/'],
@@ -282,7 +332,6 @@ class LandingController extends Controller
             ], 422);
         }
 
-        $pageVersion = $request->input('page_version', 'v1');
         if ($pageVersion === 'v4') {
             $headline = optional(LandingPageV4::first())->headline;
         } elseif ($pageVersion === 'v3') {

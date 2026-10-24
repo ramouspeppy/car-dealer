@@ -13,6 +13,8 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $this->ensureFrontendPageIsActive('products');
+
         $header      = Header::first();
 
         $products    = Product::with(['media', 'product_type', 'product_category', 'photo_delivery'])->get();
@@ -30,6 +32,8 @@ class ProductController extends Controller
     }
     public function detail(Product $product)
     {
+        $this->ensureFrontendPageIsActive('products');
+
         $profile      = Profile::first();
         $testimonies      = Testimony::with('media')->randomLimit(4)->get();
         $services  = Service::latest()->get();

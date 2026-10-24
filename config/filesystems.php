@@ -37,8 +37,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => public_path('uploads/media'), // Direct to public folder (no symlink needed)
-            'url' => env('APP_URL') . 'uploads/media',
+            'root' => public_path('upload/media'),
+            'url' => rtrim(env('APP_URL'), '/') . '/upload/media',
             'visibility' => 'public',
         ],
 
@@ -54,8 +54,15 @@ return [
 
         'career_applications' => [
             'driver' => 'local',
-            'root' => public_path('uploads/career_applications'), // Direct to public folder
-            'url' => env('APP_URL') . 'uploads/career_applications',
+            'root' => public_path('upload/career_applications'),
+            'url' => rtrim(env('APP_URL'), '/') . '/upload/career_applications',
+            'visibility' => 'public',
+        ],
+
+        'photo_delivery' => [
+            'driver' => 'local',
+            'root' => public_path('upload/photo-delivery'),
+            'url' => rtrim(env('APP_URL'), '/') . '/upload/photo-delivery',
             'visibility' => 'public',
         ],
 
@@ -72,9 +79,6 @@ return [
     |
     */
 
-    'links' => [
-        // Disabled symlink for shared hosting - using direct public path instead
-        public_path('uploads') => storage_path('app/public'),
-    ],
+    'links' => [],
 
 ];

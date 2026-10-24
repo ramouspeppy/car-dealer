@@ -158,7 +158,9 @@ class Product extends Model implements HasMedia, Viewable
     }
     public function setDiscAttribute($value)
     {
-        return $this->attributes['disc'] = str_replace('.', '', $value);
+        $this->attributes['disc'] = $value === null || trim((string) $value) === ''
+            ? null
+            : str_replace('.', '', $value);
     }
     public function setStatusAttribute($value)
     {

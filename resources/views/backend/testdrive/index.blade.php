@@ -8,6 +8,11 @@
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="#">Testdrive</a></div>
         </div>
+        <div class="section-header-button d-flex align-items-center">
+            @include('backend.websetting._frontend-toggle', ['toggles' => [
+                ['key' => 'frontend_page_testdrive', 'label' => 'Tayangkan halaman Test Drive'],
+            ]])
+        </div>
     </div>
 
     @include('backend.layouts._notif')

@@ -33,7 +33,12 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label class="form-control-label">Photo Delivery</label>
-                        <x-dropzone name="images" :existing-files="$delivery->images" />
+                        <x-dropzone
+                            name="images"
+                            :existing-files="$delivery->images"
+                            :upload-url="route('backend.photo-delivery.storeMedia')"
+                            :remove-url="route('backend.photo-delivery.deleteMedia')"
+                        />
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
 @section('title', 'Create New Product - ' . config('settings.site_name'))
 @section('content')
-    @include('backend.layouts._notif')
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
@@ -14,6 +13,8 @@
                 <div class="breadcrumb-item">Create New Product</div>
             </div>
         </div>
+        @include('backend.layouts._notif')
+
         <div class="section-body">
             <form action="{{ route('backend.product.store') }}" class="needs-validation" enctype="multipart/form-data" method="post" id="form-product">
                 @csrf

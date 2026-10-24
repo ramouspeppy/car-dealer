@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="id" data-theme="light" class="landing-v1-page">
 
 <head>
     <meta charset="utf-8">
@@ -40,456 +40,21 @@
     {{-- Tracking script dari admin (Google Tag / Meta Pixel) --}}
     {!! $landingPage->tracking_head_script !!}
 
-    <style>
-        /* Bagian kecil yang belum ada komponennya di template utama (trust bar, FAQ, sticky bar mobile).
-           Semua tetap pakai variabel warna & font asli tema, bukan warna baru. */
-        body {
-            padding-bottom: 84px;
-        }
+    @include('frontend.layouts._tracking')
 
-        #hero.lp-hero {
-            isolation: isolate;
-            background:
-                radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--accent-color), transparent 88%), transparent 28%),
-                var(--background-color);
-        }
-
-        #hero.lp-hero .lp-page-brand {
-            display: inline-flex;
-            align-items: center;
-            min-height: 48px;
-            margin-bottom: 28px;
-            color: var(--heading-color);
-            font-family: var(--heading-font);
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        #hero.lp-hero .lp-page-brand img {
-            display: block;
-            max-width: 190px;
-            max-height: 56px;
-            object-fit: contain;
-        }
-
-        #hero.lp-hero .hero-text {
-            max-width: 590px;
-        }
-
-        #hero.lp-hero .hero-text h1 {
-            font-size: clamp(2.5rem, 5vw, 4.25rem) !important;
-            line-height: 1.08;
-            letter-spacing: -.035em;
-            margin-bottom: 22px;
-        }
-
-        #hero.lp-hero .hero-text .description {
-            max-width: 540px;
-            font-size: clamp(1rem, 1.5vw, 1.15rem);
-            line-height: 1.75;
-        }
-
-        #hero.lp-hero .hero-actions {
-            gap: 14px;
-            margin-top: 28px;
-        }
-
-        #hero.lp-hero .hero-visual .profile-container {
-            width: min(100%, 540px);
-            height: auto;
-            aspect-ratio: 5 / 4;
-            margin-inline: auto;
-            padding: clamp(12px, 2vw, 22px);
-            border: 1px solid color-mix(in srgb, var(--accent-color), transparent 78%);
-            border-radius: 32px;
-            background: linear-gradient(145deg, var(--surface-color), color-mix(in srgb, var(--accent-color), var(--surface-color) 94%));
-            box-shadow: 0 28px 70px color-mix(in srgb, var(--heading-color), transparent 86%);
-        }
-
-        #hero.lp-hero .hero-visual .profile-background {
-            border-radius: 24px;
-        }
-
-        #hero.lp-hero .hero-visual .profile-image {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            border-radius: 24px;
-            object-fit: contain;
-        }
-
-        #hero.lp-hero .lp-hero-placeholder {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            width: 100%;
-            height: 100%;
-            min-height: 260px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            border-radius: 24px;
-            background: color-mix(in srgb, var(--accent-color), var(--surface-color) 94%);
-            color: var(--accent-color);
-            font-family: var(--nav-font);
-            font-weight: 700;
-        }
-
-        #hero.lp-hero .lp-hero-placeholder i {
-            font-size: clamp(4rem, 10vw, 7rem);
-        }
-
-        .lp-profile-section {
-            padding: 72px 0;
-            background: color-mix(in srgb, var(--accent-color), var(--background-color) 95%);
-        }
-
-        .lp-profile-card {
-            display: grid;
-            grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-            align-items: center;
-            gap: clamp(28px, 6vw, 72px);
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: clamp(24px, 5vw, 56px);
-            border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-            border-radius: 28px;
-            background: var(--surface-color);
-            box-shadow: 0 24px 64px color-mix(in srgb, var(--heading-color), transparent 92%);
-        }
-
-        .lp-profile-card-no-photo {
-            grid-template-columns: minmax(0, 1fr);
-            max-width: 760px;
-        }
-
-        .lp-profile-photo {
-            aspect-ratio: 4 / 5;
-            overflow: hidden;
-            border-radius: 22px;
-            background: color-mix(in srgb, var(--accent-color), var(--surface-color) 88%);
-        }
-
-        .lp-profile-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .lp-profile-copy .lp-profile-kicker {
-            display: inline-block;
-            margin-bottom: 12px;
-            color: var(--accent-color);
-            font-family: var(--nav-font);
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-        }
-
-        .lp-profile-copy h2 {
-            margin-bottom: 6px;
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-        }
-
-        .lp-profile-copy .lp-profile-role {
-            margin-bottom: 18px;
-            color: color-mix(in srgb, var(--default-color), transparent 30%);
-            font-weight: 600;
-        }
-
-        .lp-profile-copy .lp-profile-bio {
-            margin-bottom: 24px;
-            line-height: 1.8;
-        }
-
-        .lp-profile-copy .lp-profile-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 12px 22px;
-            border-radius: 50px;
-            background: #25d366;
-            color: #fff;
-            font-weight: 700;
-            text-decoration: none;
-            transition: transform .25s ease, box-shadow .25s ease;
-        }
-
-        .lp-profile-copy .lp-profile-cta:hover {
-            color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px rgba(37, 211, 102, .24);
-        }
-
-        @media (max-width: 767px) {
-            .lp-profile-card {
-                grid-template-columns: 1fr;
-            }
-
-            .lp-profile-photo {
-                max-width: 300px;
-                width: 100%;
-                margin-inline: auto;
-            }
-        }
-
-        .hero .profile-container .profile-image.product-photo-fallback {
-            box-sizing: border-box;
-            padding: 28px;
-            border-radius: 30px;
-            object-fit: contain;
-        }
-
-        .promo-list .product-photo-card .promo-image img {
-            box-sizing: border-box;
-            padding: clamp(14px, 3vw, 28px);
-            object-fit: contain;
-            transition: transform .45s ease;
-        }
-
-        .promo-list .product-photo-card:hover .promo-image img {
-            transform: scale(1.035);
-        }
-
-        #promo-list .product-photo-card {
-            border: 1px solid color-mix(in srgb, var(--accent-color), transparent 84%);
-            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
-        }
-
-        #promo-list .product-photo-card:hover {
-            transform: translateY(-8px);
-            border-color: color-mix(in srgb, var(--accent-color), transparent 48%);
-            box-shadow: 0 24px 48px color-mix(in srgb, var(--heading-color), transparent 86%);
-        }
-
-        #promo-list .product-photo-card .promo-image {
-            background: #fff;
-        }
-
-        #promo-list .product-photo-card .promo-category {
-            position: static;
-            flex: 0 1 auto;
-            max-width: calc(50% - 6px);
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        #promo-list .product-photo-badges {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            min-height: 52px;
-            padding: 10px 14px;
-            background: var(--surface-color);
-        }
-
-        #promo-list .product-photo-card .promo-image-badge {
-            position: static;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            flex: 0 1 auto;
-            max-width: calc(50% - 6px);
-            min-width: 0;
-            padding: 6px 10px;
-            overflow: hidden;
-            border: 1px solid color-mix(in srgb, var(--accent-color), transparent 72%);
-            border-radius: 50px;
-            background: var(--surface-color);
-            color: var(--heading-color);
-            font-size: 11px;
-            font-weight: 700;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            box-shadow: 0 6px 16px rgba(17, 43, 70, .1);
-        }
-
-        #promo-list .product-photo-card .promo-image-badge.is-promo {
-            border-color: transparent;
-            background: #e63946;
-            color: #fff;
-        }
-
-        .lp-trust-bar {
-            background-color: var(--surface-color);
-            border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
-            padding: 18px 0;
-        }
-
-        .lp-trust-bar .lp-trust-item {
-            font-family: var(--nav-font);
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--heading-color);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .lp-trust-bar .lp-trust-item i {
-            color: var(--accent-color);
-            font-size: 16px;
-        }
-
-        .lp-hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: color-mix(in srgb, var(--accent-color), transparent 88%);
-            color: var(--accent-color);
-            font-family: var(--nav-font);
-            font-weight: 700;
-            font-size: 13px;
-            padding: 8px 18px;
-            border-radius: 50px;
-            margin-bottom: 18px;
-        }
-
-        .lp-faq .accordion-item {
-            border: none;
-            margin-bottom: 14px;
-            border-radius: 12px !important;
-            overflow: hidden;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-        }
-
-        .lp-faq .accordion-button {
-            font-family: var(--heading-font);
-            font-weight: 600;
-            color: var(--heading-color);
-            background-color: var(--surface-color);
-            padding: 20px 24px;
-        }
-
-        .lp-faq .accordion-button:not(.collapsed) {
-            color: var(--accent-color);
-            background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
-            box-shadow: none;
-        }
-
-        .lp-faq .accordion-button:focus {
-            box-shadow: none;
-            border-color: transparent;
-        }
-
-        .lp-faq .accordion-button::after {
-            filter: none;
-        }
-
-        .lp-faq .accordion-body {
-            padding: 4px 24px 22px;
-            color: color-mix(in srgb, var(--default-color), transparent 15%);
-        }
-
-        .lp-footer {
-            background-color: var(--heading-color);
-            color: color-mix(in srgb, white, transparent 30%);
-            padding: 28px 0;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .lp-footer strong {
-            color: #fff;
-        }
-
-        .lp-sticky-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1040;
-            background-color: var(--surface-color);
-            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
-            padding: 10px 16px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .lp-sticky-bar a {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            border-radius: 50px;
-            font-family: var(--nav-font);
-            font-weight: 700;
-            font-size: 14px;
-            text-decoration: none;
-        }
-
-        .lp-sticky-bar .lp-btn-call {
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        .lp-sticky-bar .lp-btn-wa {
-            background-color: #25d366;
-            color: #fff;
-        }
-
-        html[data-theme="light"] {
-            --lp-button-color: color-mix(in srgb, var(--accent-color), #12314f 26%);
-            --lp-button-hover-color: color-mix(in srgb, var(--lp-button-color), #000 10%);
-        }
-
-        html[data-theme="light"] .hero .hero-actions .btn.btn-primary,
-        html[data-theme="light"] .call-to-action .btn-primary,
-        html[data-theme="light"] #lp-submit-btn {
-            background-color: var(--lp-button-color);
-            border-color: var(--lp-button-color);
-            color: #fff;
-        }
-
-        html[data-theme="light"] .hero .hero-actions .btn.btn-primary:hover,
-        html[data-theme="light"] .call-to-action .btn-primary:hover,
-        html[data-theme="light"] #lp-submit-btn:hover {
-            background-color: var(--lp-button-hover-color);
-            border-color: var(--lp-button-hover-color);
-            color: #fff;
-        }
-
-        html[data-theme="light"] .hero .hero-actions .btn.btn-outline:hover {
-            background-color: var(--lp-button-color);
-            border-color: var(--lp-button-color);
-            color: #fff;
-        }
-
-        html[data-theme="light"] #promo-list .product-photo-card .promo-actions .btn-purchase {
-            background: linear-gradient(135deg, var(--lp-button-color), var(--lp-button-hover-color));
-            color: #fff;
-        }
-
-        html[data-theme="light"] #promo-list .product-photo-card .promo-actions .btn-purchase:hover {
-            color: #fff;
-        }
-
-        @media (min-width: 992px) {
-            .lp-sticky-bar {
-                display: none;
-            }
-
-            body {
-                padding-bottom: 0;
-            }
-        }
-    </style>
 </head>
 
-<body class="index-page">
+<body class="index-page landing-v1-page">
 
-    {{-- Floating WhatsApp Button (persis sama dengan situs utama) --}}
-    <a href="{{ $profile->wa_url }}" target="_blank" class="floating-wa" aria-label="Chat WhatsApp">
-        <div class="floating-wa-icon">
-            <i class="bi bi-whatsapp"></i>
-        </div>
-        <div class="floating-wa-text">Chat Kami</div>
-    </a>
+    @if (filled($profile->wa))
+        {{-- Floating WhatsApp Button (persis sama dengan situs utama) --}}
+        <a href="{{ $profile->wa_url }}" target="_blank" class="floating-wa" aria-label="Chat WhatsApp">
+            <div class="floating-wa-icon">
+                <i class="bi bi-whatsapp"></i>
+            </div>
+            <div class="floating-wa-text">Chat Kami</div>
+        </a>
+    @endif
 
     {{-- HERO --}}
     <section id="hero" class="hero section lp-hero" style="min-height: auto; padding: 100px 0 70px;">
@@ -499,13 +64,26 @@
         </div>
         <div class="hero-content">
             <div class="container">
-                <a href="{{ url('/') }}" class="lp-page-brand">
-                    @if ($seo['logo'] !== '')
-                        <img src="{{ $seo['logo'] }}" alt="{{ $profile->name ?? $seo['site_name'] }}">
-                    @else
-                        <span>{{ $seo['site_name'] }}</span>
-                    @endif
-                </a>
+                <div class="lp-page-header">
+                    <a href="{{ url('/') }}" class="lp-page-brand">
+                        @if ($seo['logo'] !== '')
+                            <img src="{{ $seo['logo'] }}" alt="{{ $profile->name ?? $seo['site_name'] }}">
+                        @else
+                            <span>{{ $seo['site_name'] }}</span>
+                        @endif
+                        <span class="lp-page-brand-copy">
+                            <span>{{ $navData['name'] }}</span>
+                            <span class="lp-page-brand-site">{{ $navData['site_name'] }}</span>
+                        </span>
+                    </a>
+                    <div class="lp-page-socials" aria-label="Media sosial">
+                        @foreach ($navData['social_links'] as $social)
+                            <a href="{{ $social['url'] }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $social['name'] }}">
+                                <i class="bi {{ $social['icon'] }}" aria-hidden="true"></i>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
                 <div class="row align-items-center">
                     <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
                         <div class="hero-text">
@@ -656,7 +234,7 @@
                                         </span>
                                     </div>
                                     @if ($product->tagline)
-                                        <p>{{ Str::limit($product->tagline, 80) }}</p>
+                                        {!! $product->tagline !!}
                                     @endif
                                     <div class="promo-actions">
                                         <a href="{{ route('product.detail', $product->slug) }}" class="btn-details">Lihat Detail</a>

@@ -1,0 +1,37 @@
+.product-list-cards .product-list-image {
+            align-self: stretch;
+            min-height: 220px;
+            padding: 18px;
+            border-radius: 14px;
+        }
+
+        .product-list-cards .product-list-image img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+        }
+
+        .promo-list .product-photo-card .promo-image img {
+            box-sizing: border-box;
+            padding: clamp(14px, 3vw, 28px);
+            object-fit: contain;
+        }
+
+        .promo-list .product-photo-card:hover .promo-image img {
+            transform: none;
+        }
+
+        .product-detail-carousel .product-detail-item figure {
+            box-sizing: border-box;
+            max-width: 850px;
+            padding: clamp(14px, 3vw, 32px);
+            border-radius: 14px;
+        }
+
+        .product-detail-carousel .product-detail-item figure img {
+            display: block;
+            width: 100%;
+            max-height: 68vh;
+            object-fit: contain;
+            transform: none !important;
+        }

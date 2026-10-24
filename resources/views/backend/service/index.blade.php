@@ -14,6 +14,9 @@
                 <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="#">Service</a></div>
             </div>
+            @include('backend.websetting._frontend-toggle', ['toggles' => [
+                ['key' => 'frontend_section_services', 'label' => 'Tayangkan section Layanan di Beranda'],
+            ]])
         </div>
     
         @include('backend.layouts._notif')

@@ -27,7 +27,15 @@ class WebSetting extends Model
     }
     public function updateValue($name, $value)
     {
-        $data = $this->where('name', $name)->update(['value' => $value]);
+        $setting = $this->where('name', $name)->first();
+
+        if (!$setting) {
+            $setting = new static();
+            $setting->name = $name;
+        }
+
+        $setting->value = $value;
+        $setting->save();
     }
     public function getSiteLogoUrlAttribute()
     {

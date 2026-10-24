@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     private function uploadPath()
     {
-        return public_path('uploads/tmp/' . auth()->user()->id); // Direct path - no symlink needed
+        return public_path('upload/tmp/' . auth()->user()->id);
     }
 
     private function uploadRelativePath()
@@ -73,7 +73,7 @@ class ProductController extends Controller
     {
         $this->authorize('isAdmin', Product::class);
 
-        $product = Product::create($request->all());
+        $product = Product::create($request->validated());
 
         $product->addMedia($request->file('header_image'))
             ->toMediaCollection('header_image');

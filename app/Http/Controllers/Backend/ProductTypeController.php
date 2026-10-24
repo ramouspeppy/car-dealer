@@ -62,7 +62,7 @@ class ProductTypeController extends Controller
     public function create(ProductType $product_type)
     {
         $this->authorize('isAdmin', ProductType::class);
-        $products = Product::all();
+        $products = Product::latest()->get();
         return view('backend.product-type.create', compact('product_type', 'products'));
     }
 
@@ -70,6 +70,7 @@ class ProductTypeController extends Controller
     {
         $this->authorize('isAdmin', ProductType::class);
         $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
             'type'   => 'required|max:255',
             'status' => 'required',
             'price'  => 'required',

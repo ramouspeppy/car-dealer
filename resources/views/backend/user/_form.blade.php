@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label class="form-control-label" for="name">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                            name="name" value="{{ old('name', $user->name) }}">
+                            name="name" data-slug-target="#slug" value="{{ old('name', $user->name) }}">
                         @error('name')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label class="form-control-label" for="slug">Slug</label>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
-                            name="slug" value="{{ old('slug', $user->slug) }}">
+                            name="slug" data-auto-slug="#name" value="{{ old('slug', $user->slug) }}">
                         @error('slug')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -111,15 +111,4 @@
     </div>
 </div>
 @section('script')
-<script>
-    $('#name').change(function(e) {
-        $.get("{{ route('backend.user.checkSlug') }}", {
-                'slug': $(this).val()
-            },
-            function(data) {
-                $('#slug').val(data.slug);
-            }
-        );
-    });
-</script>
 @endsection

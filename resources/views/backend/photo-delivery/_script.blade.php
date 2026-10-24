@@ -73,11 +73,11 @@
         });
 
         function deleteDataAll() {
-            const allIds = [];
-
-            $('input:checkbox[name=idDeliveries]:checked').each(function() {
-                allIds.push($(this).val());
-            });
+            const allIds = Array.from(new Set(
+                $('input:checkbox[name=idDeliveries]:checked').map(function() {
+                    return $(this).val();
+                }).get()
+            ));
 
             $.ajax({
                 type: 'POST',
@@ -106,8 +106,8 @@
                         photoDeliveryLightbox.close();
                     }
 
-                    $('.checkbox-delivery:checked').each(function() {
-                        $(this).closest('.photo-delivery-container').remove();
+                    allIds.forEach(function(id) {
+                        $('.photo-delivery-container[data-delivery-id="' + id + '"]').remove();
                     });
 
                     $('#chkCheckAll').prop('checked', false);

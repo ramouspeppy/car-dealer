@@ -345,7 +345,7 @@ class HomeController extends Controller
 
     protected function getPopularProducts(array $range)
     {
-        $popularProducts = VisitorLog::with('product')->whereBetween('created_at', [$range['start'], $range['end']])
+        $popularProducts = VisitorLog::with('product.media')->whereBetween('created_at', [$range['start'], $range['end']])
             ->whereNotNull('product_id')
             ->select('product_id', DB::raw('COUNT(*) as views'))
             ->groupBy('product_id')

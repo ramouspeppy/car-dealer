@@ -19,7 +19,7 @@ class GalleryController extends Controller
 
     private function uploadPath()
     {
-        return public_path('uploads/tmp/' . auth()->user()->id); // Direct path - no symlink needed
+        return public_path('upload/tmp/' . auth()->user()->id);
     }
 
     private function uploadRelativePath()

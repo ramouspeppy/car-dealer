@@ -24,6 +24,8 @@ class TestdriveController extends Controller
 
     public function testdriveShow()
     {
+        $this->ensureFrontendPageIsActive('testdrive');
+
         $products = Product::latest()->active()->get();
         $services  = Service::latest()->get();
         $profile = Profile::first();
@@ -38,6 +40,8 @@ class TestdriveController extends Controller
 
     public function testdriveStore(Request $request)
     {
+        $this->ensureFrontendPageIsActive('testdrive');
+
         $messages = [
             'name.required'             => 'Ups! nama masih kosong. Yuk, diisi dulu',
             'wa.required'               => 'Ups! whatsapp masih kosong. Yuk, diisi dulu.',
