@@ -17,7 +17,7 @@ class PhotoDeliveryController extends Controller
 {
     private function uploadPath()
     {
-        return public_path('upload/photo-delivery/tmp/' . auth()->id());
+        return public_path('upload/tmp/' . auth()->id());
     }
 
     public function index(Request $request)

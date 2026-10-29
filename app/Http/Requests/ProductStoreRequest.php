@@ -16,11 +16,24 @@ class ProductStoreRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'disc'     => $this->cleanNumber($this->disc),
+            'priority' => $this->cleanNumber($this->priority),
+        ]);
+    }
+
+    private function cleanNumber($value)
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        // hapus semua karakter selain angka: "1.000.000" => "1000000"
+        return preg_replace('/[^0-9]/', '', $value);
+    }
+
     public function rules()
     {
         return [
@@ -28,7 +41,7 @@ class ProductStoreRequest extends FormRequest
         'hero_name'           => 'required|max:255',
         'slug'                => 'required|max:255|unique:products,slug',
         'tagline'             => 'nullable|max:255',
-        'disc'                => 'nullable|integer|min:0|max:100',
+        'disc'                => 'nullable|integer',
         'priority'            => 'nullable|integer',
         'source'              => 'nullable|max:255',
         'video_url'           => 'nullable|max:255',
@@ -36,7 +49,6 @@ class ProductStoreRequest extends FormRequest
         'desc'                => 'nullable',
         'detail'              => 'required',
         'status'              => 'required',
-        'header_image'        => 'required|image|max:2048',
         'image'               => 'required|image|max:2048',
         'brochure'            => 'nullable|file',
     ];

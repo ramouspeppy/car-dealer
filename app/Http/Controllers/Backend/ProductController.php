@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Product;
 use App\Models\ProductCategory;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class ProductController extends Controller
 {
@@ -75,9 +75,6 @@ class ProductController extends Controller
 
         $product = Product::create($request->validated());
 
-        $product->addMedia($request->file('header_image'))
-            ->toMediaCollection('header_image');
-
         $product->addMedia($request->file('image'))
             ->toMediaCollection('image');
 
@@ -120,35 +117,8 @@ class ProductController extends Controller
         $product->update($request->all());
 
 
-        if (count($product->product_gallery) > 0) {
-            foreach ($product->product_gallery as $media) {
-                if (!in_array($media->file_name, $request->input('product_gallery', []))) {
-                    $media->delete();
-                }
-            }
-        }
-
-        $media = $product->product_gallery->pluck('file_name')->toArray();
-
-        foreach ($request->input('product_gallery', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $product->addMedia($this->uploadPath() . '/' . $file)->toMediaCollection('product_gallery');
-            }
-        }
-
-        $media2 = $product->product_colors->pluck('file_name')->toArray();
-
-        foreach ($request->input('product_colors', []) as $file) {
-            if (count($media2) === 0 || !in_array($file, $media2)) {
-                $product->addMedia($this->uploadPath() . '/' . $file)->toMediaCollection('product_colors');
-            }
-        }
-
-        if ($request->hasFile('header_image')) {
-            $product
-                ->addMedia($request->file('header_image'))
-                ->toMediaCollection('header_image');
-        }
+        $this->syncMedia($product, 'product_gallery', $request->input('product_gallery', []));
+        $this->syncMedia($product, 'product_colors', $request->input('product_colors', []));
 
         if ($request->hasFile('image')) {
             $product
@@ -193,70 +163,25 @@ class ProductController extends Controller
     }
 
 
-    // private function uploadPath()
-    // {
-    //     return storage_path('app/tmp/' . auth()->user()->id . '/product/galleries');
-    // }
-
-    public function storeMedia(Request $request)
+    private function syncMedia(Product $product, string $collection, array $files)
     {
-        $path = $this->uploadPath();
-
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
+    // hapus media yang sudah tidak ada di input
+    foreach ($product->getMedia($collection) as $media) {
+        if (!in_array($media->file_name, $files)) {
+            $media->delete();
         }
-
-        $file = $request->file('file');
-
-        // $name = uniqid() . '_' . trim($file->getClientOriginalName());
-        $name = trim($file->getClientOriginalName());
-
-        $file->move($path, $name);
-
-        return response()->json([
-            'name'          => $name,
-            'original_name' => $file->getClientOriginalName(),
-        ]);
     }
 
-    public function deleteMedia(Request $request)
-    {
-        $path = $this->uploadPath();
+    // muat ulang relasi media supaya yang sudah dihapus tidak ikut terhitung
+    $product->unsetRelation('media');
+    $existing = $product->getMedia($collection)->pluck('file_name')->toArray();
 
-        $filePath = $path . '/' . $request->filename;
-
-        if (file_exists($filePath)) unlink($filePath);
-    }
-    // =========================================================
-
-
-    public function storeMedia2(Request $request)
-    {
-        $path = $this->uploadPath();
-
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
+    // tambah file baru dari folder temp
+    foreach ($files as $file) {
+        if (!in_array($file, $existing)) {
+            $product->addMedia($this->uploadPath() . '/' . basename($file))
+                ->toMediaCollection($collection);
         }
-
-        $file = $request->file('file');
-
-        // $name = uniqid() . '_' . trim($file->getClientOriginalName());
-        $name = trim($file->getClientOriginalName());
-
-        $file->move($path, $name);
-
-        return response()->json([
-            'name'          => $name,
-            'original_name' => $file->getClientOriginalName(),
-        ]);
     }
-
-    public function deleteMedia2(Request $request)
-    {
-        $path = $this->uploadPath();
-
-        $filePath = $path . '/' . $request->filename;
-
-        if (file_exists($filePath)) unlink($filePath);
-    }
+}
 }

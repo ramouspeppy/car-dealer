@@ -129,10 +129,6 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
 
     // Product
     Route::get('product/checkSlug', [ProductController::class, 'checkSlug'])->name('product.checkSlug');
-    Route::post('product/media', [ProductController::class, 'storeMedia'])->name('product.storeMedia');
-    Route::post('product/delete-media', [ProductController::class, 'deleteMedia'])->name('product.deleteMedia');
-    Route::post('product/media2', [ProductController::class, 'storeMedia2'])->name('product.storeMedia2');
-    Route::post('product/delete-media2', [ProductController::class, 'deleteMedia2'])->name('product.deleteMedia2');
     Route::resource('product', ProductController::class)->except('show');
 
     //Product type
@@ -155,10 +151,9 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth']]
 
     // Gallery
     Route::get('gallery/checkSlug', [GalleryController::class, 'checkSlug'])->name('gallery.checkSlug');
-    Route::post('gallery/media', [GalleryController::class, 'storeMedia'])->name('gallery.storeMedia');
-    Route::post('gallery/delete-media', [GalleryController::class, 'deleteMedia'])->name('gallery.deleteMedia');
-    Route::resource('gallery', GalleryController::class)->except('show');
+     Route::resource('gallery', GalleryController::class)->except('show');
 
+    //  image handler
     Route::post('images/upload', [ImagesUploadController::class, 'store'])->name('images.store');
     Route::post('images/delete', [ImagesUploadController::class, 'destroy'])->name('images.destroy');
 

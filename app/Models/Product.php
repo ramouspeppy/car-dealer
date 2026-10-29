@@ -48,7 +48,9 @@ class Product extends Model implements HasMedia, Viewable
     }
     public function scopePriority($query)
     {
-        return $query->orderByRaw('ISNULL (priority), priority, created_at DESC');
+         return $query->orderByRaw('ISNULL(priority) ASC')
+                 ->orderBy('priority', 'ASC')
+                 ->orderBy('created_at', 'DESC');
     }
     // end Scope ====================================================
     public function productNameLimit($limit = 5)
@@ -89,12 +91,9 @@ class Product extends Model implements HasMedia, Viewable
 
     public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaCollection('header_image', 'brochure', 'image')
-            ->singleFile();
-        $this
-            ->addMediaCollection('brochure')
-            ->singleFile();
+        $this->addMediaCollection('image')->singleFile();
+        $this->addMediaCollection('brochure')->singleFile();
+
     }
 
     public function registerMediaConversions(Media $media = null): void
@@ -110,10 +109,7 @@ class Product extends Model implements HasMedia, Viewable
     {
         return $this->getFirstMediaUrl('image');
     }
-    public function getHeaderImageUrlAttribute($value)
-    {
-        return $this->getFirstMediaUrl('header_image');
-    }
+    
     public function getProductGalleryAttribute($value)
     {
         return $this->getMedia('product_gallery');

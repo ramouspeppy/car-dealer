@@ -38,15 +38,16 @@ class ImagesUploadController extends Controller
     }
 
     public function destroy(Request $request)
-    {
-        $path = public_path('upload/tmp/' . auth()->id() . '/' . $request->filename);
+{
+    $filename = basename((string) $request->filename);
+    $path = public_path('upload/tmp/' . auth()->id() . '/' . $filename);
 
-        if (file_exists($path)) {
-            unlink($path);
-        }
-
-        return response()->noContent();
+    if ($filename !== '' && is_file($path)) {
+        unlink($path);
     }
+
+    return response()->noContent();
+}
 
     private function uploadRelativePath()
     {

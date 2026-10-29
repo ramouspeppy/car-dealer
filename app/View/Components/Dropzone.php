@@ -13,13 +13,16 @@ class Dropzone extends Component
     public $uploadUrl;
     public $removeUrl;
 
+    public $tmpUrl;
+
     public function __construct(
         $name,
         $acceptedFiles = '.jpeg,.jpg,.png,.webp',
         $maxFileSize = 2,
         $existingFiles = [],
         $uploadUrl = null,
-        $removeUrl = null
+        $removeUrl = null,
+        $tmpUrl = null
     ) {
         $this->name = $name;
         $this->acceptedFiles = $acceptedFiles;
@@ -27,6 +30,7 @@ class Dropzone extends Component
         $this->existingFiles = $existingFiles;
         $this->uploadUrl = $uploadUrl ?: route('backend.images.store');
         $this->removeUrl = $removeUrl ?: route('backend.images.destroy');
+        $this->tmpUrl = rtrim($tmpUrl ?: asset('upload/tmp/' . auth()->id()), '/') . '/';
     }
 
     public function render()
